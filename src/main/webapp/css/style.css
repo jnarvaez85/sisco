@@ -1,0 +1,10 @@
+@charset "ISO-8859-1";
+
+
+#rgb_corporative{background: #a19ee3;}
+
+.header_dropdown{margin-right: 7%;position: absolute;z-index: 9999;top: 0;right: 0;}
+.header{padding: 15px;color: #fff;}
+.header_hr{position: relative;bottom: 22px;}
+
+.title_breadcrumb{ position: absolute;    top: 7rem;    left: 1%}
