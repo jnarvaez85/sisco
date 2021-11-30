@@ -2,9 +2,27 @@
 
 
 #rgb_corporative{background: #a19ee3;}
+#a_link{text-decoration: none;color: #686767;}
 
 .header_dropdown{margin-right: 7%;position: absolute;z-index: 9999;top: 0;right: 0;}
 .header{padding: 15px;color: #fff;}
 .header_hr{position: relative;bottom: 22px;}
 
 .title_breadcrumb{ position: absolute;    top: 7rem;    left: 1%}
+
+.title_login{text-align: center;    padding-bottom: 20px;    font-size: 2rem;    color: #a19ee3;}
+.login{
+	width: 400px;
+	margin: auto;
+	border: 1px solid #330a0a1f;
+	padding: 30px;
+	border-radius: 6px;
+	background: #ece0f466;
+	box-shadow: 0px 0px 5px 5px #0403031f;
+	top:6rem;
+	position: relative;
+}
+
+.alert_error_login{position: absolute;    top: 7rem;    margin: auto;    width: 380px;    z-index: 999999999;    left: 0;    right: 0;}
+
+.div_content{position: absolute;border: 1px solid #0404042e;width: 73%;left: 1rem;border-radius: 6px;height: 70%;padding: 20px;}

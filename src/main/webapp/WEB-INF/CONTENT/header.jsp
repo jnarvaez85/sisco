@@ -1,11 +1,23 @@
 <%@ include file="../../libraries/bootstrap.jsp" %>
+
+
 <%@page import="admin.*"%>
 
 <%@ page language="java"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.LinkedList"%>
 
-<% LinkedList<Menu> menu = MenuDAO.datosMenu(); %>
+<% 
+LinkedList<Menu> menu = MenuDAO.datosMenu();
+
+LinkedList<Entidad> entidad = EntidadDAO.datosEntidad();
+String nombre_ent = entidad.get(0).getNom_entidad();
+
+LinkedList<Systems> software = SystemsDAO.datosSystema();
+String nombre_sys = software.get(0).getNom_sys();
+String version_sys = software.get(0).getVer_sys();
+
+%>
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -17,23 +29,23 @@
 <body>
 
 <div class="header" id="rgb_corporative">
-Lisencia Instalada a Centro Evangelico
+<%= "Licencia instalada a "+" "+nombre_ent %>
 <span class="header_dropdown">
-<nav class="navbar navbar-expand-lg navbar-light">
+<nav class="navbar navbar-expand-lg navbar-dark">
   <div class="container-fluid">    
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+    <button class="navbar-toggler "  type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>    </button>
     <div class="collapse navbar-collapse" id="navbarNavDropdown">
       <ul class="navbar-nav">
      
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Dropdown link
+            <img width="25px" src="img/white/user.png"/> ${usuario.getNom_persona()} ${usuario.getApell_persona()}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+            <li><a class="dropdown-item" href="#"><img width="18px" src="img/menu/config.png"/> Configuración</a></li>
+            <li><a class="dropdown-item" href="#"><img width="18px" src="img/menu/admin.png"/> Cambiar contraseña</a></li>
+            <li><a class="dropdown-item" href="logout"><img width="18px" src="img/menu/logout.png"/> Salir</a></li>
           </ul>
         </li>
       </ul>
@@ -47,7 +59,7 @@ Lisencia Instalada a Centro Evangelico
 <div style=""> 
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
   <div class="container-fluid">
-    <a class="navbar-brand" href="index.jsp">SISCO 3.0 </a>
+    <a class="navbar-brand" href="views?url=home"><%= nombre_sys+ " "+version_sys %> </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -95,12 +107,13 @@ Lisencia Instalada a Centro Evangelico
     		int param = menu.get(i).getCod_menu_param();
     		String opcion = menu.get(i).getNom_menu();
     		String icon = menu.get(i).getIcon_menu();
+    		String link = menu.get(i).getLink_menu();
     		
     		if(param==2){ // recaudo   		
     		%>
           
             <li>                    
-            <a class="dropdown-item" href="#">
+            <a class="dropdown-item" href="recaudo?url=<%= link %>">
             <img width="18px" src="img/menu/<%= icon %>.png"/>
             <%= opcion %>
              </a>       
@@ -118,9 +131,28 @@ Lisencia Instalada a Centro Evangelico
             <img width="18px" src="img/menu/nomina.png"/> Nomina
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                 <%
+      	for (int i = 0; i < menu.size(); i++) {
+
+    		int param = menu.get(i).getCod_menu_param();
+    		String opcion = menu.get(i).getNom_menu();
+    		String icon = menu.get(i).getIcon_menu();
+    		String link = menu.get(i).getLink_menu();
+    		
+    		if(param==3){ // nomina   		
+    		%>
+          
+            <li>                    
+            <a class="dropdown-item" href="nomina?url=<%= link %>">
+            <img width="18px" src="img/menu/<%= icon %>.png"/>
+            <%= opcion %>
+             </a>       
+            
+            </li>
+            
+		<% } 
+      	}
+		%>
           </ul>
         </li>
        <li class="nav-item dropdown">
@@ -128,9 +160,28 @@ Lisencia Instalada a Centro Evangelico
             <img width="18px" src="img/menu/caja.png"/> Caja
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                 <%
+      	for (int i = 0; i < menu.size(); i++) {
+
+    		int param = menu.get(i).getCod_menu_param();
+    		String opcion = menu.get(i).getNom_menu();
+    		String icon = menu.get(i).getIcon_menu();
+    		String link = menu.get(i).getLink_menu();
+    		
+    		if(param==4){ // caja  		
+    		%>
+          
+            <li>                    
+            <a class="dropdown-item" href="caja?url=<%= link %>">
+            <img width="18px" src="img/menu/<%= icon %>.png"/>
+            <%= opcion %>
+             </a>       
+            
+            </li>
+            
+		<% } 
+      	}
+		%>
           </ul>
         </li>
         <li class="nav-item dropdown">
@@ -138,9 +189,28 @@ Lisencia Instalada a Centro Evangelico
            <img width="18px" src="img/menu/cierre.png"/> Cierre de planillas
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                 <%
+      	for (int i = 0; i < menu.size(); i++) {
+
+    		int param = menu.get(i).getCod_menu_param();
+    		String opcion = menu.get(i).getNom_menu();
+    		String icon = menu.get(i).getIcon_menu();
+    		String link = menu.get(i).getLink_menu();
+    		
+    		if(param==5){ // cierre  		
+    		%>
+          
+            <li>                    
+            <a class="dropdown-item" href="cierre?url=<%= link %>">
+            <img width="18px" src="img/menu/<%= icon %>.png"/>
+            <%= opcion %>
+             </a>       
+            
+            </li>
+            
+		<% } 
+      	}
+		%>
           </ul>
         </li>
                <li class="nav-item dropdown">
@@ -148,9 +218,28 @@ Lisencia Instalada a Centro Evangelico
           <img width="18px" src="img/menu/obligaciones.png"/> Obligaciones
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <%
+      	for (int i = 0; i < menu.size(); i++) {
+
+    		int param = menu.get(i).getCod_menu_param();
+    		String opcion = menu.get(i).getNom_menu();
+    		String icon = menu.get(i).getIcon_menu();
+    		String link = menu.get(i).getLink_menu();
+    		
+    		if(param==6){ // obligaciones  		
+    		%>
+          
+            <li>                    
+            <a class="dropdown-item" href="obligaciones?url=<%= link %>">
+            <img width="18px" src="img/menu/<%= icon %>.png"/>
+            <%= opcion %>
+             </a>       
+            
+            </li>
+            
+		<% } 
+      	}
+		%>
           </ul>
         </li>
                <li class="nav-item dropdown">
@@ -158,9 +247,28 @@ Lisencia Instalada a Centro Evangelico
             <img width="18px" src="img/menu/auditoria.png"/> Reportes
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <%
+      	for (int i = 0; i < menu.size(); i++) {
+
+    		int param = menu.get(i).getCod_menu_param();
+    		String opcion = menu.get(i).getNom_menu();
+    		String icon = menu.get(i).getIcon_menu();
+    		String link = menu.get(i).getLink_menu();
+    		
+    		if(param==7){ // reportes  		
+    		%>
+          
+            <li>                    
+            <a class="dropdown-item" href="reportes?url=<%= link %>">
+            <img width="18px" src="img/menu/<%= icon %>.png"/>
+            <%= opcion %>
+             </a>       
+            
+            </li>
+            
+		<% } 
+      	}
+		%>
           </ul>
         </li>
                <li class="nav-item dropdown">
@@ -168,9 +276,28 @@ Lisencia Instalada a Centro Evangelico
             <img width="18px" src="img/menu/admin.png"/> Administración
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                        <%
+      	for (int i = 0; i < menu.size(); i++) {
+
+    		int param = menu.get(i).getCod_menu_param();
+    		String opcion = menu.get(i).getNom_menu();
+    		String icon = menu.get(i).getIcon_menu();
+    		String link = menu.get(i).getLink_menu();
+    		
+    		if(param==8){ // admin  		
+    		%>
+          
+            <li>                    
+            <a class="dropdown-item" href="admin?url=<%= link %>">
+            <img width="18px" src="img/menu/<%= icon %>.png"/>
+            <%= opcion %>
+             </a>       
+            
+            </li>
+            
+		<% } 
+      	}
+		%>
           </ul>
         </li>
                <li class="nav-item dropdown">
@@ -178,9 +305,28 @@ Lisencia Instalada a Centro Evangelico
             <img width="18px" src="img/menu/seguridad.png"/> Seguridad
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-            <li><a class="dropdown-item" href="#">Action</a></li>
-            <li><a class="dropdown-item" href="#">Another action</a></li>
-            <li><a class="dropdown-item" href="#">Something else here</a></li>
+                              <%
+      	for (int i = 0; i < menu.size(); i++) {
+
+    		int param = menu.get(i).getCod_menu_param();
+    		String opcion = menu.get(i).getNom_menu();
+    		String icon = menu.get(i).getIcon_menu();
+    		String link = menu.get(i).getLink_menu();
+    		
+    		if(param==9){ // segur  		
+    		%>
+          
+            <li>                    
+            <a class="dropdown-item" href="segur?url=<%= link %>">
+            <img width="18px" src="img/menu/<%= icon %>.png"/>
+            <%= opcion %>
+             </a>       
+            
+            </li>
+            
+		<% } 
+      	}
+		%>
           </ul>
         </li>
    

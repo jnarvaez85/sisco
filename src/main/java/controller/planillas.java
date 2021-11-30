@@ -24,10 +24,10 @@ public class planillas extends HttpServlet {
 	
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String login_accion = request.getParameter("url");
+		String accion = request.getParameter("url");
 
-		if (login_accion != null) {
-			switch (login_accion) {
+		if (accion != null) {
+			switch (accion) {
 			case "nuevaPlanilla":
 				this.agregarPlanilla(request, response);
 				break;

@@ -3,6 +3,14 @@
 <%@ include file="../../WEB-INF/CONTENT/consultas.jsp" %>
 
 
+<div class="alert_error_login">
+<div class="alert alert-warning alert-danger fade show" role="alert">
+  <strong>ERROR!</strong> Datos incorrecto o usuario no existe
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+</div>
+
+
 <div class="login">
 <div class="title_login"><%= nom_sys+ " "+ver_sys %></div>
 
