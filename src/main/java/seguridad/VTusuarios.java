@@ -18,6 +18,7 @@ public class VTusuarios {
 	private String estado;
 	private int cod_rol;
 	private String rol;
+	private int estado_firma;
 	
 	
 	public VTusuarios() {
@@ -26,9 +27,12 @@ public class VTusuarios {
 	}
 
 
+	
+
+
 	public VTusuarios(int cod_persona, String nom_persona, String apell_persona, int cod_id, String tipo_identificacion,
 			String usuario, String dir_persona, String tel_persona, Date fecha_inicio, Date fecha_fin, int cod_estado,
-			String estado, int cod_rol, String rol) {
+			String estado, int cod_rol, String rol, int estado_firma) {
 		super();
 		this.cod_persona = cod_persona;
 		this.nom_persona = nom_persona;
@@ -44,7 +48,11 @@ public class VTusuarios {
 		this.estado = estado;
 		this.cod_rol = cod_rol;
 		this.rol = rol;
+		this.estado_firma = estado_firma;
 	}
+
+
+
 
 
 	public VTusuarios(int cod_persona) {
@@ -53,9 +61,11 @@ public class VTusuarios {
 	}
 
 
+
+
 	public VTusuarios(String nom_persona, String apell_persona, int cod_id, String tipo_identificacion, String usuario,
 			String dir_persona, String tel_persona, Date fecha_inicio, Date fecha_fin, int cod_estado, String estado,
-			int cod_rol, String rol) {
+			int cod_rol, String rol, int estado_firma) {
 		super();
 		this.nom_persona = nom_persona;
 		this.apell_persona = apell_persona;
@@ -70,7 +80,11 @@ public class VTusuarios {
 		this.estado = estado;
 		this.cod_rol = cod_rol;
 		this.rol = rol;
+		this.estado_firma = estado_firma;
 	}
+
+
+
 
 
 	public int getCod_persona() {
@@ -210,6 +224,16 @@ public class VTusuarios {
 
 	public void setRol(String rol) {
 		this.rol = rol;
+	}
+
+
+	public int getEstado_firma() {
+		return estado_firma;
+	}
+
+
+	public void setEstado_firma(int estado_firma) {
+		this.estado_firma = estado_firma;
 	}
 	
 	

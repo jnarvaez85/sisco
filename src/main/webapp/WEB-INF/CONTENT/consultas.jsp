@@ -3,6 +3,7 @@
 
 <!--  Paquetes JAVA -->
 <%@page import="admin.*"%>
+<%@page import="seguridad.*"%>
 
 <%@ page language="java"%>
 <%@ page import="java.util.*"%>
@@ -29,6 +30,15 @@ LinkedList<Systems> datos_software = SystemsDAO.datosSystema();
 int var_ent=0;
 LinkedList<Entidad> datos_entidad = EntidadDAO.datosEntidad();
 	String nom_ent = datos_entidad.get(var_sys).getNom_entidad();
+	
+	
+// USUARIOS
+LinkedList<VTusuarios> datos_usuario = UsuariosDAO.listarUsuarios();
+
+
+// PARAMETROS
+LinkedList<Parametros> parametros = ParametrosDAO.listarParametros();
+	
 
 
 %>

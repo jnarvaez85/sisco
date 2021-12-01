@@ -317,7 +317,7 @@ String version_sys = software.get(0).getVer_sys();
     		%>
           
             <li>                    
-            <a class="dropdown-item" href="segur?url=<%= link %>">
+            <a class="dropdown-item" href="seguridad?url=<%= link %>">
             <img width="18px" src="img/menu/<%= icon %>.png"/>
             <%= opcion %>
              </a>       
