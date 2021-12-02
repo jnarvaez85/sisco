@@ -14,36 +14,28 @@ public class UsuariosDAO {
 	
 	MysqlConexion conx = new MysqlConexion();
 
-	//private static final String SEARCH_USER = "SELECT COUNT(usuario) FROM view_usuarios WHERE usuario = ?";
 	private static final String SELECT_USER = "SELECT * FROM view_usuarios";
-	private static final String SELECT_LOGUIN = "SELECT \r\n"
-			+ "per.*,\r\n"
-			+ "usr.segur_user,\r\n"
-			+ "usr.segur_password\r\n"
-			+ "FROM segur_usuario usr\r\n"
-			+ "INNER JOIN view_usuarios per ON usr.cod_persona=per.cod_persona\r\n"
-			+ "WHERE segur_user =? AND segur_password = ?";
 
-
-	
 	
 	// METODO PARA VALIDAR LOGIN
 	@SuppressWarnings("static-access")
 	public VTusuarios validarLogin(String segur_user, String segur_password) throws SQLException {
 		Connection conn = null;
-		PreparedStatement ps = null;
 		ResultSet rs = null;
+		CallableStatement stmt = null;
 
 		VTusuarios user = new VTusuarios();
 
 		try {
 
 			conn = conx.conectar();
-			ps = conn.prepareStatement(SELECT_LOGUIN);			
 			
-			ps.setString(1, segur_user);
-			ps.setString(2, segur_password);
-			rs = ps.executeQuery();
+			String sql = "{call SP_VALIDA_LOGIN (?, ?)}";
+	        stmt = conn.prepareCall(sql);			
+			
+	        stmt.setString(1, segur_user);
+	        stmt.setString(2, segur_password);
+			rs = stmt.executeQuery();
 
 			while (rs.next()) {
 				user.setNom_persona(rs.getString("nom_persona"));
@@ -62,12 +54,11 @@ public class UsuariosDAO {
 			ex.printStackTrace(System.out);
 		} finally {
 			conx.close(rs);
-			conx.close(ps);
+			conx.close(stmt);
 			conx.close(conn);
 		}
 		return user;
 	}
-	
 	
 	
 	
@@ -166,5 +157,45 @@ public class UsuariosDAO {
 			}
 			return 1;
 		}
-
+		
+		
+		// INSERTAR USUARIO		
+		public void insertarUsuario(Personas user) throws SQLException {
+			
+	    	MysqlConexion conx = new MysqlConexion();
+	    	Connection con = null;
+			PreparedStatement ps = null;
+			CallableStatement stmt = null;
+			
+			try {
+				con = conx.conectar();
+				//ps = con.prepareStatement(INSERT_USER);
+				
+				 String sql = "{call SP_INSERT_PERSONA (?,?,?,?,?,?,?)}";
+		         stmt = con.prepareCall(sql);
+			
+		         stmt.setString(1, user.getNom_persona());
+		         stmt.setString(2, user.getApell_persona());
+		         stmt.setInt(3, user.getTipo_doc_persona());
+		         stmt.setString(4, user.getDoc_persona());
+		         stmt.setString(5, user.getDir_persona());
+		         stmt.setString(6, user.getTel_persona());
+		         stmt.setInt(7, user.getRol_persona());			
+		         stmt.executeUpdate();
+				
+	        } catch (SQLException e) {
+					System.out.println("Error al insertar usuario " + e);
+				}
+				
+				finally {
+					try {
+						
+						MysqlConexion.close(ps);
+						MysqlConexion.close(stmt);
+						MysqlConexion.close(con);
+					} catch (SQLException e) {
+						System.out.println("Error al cerrar" + e);
+					}
+				}
+		}
 }

@@ -1,6 +1,9 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,17 +38,12 @@ public class seguridad extends HttpServlet {
 			switch (accion) {
 			case "usuarios":
 				this.listarUsuarios(request, response);
-				break;
-			case "autorizarFirma":
-				this.autorizarFirma(request, response);
-				break;
-			case "configurar":
-				this.configurarUsuario(request, response);
-				break;
-			case "nuevoUsuario":
-				this.agregarUsuario(request, response);
+				break;	
+			case "validarExisteUsuario":
+				this.validarExisteUsuario(request, response);
 				break;
 			}
+			
 			
 		} else {
 			response.sendRedirect("error.jsp");
@@ -59,19 +57,10 @@ public class seguridad extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);	
 	}
 	
-	private void autorizarFirma(HttpServletRequest request, HttpServletResponse response)
+
+	private void validarExisteUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/consultarPlanilla.jsp").forward(request, response);	
-	}
-	
-	private void configurarUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/planillaCompartida.jsp").forward(request, response);	
-	}
-	
-	private void agregarUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/segur_agregarUsuario.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/segur_validarUsuario.jsp").forward(request, response);	
 	}
 	
 	
@@ -85,18 +74,21 @@ public class seguridad extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String accion = request.getParameter("validar");
-
-		if (accion != null) {
+		
+		try {
 			switch (accion) {
+		
 			case "validarUsuario":
-				this.validarUsuario(request, response);
+				validarUsuario(request, response);
 				break;
+			case "agregarUsuario":
+				agregarUsuario(request, response);
+				break;
+			}
+		} catch (SQLException ex) {
+			throw new ServletException(ex);
 		}
-			
-		} else {
-			response.sendRedirect("error.jsp");
-		}
-		response.getWriter().append("Served at: ").append(request.getContextPath());
+	
 	}
 	
 	
@@ -107,17 +99,46 @@ public class seguridad extends HttpServlet {
 	private void validarUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		VTusuarios addUsuario = new VTusuarios();
+		//VTusuarios addUsuario = new VTusuarios();
 		UsuariosDAO userValidate = new UsuariosDAO();		
 		
 		if(userValidate.validarUsuario(request.getParameter("txtIdentificacion")) == 0) {
-    	
-		response.sendRedirect("noexiste");
-		}else {
 			
-			request.setAttribute("message", "hello");
-			response.sendRedirect("seguridad?url=nuevoUsuario&req=101");
+		    String doc = request.getParameter("txtIdentificacion");	
+		
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_agregarUsuario.jsp");
+			request.setAttribute("doc_user", doc);	
+			dispatcher.forward(request, response);				
+		
+		}else {	
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_validarUsuario.jsp");
+			request.setAttribute("alert", "101");	
+			dispatcher.forward(request, response);
+		}
 	}
+	
+	
+	// Agregar nuevo usuario
+	private void agregarUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		
+		Personas per = new Personas();
+		UsuariosDAO addUser = new UsuariosDAO();
+		
+		per.setNom_persona(request.getParameter("txtNombres"));
+		per.setApell_persona( request.getParameter("txtApellidos"));
+		per.setTipo_doc_persona(Integer.parseInt(request.getParameter("selectTipoId")));
+		per.setDoc_persona(request.getParameter("txtIdentificacion"));
+		per.setDir_persona(request.getParameter("txtDireccion"));
+		per.setTel_persona(request.getParameter("txtTelefono"));
+		per.setRol_persona(Integer.parseInt(request.getParameter("selectPermisos")));
+		
+		addUser.insertarUsuario(per);
+    	
+		response.sendRedirect("WEB-INF/PAGE/segur_usuarios.jsp");
+		
+
+	
 	}
 
 

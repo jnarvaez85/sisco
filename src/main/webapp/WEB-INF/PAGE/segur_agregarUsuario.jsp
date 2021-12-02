@@ -6,11 +6,7 @@
 
 
 
-<% if(request.getParameter("req") != null){ %>
-<jsp:include page="/WEB-INF/ALERT/usuarioRegistrado.jsp" />
-<% } %>
-
-
+ <%  String documento = (String)request.getAttribute("doc_user"); %>
 
 
 <!DOCTYPE html>
@@ -36,23 +32,19 @@
     	  
     	  if(codigo==1){ // tipo identificacion
       
-      %>
+    		  %>
       <option value="<%= parametro%>"><%= detalle%></option>
       <% 	} 
       	}
       %>
       
     </select>
-    <div class="invalid-feedback">
-      Please select a valid state.
-    </div>
+ 
   </div>
   <div class="col-md-3">
     <label for="validationCustom05" class="form-label">Identificación</label>
-    <input type="text" class="form-control" name="txtIdentificacion" autocomplete="off" required>
-    <div class="invalid-feedback">
-      Please provide a valid zip.
-    </div>
+    <input type="text" class="form-control" name="txtIdentificacion" readonly value="<%= documento %>">
+   
   </div>
    
   
@@ -76,9 +68,6 @@
       	}
       %>
     </select>    
-    <div class="valid-feedback">
-      Looks good!
-    </div>
   </div>
   <div class="col-md-4">
     <label for="validationCustom02" class="form-label">Nombres</label>
@@ -109,7 +98,7 @@
     <button class="btn btn-primary" type="submit">GUARDAR</button>
   </div>
   
-        <input type="hidden"  name="validar" value="validarUsuario">
+        <input type="hidden"  name="validar" value="agregarUsuario">
   
 </form>
 </div>

@@ -59,7 +59,7 @@
     <h5 class="card-title">Usuarios</h5>
     <h6 class="card-subtitle mb-2 text-muted"><img width="15px" src="img/menu/about.png"/> Modulo: Seguridad</h6>
     <p class="card-text">Listado de usuarios con acceso a los privilegios de SISCO</p>
-    <a href="seguridad?url=nuevoUsuario" id="a_link"><img width="20px" src="img/menu/nuevo_cierre.png"/> Agregar Usuario</a>
+    <a href="seguridad?url=validarExisteUsuario" id="a_link"><img width="20px" src="img/menu/nuevo_cierre.png"/> Agregar Usuario</a>
   </div>
 </div>
 </div>
