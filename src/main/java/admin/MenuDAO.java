@@ -10,35 +10,46 @@ import db.MysqlConexion;
 
 public class MenuDAO {
 	
-	private static final String SELECT_MENU = "SELECT * FROM admin_menu";
+	private static final String SELECT_MENU = "SELECT * FROM view_menu where cod_rol=?";
+	
 	
 	// MOSTRAR DATOS DEL MENU
 	
-		public static  LinkedList<Menu> datosMenu() {
-	    	LinkedList<Menu> menu = new LinkedList<Menu> ();
+		public static  LinkedList<VTmenu> datosMenu(int cod_rol) {
+	    	LinkedList<VTmenu> menu = new LinkedList<VTmenu> ();
 	    	
 	    	MysqlConexion conx = new MysqlConexion();
 	    	Connection con = null;
 			PreparedStatement ps = null;
-			ResultSet rs = null;	
+			ResultSet rs = null;
+			int per=0;
+			
 	     
 			try {
 				con = conx.conectar();
-				ps = con.prepareStatement(SELECT_MENU);
+				ps = con.prepareStatement("SELECT * FROM view_menu WHERE permiso=1 AND  cod_rol="+cod_rol);
 				
 				
 				rs = ps.executeQuery();
 	     
 	            while (rs.next()) {
 	            	
-	            	Menu men = new Menu();
+	            	VTmenu men = new VTmenu();
 	            	
-	            	men.setCod_menu(rs.getInt("cod_menu"));
-	            	men.setCod_menu_param(rs.getInt("cod_menu_param"));
-	            	men.setNom_menu(rs.getString("nom_menu"));
-	            	men.setIcon_menu(rs.getString("icon_menu"));
+	            	men.setCod_modulo(rs.getInt("cod_modulo"));
+	            	men.setCod_rol(rs.getInt("cod_rol"));
+	            	men.setCod_tipo_menu(rs.getInt("cod_tipo_menu"));
 	            	men.setEstado_menu(rs.getInt("estado_menu"));
+	            	men.setEstado_permiso(rs.getString("estado_permiso"));
+	            	men.setIcon_menu(rs.getString("icon_menu"));
 	            	men.setLink_menu(rs.getString("link_menu"));
+	            	men.setMenu(rs.getString("menu"));
+	            	men.setModulo(rs.getString("modulo"));
+	            	men.setOpcion(rs.getString("opcion"));
+	            	men.setPermiso(rs.getInt("permiso"));
+	            	men.setRol(rs.getString("rol"));
+	            	men.setTipo_menu(rs.getString("tipo_menu"));
+	            	
 	            	menu.add(men);
 	            }
 	        } catch (SQLException e) {

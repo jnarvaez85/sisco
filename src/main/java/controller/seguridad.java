@@ -99,7 +99,6 @@ public class seguridad extends HttpServlet {
 	private void validarUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
-		//VTusuarios addUsuario = new VTusuarios();
 		UsuariosDAO userValidate = new UsuariosDAO();		
 		
 		if(userValidate.validarUsuario(request.getParameter("txtIdentificacion")) == 0) {
@@ -120,7 +119,7 @@ public class seguridad extends HttpServlet {
 	
 	// Agregar nuevo usuario
 	private void agregarUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException {
+			throws SQLException, IOException, ServletException {
 		
 		Personas per = new Personas();
 		UsuariosDAO addUser = new UsuariosDAO();
@@ -133,11 +132,9 @@ public class seguridad extends HttpServlet {
 		per.setTel_persona(request.getParameter("txtTelefono"));
 		per.setRol_persona(Integer.parseInt(request.getParameter("selectPermisos")));
 		
-		addUser.insertarUsuario(per);
-    	
-		response.sendRedirect("WEB-INF/PAGE/segur_usuarios.jsp");
-		
-
+		addUser.insertarUsuario(per);    	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
 	
 	}
 

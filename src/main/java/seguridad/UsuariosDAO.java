@@ -15,6 +15,14 @@ public class UsuariosDAO {
 	MysqlConexion conx = new MysqlConexion();
 
 	private static final String SELECT_USER = "SELECT * FROM view_usuarios";
+	private static final String SELECT_ROL="	SELECT \r\n"
+			+ "	distinct\r\n"
+			+ "	menu.cod_rol,\r\n"
+			+ "	menu.rol\r\n"
+			+ "	FROM segur_usuario usr \r\n"
+			+ "	INNER JOIN view_menu menu\r\n"
+			+ "	ON usr.cod_rol=menu.cod_rol WHERE usr.segur_user = ?";
+
 
 	
 	// METODO PARA VALIDAR LOGIN
@@ -164,12 +172,10 @@ public class UsuariosDAO {
 			
 	    	MysqlConexion conx = new MysqlConexion();
 	    	Connection con = null;
-			PreparedStatement ps = null;
 			CallableStatement stmt = null;
 			
 			try {
 				con = conx.conectar();
-				//ps = con.prepareStatement(INSERT_USER);
 				
 				 String sql = "{call SP_INSERT_PERSONA (?,?,?,?,?,?,?)}";
 		         stmt = con.prepareCall(sql);
@@ -190,7 +196,6 @@ public class UsuariosDAO {
 				finally {
 					try {
 						
-						MysqlConexion.close(ps);
 						MysqlConexion.close(stmt);
 						MysqlConexion.close(con);
 					} catch (SQLException e) {
@@ -198,4 +203,50 @@ public class UsuariosDAO {
 					}
 				}
 		}
+		
+		
+		
+		// METODO PARA VALIDAR EL ROL
+		
+			public Usuarios validarRol(String segur_user) {
+			
+		 	MysqlConexion conx = new MysqlConexion();
+	    	Connection con = null;
+	    	PreparedStatement ps = null;
+			ResultSet rs = null;
+			
+			Usuarios rol = new Usuarios();
+			
+			try {
+				
+				con = conx.conectar();					
+				con = conx.conectar();
+				ps = con.prepareStatement(SELECT_ROL);		
+
+		         ps.setString(1, segur_user);					
+				 rs=	ps.executeQuery();
+				
+				if(rs.next()) {
+					 rol.setCod_rol(rs.getInt("cod_rol"));				}
+				
+				
+			   } catch (SQLException e) {
+					System.out.println("Error al mostrar a los usuarios " + e);
+				}
+	        
+			finally {
+				try {
+					
+					MysqlConexion.close(rs);
+					MysqlConexion.close(ps);
+					MysqlConexion.close(con);
+				} catch (SQLException e) {
+					System.out.println("Error al cerrar" + e);
+				}
+			}
+			return rol;
+		}
+		
+		
+	
 }

@@ -2,13 +2,17 @@
 
 
 <%@page import="admin.*"%>
+<%@page import="seguridad.*"%>
 
 <%@ page language="java"%>
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.LinkedList"%>
 
 <% 
-LinkedList<Menu> menu = MenuDAO.datosMenu();
+
+// recibe el rol
+int cod_rol = (int)session.getAttribute("mi_rol");
+LinkedList<VTmenu> menu = MenuDAO.datosMenu(cod_rol);
 
 LinkedList<Entidad> entidad = EntidadDAO.datosEntidad();
 String nombre_ent = entidad.get(0).getNom_entidad();
@@ -17,7 +21,11 @@ LinkedList<Systems> software = SystemsDAO.datosSystema();
 String nombre_sys = software.get(0).getNom_sys();
 String version_sys = software.get(0).getVer_sys();
 
+
+
+
 %>
+
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
@@ -74,8 +82,8 @@ String version_sys = software.get(0).getVer_sys();
           <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+    		String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		
@@ -104,8 +112,8 @@ String version_sys = software.get(0).getVer_sys();
           <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+    		String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		
@@ -134,8 +142,8 @@ String version_sys = software.get(0).getVer_sys();
                  <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+			String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		
@@ -163,8 +171,8 @@ String version_sys = software.get(0).getVer_sys();
                  <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+    		String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		
@@ -192,8 +200,8 @@ String version_sys = software.get(0).getVer_sys();
                  <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+    		String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		
@@ -221,8 +229,8 @@ String version_sys = software.get(0).getVer_sys();
                         <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+    		String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		
@@ -250,8 +258,8 @@ String version_sys = software.get(0).getVer_sys();
                         <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+    		String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		
@@ -279,8 +287,8 @@ String version_sys = software.get(0).getVer_sys();
                         <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+    		String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		
@@ -308,8 +316,8 @@ String version_sys = software.get(0).getVer_sys();
                               <%
       	for (int i = 0; i < menu.size(); i++) {
 
-    		int param = menu.get(i).getCod_menu_param();
-    		String opcion = menu.get(i).getNom_menu();
+    		int param = menu.get(i).getCod_modulo();
+    		String opcion = menu.get(i).getOpcion();
     		String icon = menu.get(i).getIcon_menu();
     		String link = menu.get(i).getLink_menu();
     		

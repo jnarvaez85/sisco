@@ -24,7 +24,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr>
+    
     
 <% for (int i = 0; i < datos_usuario.size(); i++) { 
 	
@@ -35,17 +35,71 @@
 	String usuario = datos_usuario.get(i).getUsuario();
 	String rol = datos_usuario.get(i).getRol();
 
-%>    
+%>    <tr>
       <td><%=  firma %></td>
       <td><%=  estado %></td>
       <td><%=  nombre+" "+apellidos %></td>
       <td><%=  usuario %></td>
       <td><%=  rol %></td>
-      <td>@mdo</td>
+      <td>
       
-<% } %>      
+      <nav class="navbar navbar-expand-lg navbar-light" id="nav-link">
+  <div class="container-fluid" >    
+    <button class="navbar-toggler"  type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>    </button>
+    <div class="collapse navbar-collapse" id="navbarNavDropdown">
+      <ul class="navbar-nav">
+     
+        <li class="nav-item dropdown" >
+          <a class="nav-link dropdown-toggle" href="#" id="navbar" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            <img width="18px" src="img/menu/config.png"/> Opciones
+          </a>
+          <ul class="dropdown-menu"  aria-labelledby="navbarDropdownMenuLink">
+          
       
-    </tr>
+          
+            <li>
+            
+       <%
+       
+      
+       LinkedList<VTmenu> submenu = MenuDAO.datosMenu(getRol);
+       
+       
+      	for (int x = 0; x < menu.size(); x++) {
+
+    		int param = submenu.get(x).getCod_modulo();
+    		String opcion = submenu.get(x).getOpcion();
+    		String icon = submenu.get(x).getIcon_menu();
+    		String link = submenu.get(x).getLink_menu();
+    		
+    		if(param==10){ // opciones de usuarios    		
+    		%>
+            
+            <a class="dropdown-item" href="seguridad?url=<%= link %>">
+            <img width="18px" src="img/menu/<%= icon %>.png"/> <%= opcion %>
+            </a>
+            
+            	<% } 
+      	}
+		%>
+            
+            
+            </li>
+            
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>
+      
+      </td>
+      </tr>
+<% } 
+%>      
+      
+    
 
   </tbody>
 </table>

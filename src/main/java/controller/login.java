@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import seguridad.Usuarios;
 import seguridad.UsuariosDAO;
 import seguridad.VTusuarios;
 
@@ -58,17 +59,26 @@ public class login extends HttpServlet {
 
 		UsuariosDAO usuario = new UsuariosDAO();
 		VTusuarios login = new VTusuarios();
+		Usuarios rol = new Usuarios();
 
 		String user = request.getParameter("txtUsuario");
 		String password = request.getParameter("txtPassword");
+		
+
 
 		try {
 
 			login = usuario.validarLogin(user, password);
-
+			rol = usuario.validarRol(user);
+			
 			if (login.getUsuario() != null) {
 				
-	    		HttpSession session= request.getSession(true); 
+	    		HttpSession session= request.getSession(true);
+	    		
+	    		
+	    		session.setAttribute("mi_rol", rol.getCod_rol()); // Retorna el rol
+        		request.setAttribute("mi_rol", rol.getCod_rol());
+	    		
 	    		session.setAttribute("usuario", login);
 	    		request.getRequestDispatcher("WEB-INF/PAGE/home.jsp").forward(request, response);
 

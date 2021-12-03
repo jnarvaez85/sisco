@@ -1,5 +1,7 @@
 @charset "ISO-8859-1";
 
+#nav-link {padding: 0 !important;}
+#navbar {padding: 0 !important;}
 
 #rgb_corporative{background: #a19ee3;}
 #a_link{text-decoration: none;color: #686767;}

@@ -15,6 +15,7 @@
 
 <% 
 
+int getRol = (int)session.getAttribute("mi_rol");
 
 
 // REDIRIGE LA SESSION EXPIRADA
