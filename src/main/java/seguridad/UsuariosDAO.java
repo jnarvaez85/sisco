@@ -89,6 +89,7 @@ public class UsuariosDAO {
 	            	
 	            	VTusuarios list_user = new VTusuarios();
 	            	
+	            	list_user.setCod_persona(rs.getInt("cod_persona"));
 	            	list_user.setNom_persona(rs.getString("nom_persona"));
 	            	list_user.setApell_persona(rs.getString("apell_persona"));
 	            	list_user.setTipo_identificacion(rs.getString("tipo_identificacion"));

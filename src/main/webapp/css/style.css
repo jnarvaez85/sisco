@@ -9,7 +9,7 @@
 
 .modal_error{position: absolute;z-index: 99999999999999;left: 0;right: 0;width: 600px;margin: auto;}
 
-.header_dropdown{margin-right: 7%;position: absolute;z-index: 9999;top: 0;right: 0;}
+.header_dropdown{margin-right: 7%;position: absolute;z-index: 999;top: 0;right: 0;}
 .header{padding: 15px;color: #fff;}
 .header_hr{position: relative;bottom: 22px;}
 
