@@ -2,38 +2,32 @@
 
 
 
-/* Bloquear Usuario*/
-var bloquearUsuario = document.getElementById('bloquearUsuario')
-bloquearUsuario.addEventListener('show.bs.modal', function (event) {
-    
-  var button = event.relatedTarget
-  var cod_persona = button.getAttribute('data-bs-cod-persona')
-  var user = button.getAttribute('data-bs-usuario')
 
-  var modalTitle = bloquearUsuario.querySelector('.modal-title')
-  var modalBodyInput = bloquearUsuario.querySelector('.modal-body input')
-  modalTitle.textContent = 'Bloquear usuario' 
-  
-  modalBodyInput.value = cod_persona
-  modalBodyInput.value = user
-  
-})
-
-
-/* Asignar como contador*/
+/* Asignar contador*/
 var asignarContador = document.getElementById('asignarContador')
-asignarContador.addEventListener('show.bs.modal', function (event) {
-    
+asignarContador.addEventListener('show.bs.modal', function (event) { 
   var button = event.relatedTarget
-  var recipient = button.getAttribute('data-bs-whatever')
-
+  var recipient = button.getAttribute('data-bs-cod-persona')
   var modalTitle = asignarContador.querySelector('.modal-title')
   var modalBodyInput = asignarContador.querySelector('.modal-body input')
-  modalTitle.textContent = 'Asignar como contador' 
+
+  modalTitle.textContent = 'Asignar como contador ' 
   modalBodyInput.value = recipient
-  
 })
 
+
+
+/* Eliminar Usuario*/
+var eliminarUsuario = document.getElementById('eliminarUsuario')
+eliminarUsuario.addEventListener('show.bs.modal', function (event) { 
+  var button = event.relatedTarget
+  var recipient = button.getAttribute('data-bs-cod-persona')
+  var modalTitle = eliminarUsuario.querySelector('.modal-title')
+  var modalBodyInput = eliminarUsuario.querySelector('.modal-body input')
+
+  modalTitle.textContent = 'Eliminar Usuario ' 
+  modalBodyInput.value = recipient
+})
 
 
 

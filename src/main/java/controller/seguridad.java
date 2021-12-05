@@ -27,7 +27,7 @@ public class seguridad extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-
+    
     
     // INICIO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
@@ -41,6 +41,9 @@ public class seguridad extends HttpServlet {
 				break;	
 			case "validarExisteUsuario":
 				this.validarExisteUsuario(request, response);
+				break;
+			case "bloquearUsuario":
+				this.bloquearUsuario(request, response);
 				break;
 			}
 			
@@ -63,6 +66,15 @@ public class seguridad extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/PAGE/segur_validarUsuario.jsp").forward(request, response);	
 	}
 	
+	private void bloquearUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		//request.getRequestDispatcher("WEB-INF/PAGE/segur_bloquearUsuario.jsp").forward(request, response);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_bloquearUsuario.jsp");
+		request.setAttribute("alert", "101");	
+		dispatcher.forward(request, response);
+	}
+	
 	
 
 	// FIN GET
@@ -83,6 +95,9 @@ public class seguridad extends HttpServlet {
 				break;
 			case "agregarUsuario":
 				agregarUsuario(request, response);
+				break;
+			case "eliminarUsuario":
+				eliminarUsuario(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -133,6 +148,19 @@ public class seguridad extends HttpServlet {
 		per.setRol_persona(Integer.parseInt(request.getParameter("selectPermisos")));
 		
 		addUser.insertarUsuario(per);    	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
+	
+	}
+	
+	// Eliminar usuario
+	private void eliminarUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		int cod_persona = Integer.parseInt(request.getParameter("cod_persona"));
+		UsuariosDAO.eliminarUsuario(cod_persona);
+		
+		
 	
 		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
 	

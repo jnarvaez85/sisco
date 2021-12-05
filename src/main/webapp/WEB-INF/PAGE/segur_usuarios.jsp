@@ -98,15 +98,24 @@
     		String opcion = submenu.get(x).getOpcion();
     		String icon = submenu.get(x).getIcon_menu();
     		String link = submenu.get(x).getLink_menu();
+    		int tipo = submenu.get(x).getCod_enlace();
     		
-    		if(param==10){ // opciones de usuarios    		
+    		if(param==10 && tipo==0){ // opciones de usuarios, enlace tipo modal    		
     		%> <a href="#" class="dropdown-item"
-													data-bs-toggle="modal" data-bs-target="#<%= link %>"
-													data-bs-cod-persona="<%= cod_persona %>" data-bs-usuario="<%= nombre %>"> <img
-														width="18px" src="img/menu/<%= icon %>.png" /> <%= opcion %></a>
+				data-bs-toggle="modal" data-bs-target="#<%= link %>"
+				data-bs-cod-persona="<%= cod_persona %>" > <img
+				width="18px" src="img/menu/<%= icon %>.png" /> <%= opcion %></a>
 
 				<%
- }
+ 			}else{ 
+ 			
+ 				if(param==10 && tipo != 0){
+ 			%>
+ 				<a href="seguridad?url=<%= link %>&id=<%= cod_persona %>" class="dropdown-item"> <img
+				width="18px" src="img/menu/<%= icon %>.png" /> <%= opcion %></a>
+ 				
+ 	<%		}
+ 		}
  }
  %>
 
@@ -151,76 +160,8 @@
 </html>
 
 
-
-<!-- BLOQUEAR USUARIO -->
-<div class="modal fade" id="bloquearUsuario" tabindex="-1"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Bloquear Usuario</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form>
-					<div class="mb-3">
-						<input type="text" class="form-control" id="cod_persona">
-						<input type="text" class="form-control" id="user">
-					</div>
-					<div class="mb-3">
-						<div style="text-align:center">
-						El usuario sera bloqueado temporalmente y NO contara con privilegios para acceder al sistema.<br>
-						¿Realmente desea bloquear a ?
-						</div>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary"
-					data-bs-dismiss="modal">Cancelar</button>
-				<button type="button" class="btn btn-primary">Bloquear</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-<!-- ASIGNAR COMO CONTADOR -->
-<div class="modal fade" id="asignarContador" tabindex="-1"
-	aria-labelledby="exampleModalLabel" aria-hidden="true">
-	<div class="modal-dialog">
-		<div class="modal-content">
-			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">Bloquear Usuario</h5>
-				<button type="button" class="btn-close" data-bs-dismiss="modal"
-					aria-label="Close"></button>
-			</div>
-			<div class="modal-body">
-				<form>
-					<div class="mb-3">
-						<label for="recipient-name" class="col-form-label">Recipient:</label>
-						<input type="text" class="form-control" id="recipient-name">
-					</div>
-					<div class="mb-3">
-						<label for="message-text" class="col-form-label">Message:</label>
-						<textarea class="form-control" id="message-text"></textarea>
-					</div>
-				</form>
-			</div>
-			<div class="modal-footer">
-				<button type="button" class="btn btn-secondary"
-					data-bs-dismiss="modal">Close</button>
-				<button type="button" class="btn btn-primary">Send message</button>
-			</div>
-		</div>
-	</div>
-</div>
-
-
-
-
-
+<%@ include file="../modal/asignarContador.jsp"%>
+<%@ include file="../modal/eliminarUsuario.jsp"%>
 <%@ include file="../js/scriptUsuarios.jsp"%>
 
 

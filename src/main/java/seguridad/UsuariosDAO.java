@@ -101,7 +101,7 @@ public class UsuariosDAO {
 					list_user.setCod_estado(rs.getInt("cod_estado"));
 					list_user.setEstado(rs.getString("estado"));
 					list_user.setRol(rs.getString("rol"));
-					list_user.setEstado_firma(rs.getInt("estado_firma"));
+					list_user.setEstado_firma(rs.getInt("estado_firma"));		
 					list_usuarios.add(list_user);
 	            }
 	        } catch (SQLException e) {
@@ -207,8 +207,7 @@ public class UsuariosDAO {
 		
 		
 		
-		// METODO PARA VALIDAR EL ROL
-		
+		// METODO PARA VALIDAR EL ROL		
 			public Usuarios validarRol(String segur_user) {
 			
 		 	MysqlConexion conx = new MysqlConexion();
@@ -247,6 +246,44 @@ public class UsuariosDAO {
 			}
 			return rol;
 		}
+			
+			
+			// METODO PARA ELIMINAR USUARIO	
+			public static int eliminarUsuario(int cod_persona) throws SQLException {
+
+				int rows = 0;
+				
+			 	MysqlConexion conx = new MysqlConexion();
+		    	Connection con = null;
+		    	CallableStatement stmt = null;
+		    	
+
+				try {
+					con = conx.conectar();					
+
+					String sql = "{call SP_ELIMINA_USUARIO (?)}";
+			        stmt = con.prepareCall(sql);						
+			
+			        stmt.setInt(1, cod_persona);
+										
+					rows = stmt.executeUpdate();
+					
+					
+				   } catch (SQLException e) {
+						System.out.println("Error al eliminar usuarios " + e);
+					}
+		        
+				finally {
+					try {
+						
+						MysqlConexion.close(stmt);
+						MysqlConexion.close(con);
+					} catch (SQLException e) {
+						System.out.println("Error al cerrar" + e);
+					}
+				}
+				return rows;
+			}
 		
 		
 	

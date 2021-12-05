@@ -19,6 +19,7 @@ public class VTusuarios {
 	private int cod_rol;
 	private String rol;
 	private int estado_firma;
+
 	
 	
 	public VTusuarios() {
@@ -26,8 +27,6 @@ public class VTusuarios {
 		// TODO Auto-generated constructor stub
 	}
 
-
-	
 
 
 	public VTusuarios(int cod_persona, String nom_persona, String apell_persona, int cod_id, String tipo_identificacion,
@@ -49,9 +48,8 @@ public class VTusuarios {
 		this.cod_rol = cod_rol;
 		this.rol = rol;
 		this.estado_firma = estado_firma;
+	
 	}
-
-
 
 
 
@@ -81,6 +79,7 @@ public class VTusuarios {
 		this.cod_rol = cod_rol;
 		this.rol = rol;
 		this.estado_firma = estado_firma;
+
 	}
 
 
@@ -92,9 +91,11 @@ public class VTusuarios {
 	}
 
 
+
 	public void setCod_persona(int cod_persona) {
 		this.cod_persona = cod_persona;
 	}
+
 
 
 	public String getNom_persona() {
@@ -102,14 +103,17 @@ public class VTusuarios {
 	}
 
 
+
 	public void setNom_persona(String nom_persona) {
 		this.nom_persona = nom_persona;
 	}
 
 
+
 	public String getApell_persona() {
 		return apell_persona;
 	}
+
 
 
 	public void setApell_persona(String apell_persona) {
@@ -127,15 +131,16 @@ public class VTusuarios {
 	}
 
 
+
 	public String getTipo_identificacion() {
 		return tipo_identificacion;
 	}
 
 
+
 	public void setTipo_identificacion(String tipo_identificacion) {
 		this.tipo_identificacion = tipo_identificacion;
 	}
-
 
 	public String getUsuario() {
 		return usuario;
@@ -151,7 +156,6 @@ public class VTusuarios {
 		return dir_persona;
 	}
 
-
 	public void setDir_persona(String dir_persona) {
 		this.dir_persona = dir_persona;
 	}
@@ -165,6 +169,7 @@ public class VTusuarios {
 	public void setTel_persona(String tel_persona) {
 		this.tel_persona = tel_persona;
 	}
+
 
 
 	public Date getFecha_inicio() {
@@ -187,9 +192,11 @@ public class VTusuarios {
 	}
 
 
+
 	public int getCod_estado() {
 		return cod_estado;
 	}
+
 
 
 	public void setCod_estado(int cod_estado) {
@@ -207,10 +214,10 @@ public class VTusuarios {
 	}
 
 
+
 	public int getCod_rol() {
 		return cod_rol;
 	}
-
 
 	public void setCod_rol(int cod_rol) {
 		this.cod_rol = cod_rol;
@@ -231,12 +238,12 @@ public class VTusuarios {
 		return estado_firma;
 	}
 
-
 	public void setEstado_firma(int estado_firma) {
 		this.estado_firma = estado_firma;
 	}
-	
-	
+
+
+
 	
 
 }

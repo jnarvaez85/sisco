@@ -46,6 +46,8 @@ public class MenuDAO {
 	            	men.setPermiso(rs.getInt("permiso"));
 	            	men.setRol(rs.getString("rol"));
 	            	men.setTipo_menu(rs.getString("tipo_menu"));
+	            	men.setCod_enlace(rs.getInt("cod_enlace"));
+	            	men.setTipo_enlace(rs.getString("tipo_enlace"));
 	            	
 	            	menu.add(men);
 	            }
