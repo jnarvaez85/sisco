@@ -28,6 +28,6 @@
 	position: relative;
 }
 
-.alert_error_login{position: absolute;    top: 7rem;    margin: auto;    width: 380px;    z-index: 999999999;    left: 0;    right: 0;}
+.alert_error_login{position: absolute;    top: 14rem;    margin: auto;    width: 380px;    z-index: 999999999;    left: 0;    right: 0;}
 
 .div_content{position: absolute;border: 1px solid #0404042e;width: 73%;left: 1rem;border-radius: 6px;height: 70%;padding: 20px;}

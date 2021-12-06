@@ -9,7 +9,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-
 <meta charset="ISO-8859-1">
 </head>
 <body>
@@ -18,6 +17,7 @@
 			<thead>
 				<tr>
 					<th scope="col">Firma</th>
+					<th scope="col"></th>
 					<th scope="col">Estado</th>
 					<th scope="col">Nombre</th>
 					<th scope="col">Usuario</th>					
@@ -31,6 +31,7 @@
 	
 	int cod_persona = datos_usuario.get(i).getCod_persona();
 	int estado = datos_usuario.get(i).getCod_estado();
+	String estado_user = datos_usuario.get(i).getEstado();
 	int firma = datos_usuario.get(i).getEstado_firma();
 	String nombre = datos_usuario.get(i).getNom_persona();
 	String apellidos = datos_usuario.get(i).getApell_persona();
@@ -57,6 +58,7 @@
 					
 					
 					</td>
+					<td><%=  estado_user %></td>
 					<td><%=  nombre+" "+apellidos %></td>
 					<td><%=  usuario %></td>					
 					<td><%=  rol %></td>
@@ -100,10 +102,14 @@
     		String link = submenu.get(x).getLink_menu();
     		int tipo = submenu.get(x).getCod_enlace();
     		
+    		
+    
+    		
     		if(param==10 && tipo==0){ // opciones de usuarios, enlace tipo modal    		
     		%> <a href="#" class="dropdown-item"
 				data-bs-toggle="modal" data-bs-target="#<%= link %>"
-				data-bs-cod-persona="<%= cod_persona %>" > <img
+				data-bs-cod-persona="<%= cod_persona %>" data-bs-nom-persona="<%= nombre %>" data-bs-estado="<%= estado_user %>"
+				data-bs-estado-user="<%= estado %>"> <img
 				width="18px" src="img/menu/<%= icon %>.png" /> <%= opcion %></a>
 
 				<%
@@ -160,9 +166,13 @@
 </html>
 
 
+<%@ include file="../modal/bloquearUsuario.jsp"%>
 <%@ include file="../modal/asignarContador.jsp"%>
 <%@ include file="../modal/eliminarUsuario.jsp"%>
+<%@ include file="../modal/resetearPassword.jsp"%>
 <%@ include file="../js/scriptUsuarios.jsp"%>
+
+
 
 
 

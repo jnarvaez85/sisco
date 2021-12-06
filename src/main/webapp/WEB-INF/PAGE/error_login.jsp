@@ -5,7 +5,7 @@
 
 <div class="alert_error_login">
 <div class="alert alert-warning alert-danger fade show" role="alert">
-  <strong>ERROR!</strong> Datos incorrecto o usuario no existe
+  <strong>ERROR ACCESO!</strong> Datos incorrectos o es posible que el usuario este Inactivo o no exista!
   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
 </div>

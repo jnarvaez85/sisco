@@ -33,24 +33,27 @@ public class seguridad extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String accion = request.getParameter("url");
-
-		if (accion != null) {
+		
+		
+		
+		try {
 			switch (accion) {
+		
 			case "usuarios":
-				this.listarUsuarios(request, response);
-				break;	
+				listarUsuarios(request, response);
+				break;
 			case "validarExisteUsuario":
-				this.validarExisteUsuario(request, response);
+				validarExisteUsuario(request, response);
 				break;
 			case "bloquearUsuario":
-				this.bloquearUsuario(request, response);
+				bloquearUsuario(request, response);
 				break;
 			}
-			
-			
-		} else {
-			response.sendRedirect("error.jsp");
+		} catch (SQLException ex) {
+			throw new ServletException(ex);
 		}
+		
+		
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
@@ -66,14 +69,7 @@ public class seguridad extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/PAGE/segur_validarUsuario.jsp").forward(request, response);	
 	}
 	
-	private void bloquearUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		
-		//request.getRequestDispatcher("WEB-INF/PAGE/segur_bloquearUsuario.jsp").forward(request, response);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_bloquearUsuario.jsp");
-		request.setAttribute("alert", "101");	
-		dispatcher.forward(request, response);
-	}
+
 	
 	
 
@@ -98,6 +94,12 @@ public class seguridad extends HttpServlet {
 				break;
 			case "eliminarUsuario":
 				eliminarUsuario(request, response);
+				break;
+			case "bloquearUsuario":
+				bloquearUsuario(request, response);
+				break;
+			case "resetearPassword":
+				resetearPassword(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -158,11 +160,40 @@ public class seguridad extends HttpServlet {
 			throws SQLException, IOException, ServletException {
 		
 		int cod_persona = Integer.parseInt(request.getParameter("cod_persona"));
-		UsuariosDAO.eliminarUsuario(cod_persona);
-		
-		
+		UsuariosDAO.eliminarUsuario(cod_persona);	
 	
 		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
+	
+	}
+	
+	// Bloquear/desbloquear usuario
+	private void bloquearUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		Usuarios editUsuario = new Usuarios();		
+		
+		editUsuario.setCod_persona(Integer.parseInt(request.getParameter("txtCodPersona")));
+		editUsuario.setEstado_user(Integer.parseInt(request.getParameter("txtEstadoUsuario")));
+	
+		UsuariosDAO.modificarUsuario(editUsuario);	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
+	
+	}
+	
+	// Resetear contraseña
+	private void resetearPassword(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		Usuarios editUsuario = new Usuarios();		
+		
+		editUsuario.setCod_persona(Integer.parseInt(request.getParameter("txtCodPersona")));
+		editUsuario.setSegur_password(request.getParameter("txtSegurPassword"));
+	
+		UsuariosDAO.resetearPassword(editUsuario);	
+	
+		request.getRequestDispatcher("logout").forward(request, response);
+		
 	
 	}
 

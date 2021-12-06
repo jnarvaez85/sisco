@@ -16,14 +16,18 @@
             
           </div>
           <div class="mb-3">
-            Confirma eliminar el usuario?
+            
+      <div id="nom_persona">
+      <input type="text" disabled class="form-control-plaintext" id="nom_persona">
+      </div>
           </div>
           
-          <input type="hidden" name="cod_persona" class="form-control" id="recipient-name">
-          <input type="hidden" name="validar" value="eliminarUsuario">
+
         
       </div>
-      <div class="modal-footer">
+          <div class="modal-footer">
+        <input type="hidden" name="cod_persona" class="form-control" id="cod_persona">          
+        <input type="hidden" name="validar" value="eliminarUsuario">      
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="submit" class="btn btn-danger">Eliminar</button>
         

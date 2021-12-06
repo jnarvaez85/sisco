@@ -2,6 +2,7 @@ package seguridad;
 
 import java.sql.CallableStatement;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -220,7 +221,6 @@ public class UsuariosDAO {
 			try {
 				
 				con = conx.conectar();					
-				con = conx.conectar();
 				ps = con.prepareStatement(SELECT_ROL);		
 
 		         ps.setString(1, segur_user);					
@@ -271,6 +271,91 @@ public class UsuariosDAO {
 					
 				   } catch (SQLException e) {
 						System.out.println("Error al eliminar usuarios " + e);
+					}
+		        
+				finally {
+					try {
+						
+						MysqlConexion.close(stmt);
+						MysqlConexion.close(con);
+					} catch (SQLException e) {
+						System.out.println("Error al cerrar" + e);
+					}
+				}
+				return rows;
+			}
+			
+			// MODIFICAR USUARIO
+			public static int modificarUsuario(Usuarios user) throws SQLException {
+
+				int rows = 0;
+				
+			 	MysqlConexion conx = new MysqlConexion();
+		    	Connection con = null;
+		    	CallableStatement stmt = null;
+		    	
+				try {
+					
+					
+					con = conx.conectar();					
+					String sql = "{call SP_BLOQUEAR_USUARIO (?,?,?,?,?,?,?)}";
+			        stmt = con.prepareCall(sql);	
+								
+			        stmt.setInt(1, user.getCod_persona());
+			        stmt.setInt(2, user.getCod_rol() );
+			        stmt.setInt(3, user.getEstado_user());
+			        stmt.setDate(4, (Date) user.getFecha_fin_user());
+			        stmt.setDate(5, (Date) user.getFecha_inicio_user());
+			        stmt.setString(6, user.getSegur_password());
+			        stmt.setString(7, user.getSegur_user());			
+
+			        rows = stmt.executeUpdate();
+					
+				   } catch (SQLException e) {
+						System.out.println("Error al bloquear/desbloquear usuario " + e);
+					}
+		        
+				finally {
+					try {
+						
+						MysqlConexion.close(stmt);
+						MysqlConexion.close(con);
+					} catch (SQLException e) {
+						System.out.println("Error al cerrar" + e);
+					}
+				}
+				return rows;
+			}
+			
+			
+			// RESETEAR CONTRASEÑA
+			public static int resetearPassword(Usuarios user) throws SQLException {
+
+				int rows = 0;
+				
+			 	MysqlConexion conx = new MysqlConexion();
+		    	Connection con = null;
+		    	CallableStatement stmt = null;
+		    	
+				try {
+					
+					
+					con = conx.conectar();					
+					String sql = "{call SP_RESETEAR_PASSWORD (?,?,?,?,?,?,?)}";
+			        stmt = con.prepareCall(sql);	
+								
+			        stmt.setInt(1, user.getCod_persona());
+			        stmt.setInt(2, user.getCod_rol() );
+			        stmt.setInt(3, user.getEstado_user());
+			        stmt.setDate(4, (Date) user.getFecha_fin_user());
+			        stmt.setDate(5, (Date) user.getFecha_inicio_user());
+			        stmt.setString(6, user.getSegur_password());
+			        stmt.setString(7, user.getSegur_user());			
+
+			        rows = stmt.executeUpdate();
+					
+				   } catch (SQLException e) {
+						System.out.println("Error al resetear contraseña " + e);
 					}
 		        
 				finally {
