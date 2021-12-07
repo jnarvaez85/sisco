@@ -6,6 +6,8 @@
 
 
 
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -37,6 +39,9 @@
 	String apellidos = datos_usuario.get(i).getApell_persona();
 	String usuario = datos_usuario.get(i).getUsuario();
 	String rol = datos_usuario.get(i).getRol();
+		
+	String direccion = datos_usuario.get(i).getDir_persona();
+	String telefono = datos_usuario.get(i).getTel_persona();
 
 %>
 				<tr>
@@ -105,20 +110,37 @@
     		
     
     		
-    		if(param==10 && tipo==0){ // opciones de usuarios, enlace tipo modal    		
+    		if(param==10 && tipo==0){ // opciones de usuarios, enlace tipo modal=0    		
     		%> <a href="#" class="dropdown-item"
 				data-bs-toggle="modal" data-bs-target="#<%= link %>"
-				data-bs-cod-persona="<%= cod_persona %>" data-bs-nom-persona="<%= nombre %>" data-bs-estado="<%= estado_user %>"
-				data-bs-estado-user="<%= estado %>"> <img
-				width="18px" src="img/menu/<%= icon %>.png" /> <%= opcion %></a>
+				data-bs-cod-persona="<%= cod_persona %>" 
+				data-bs-nom-persona="<%= nombre %>" 
+				data-bs-apell-persona="<%= apellidos %>"
+				data-bs-dir-persona="<%= direccion %>"
+				data-bs-tel-persona="<%= telefono %>"
+				data-bs-rol-persona="<%= rol %>"
+				data-bs-estado="<%= estado_user %>"
+				data-bs-estado-user="<%= estado %>"> 
+				<img width="18px" src="img/menu/<%= icon %>.png" /> <%= opcion %></a>
 
 				<%
  			}else{ 
  			
  				if(param==10 && tipo != 0){
+ 					
+ 					
  			%>
- 				<a href="seguridad?url=<%= link %>&id=<%= cod_persona %>" class="dropdown-item"> <img
-				width="18px" src="img/menu/<%= icon %>.png" /> <%= opcion %></a>
+ 			
+				
+				<form action="${pageContext.request.contextPath}/seguridad" method="post">
+				<div>				
+				<button type="submit" class="btn btn-link dropdown-item">
+				<img  width="18px" src="img/menu/<%= icon %>.png" /> <%= opcion %>
+				</button>
+				</div>
+				<input type="hidden"  name="txtCodPersona"  value="<%= cod_persona %>">
+				<input type="hidden" name="validar" value="asignarContador">  
+				</form>
  				
  	<%		}
  		}
@@ -167,8 +189,8 @@
 
 
 <%@ include file="../modal/bloquearUsuario.jsp"%>
-<%@ include file="../modal/asignarContador.jsp"%>
 <%@ include file="../modal/eliminarUsuario.jsp"%>
+<%@ include file="../modal/modificarUsuario.jsp"%>
 <%@ include file="../modal/resetearPassword.jsp"%>
 <%@ include file="../js/scriptUsuarios.jsp"%>
 

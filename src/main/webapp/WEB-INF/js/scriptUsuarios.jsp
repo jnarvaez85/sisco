@@ -23,18 +23,6 @@ bloquearUsuario.addEventListener('show.bs.modal', function (event) {
 })
 
 
-/* Asignar contador*/
-var asignarContador = document.getElementById('asignarContador')
-asignarContador.addEventListener('show.bs.modal', function (event) { 
-  var button = event.relatedTarget
-  var recipient = button.getAttribute('data-bs-cod-persona')
-  var modalTitle = asignarContador.querySelector('.modal-title')
-  var modalBodyInput = asignarContador.querySelector('.modal-body input')
-
-  modalTitle.textContent = 'Asignar como contador ' 
-  modalBodyInput.value = recipient
-})
-
 
 
 /* Eliminar Usuario*/
@@ -57,8 +45,40 @@ eliminarUsuario.addEventListener('show.bs.modal', function (event) {
 })
 
 
-/* Resetear contraseña*/
+/* Modificar Usuario*/
+var modificarUsuario = document.getElementById('modificarUsuario')
+modificarUsuario.addEventListener('show.bs.modal', function (event) { 
+  var button = event.relatedTarget
+  
+  var cod_persona = button.getAttribute('data-bs-cod-persona')
+  var nom_persona = button.getAttribute('data-bs-nom-persona')
+  var apell_persona = button.getAttribute('data-bs-apell-persona')
+  var dir_persona = button.getAttribute('data-bs-dir-persona')
+  var tel_persona = button.getAttribute('data-bs-tel-persona')
+  var rol_persona = button.getAttribute('data-bs-rol-persona')
+  
+  var modalTitle = modificarUsuario.querySelector('.modal-title')
+  
+  var codPersonaInput = modificarUsuario.querySelector('.modal-footer input')
+  var nomPersonaInput = modificarUsuario.querySelector('#nom_persona input')
+  var apellPersonaInput = modificarUsuario.querySelector('#apell_persona input')
+  var dirPersonaInput = modificarUsuario.querySelector('#dir_persona input')
+  var telPersonaInput = modificarUsuario.querySelector('#tel_persona input')
+  var rolPersonaInput = modificarUsuario.querySelector('#rol_persona input')
+  
 
+  modalTitle.textContent = 'Modificar info del usuario ' 
+  codPersonaInput.value = cod_persona
+  nomPersonaInput.value = nom_persona
+  apellPersonaInput.value = apell_persona
+  dirPersonaInput.value = dir_persona
+  telPersonaInput.value = tel_persona
+  rolPersonaInput.value = rol_persona
+  
+})
+
+
+/* Resetear contraseña*/
 var fecha= new Date()
 var horas= fecha.getHours()
 var minutos = fecha.getMinutes()

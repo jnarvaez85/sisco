@@ -26,7 +26,7 @@ public class UsuariosDAO {
 
 
 	
-	// METODO PARA VALIDAR LOGIN
+	// VALIDAR LOGIN
 	@SuppressWarnings("static-access")
 	public VTusuarios validarLogin(String segur_user, String segur_password) throws SQLException {
 		Connection conn = null;
@@ -208,7 +208,7 @@ public class UsuariosDAO {
 		
 		
 		
-		// METODO PARA VALIDAR EL ROL		
+		// VALIDAR EL ROL		
 			public Usuarios validarRol(String segur_user) {
 			
 		 	MysqlConexion conx = new MysqlConexion();
@@ -248,7 +248,7 @@ public class UsuariosDAO {
 		}
 			
 			
-			// METODO PARA ELIMINAR USUARIO	
+			// ELIMINAR USUARIO	
 			public static int eliminarUsuario(int cod_persona) throws SQLException {
 
 				int rows = 0;
@@ -285,8 +285,8 @@ public class UsuariosDAO {
 				return rows;
 			}
 			
-			// MODIFICAR USUARIO
-			public static int modificarUsuario(Usuarios user) throws SQLException {
+			// BLOQUEAR USUARIO
+			public static int bloquearUsuario(Usuarios user) throws SQLException {
 
 				int rows = 0;
 				
@@ -370,6 +370,49 @@ public class UsuariosDAO {
 				return rows;
 			}
 		
+			
+			// MODIFICAR USUARIO
+						public static int modificarUsuario(Personas persona) throws SQLException {
+
+							int rows = 0;
+							
+						 	MysqlConexion conx = new MysqlConexion();
+					    	Connection con = null;
+					    	CallableStatement stmt = null;
+					    	
+							try {								
+								
+								con = conx.conectar();					
+								String sql = "{call SP_MODIFICA_USUARIO (?,?,?,?,?,?,?,?)}";
+						        stmt = con.prepareCall(sql);	
+											
+						        stmt.setInt(1, persona.getCod_persona());						        
+						        stmt.setInt(2, persona.getTipo_doc_persona());
+						        stmt.setString(3, persona.getDoc_persona());
+						        stmt.setString(4, persona.getNom_persona());
+						        stmt.setString(5, persona.getApell_persona());
+						        stmt.setString(6, persona.getDir_persona());
+						        stmt.setString(7, persona.getTel_persona());
+						        stmt.setInt(8, persona.getRol_persona() );
+								
+
+						        rows = stmt.executeUpdate();
+								
+							   } catch (SQLException e) {
+									System.out.println("Error al modificar usuario " + e);
+								}
+					        
+							finally {
+								try {
+									
+									MysqlConexion.close(stmt);
+									MysqlConexion.close(con);
+								} catch (SQLException e) {
+									System.out.println("Error al cerrar" + e);
+								}
+							}
+							return rows;
+						}
 		
 	
 }

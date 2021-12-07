@@ -17,10 +17,12 @@
       
       <div class="modal-footer" style="margin: auto;">
       <input type="hidden"  name="txtCodPersona" class="form-control" id="cod_persona"> 
-      <input type="hidden" name="validar" value="bloquearUsuario">  
+      <input type="hidden" name="validar" value="bloquearUsuario">     
       <button type="submit"  class="btn btn-success">Cambiar estado</button>
        </form>  
       </div>
     </div>
   </div>
 </div>
+
+

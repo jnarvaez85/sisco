@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -36,21 +37,14 @@ public class seguridad extends HttpServlet {
 		
 		
 		
-		try {
-			switch (accion) {
-		
-			case "usuarios":
-				listarUsuarios(request, response);
-				break;
-			case "validarExisteUsuario":
-				validarExisteUsuario(request, response);
-				break;
-			case "bloquearUsuario":
-				bloquearUsuario(request, response);
-				break;
-			}
-		} catch (SQLException ex) {
-			throw new ServletException(ex);
+		switch (accion) {
+
+		case "usuarios":
+			listarUsuarios(request, response);
+			break;
+		case "validarExisteUsuario":
+			validarExisteUsuario(request, response);
+			break;
 		}
 		
 		
@@ -68,7 +62,6 @@ public class seguridad extends HttpServlet {
 			throws ServletException, IOException {
 		request.getRequestDispatcher("WEB-INF/PAGE/segur_validarUsuario.jsp").forward(request, response);	
 	}
-	
 
 	
 	
@@ -100,6 +93,15 @@ public class seguridad extends HttpServlet {
 				break;
 			case "resetearPassword":
 				resetearPassword(request, response);
+				break;
+			case "modificarUsuario":
+				modificarUsuario(request, response);
+				break;
+			case "asignarContador":
+				asignarContador(request, response);
+				break;
+			case "deshabilitarContador":
+				deshabilitarContador(request, response);
 				break;
 			}
 		} catch (SQLException ex) {
@@ -170,14 +172,32 @@ public class seguridad extends HttpServlet {
 	private void bloquearUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		
+	
+		
 		Usuarios editUsuario = new Usuarios();		
 		
 		editUsuario.setCod_persona(Integer.parseInt(request.getParameter("txtCodPersona")));
 		editUsuario.setEstado_user(Integer.parseInt(request.getParameter("txtEstadoUsuario")));
 	
-		UsuariosDAO.modificarUsuario(editUsuario);	
-	
-		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
+		UsuariosDAO.bloquearUsuario(editUsuario);
+		//request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
+		
+		
+		if(Integer.parseInt(request.getParameter("txtEstadoUsuario")) == 1){
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/ALERT/usuarioBloqueado.jsp");
+		dispatcher.forward(request, response);
+		
+		}else {
+			
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/ALERT/usuarioDesbloqueado.jsp");
+		dispatcher.forward(request, response);
+			
+			
+		}
+		
+		
+		
 	
 	}
 	
@@ -192,10 +212,64 @@ public class seguridad extends HttpServlet {
 	
 		UsuariosDAO.resetearPassword(editUsuario);	
 	
-		request.getRequestDispatcher("logout").forward(request, response);
-		
+		request.getRequestDispatcher("logout").forward(request, response);	
 	
 	}
+	
+	// Modificar Usuario
+	private void modificarUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		Personas editPersona = new Personas();		
+		
+		editPersona.setCod_persona(Integer.parseInt(request.getParameter("txtCodPersona")));
+		editPersona.setRol_persona(Integer.parseInt(request.getParameter("selectPermisos")));
+		editPersona.setNom_persona(request.getParameter("txtNomPersona"));
+		editPersona.setApell_persona(request.getParameter("txtApellPersona"));
+		editPersona.setDir_persona(request.getParameter("txtDirPersona"));
+		editPersona.setTel_persona(request.getParameter("txtTelPersona"));
+	
+		UsuariosDAO.modificarUsuario(editPersona);	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);	
+	
+	}
+	
+	
+	// Asignar contador
+	private void asignarContador(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {		
+			
+		int cod_persona = Integer.parseInt(request.getParameter("txtCodPersona"));
+		 
+		VTcontadores contador=ContadoresDAO.validarContador(cod_persona);
+		  
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_asignarContador.jsp");
+		request.setAttribute("contador", contador);	
+		dispatcher.forward(request, response);
+	
+	}
+	
+	
+	// Deshabilitar contador
+	private void deshabilitarContador(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {		
+			
+		Contadores deshContador = new Contadores();		
+		
+		deshContador.setCod_persona(Integer.parseInt(request.getParameter("txtCodPersona")));
+		//deshContador.setCod_cont(Integer.parseInt(request.getParameter("selectPermisos")));
+		//deshContador.setCargo_cont(request.getParameter("txtNomPersona"));
+		//deshContador.setFecha_inicio_con(Date.valueOf(request.getParameter("txtApellPersona")));
+		//deshContador.setFecha_fin_con(Date.valueOf(request.getParameter("txtDirPersona")));
+		//deshContador.setEstado_cont(Integer.parseInt(request.getParameter("txtTelPersona")));
+	
+		ContadoresDAO.deshabilitarContador(deshContador);	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);	
+	
+	}
+
 
 
 }
