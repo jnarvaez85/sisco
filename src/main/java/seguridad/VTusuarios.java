@@ -5,6 +5,8 @@ import java.sql.Date;
 public class VTusuarios {
 	
 	private int cod_persona;
+	private int estado_cont;
+	private String admin;
 	private String nom_persona;
 	private String apell_persona;
 	private int cod_id;
@@ -29,11 +31,14 @@ public class VTusuarios {
 
 
 
-	public VTusuarios(int cod_persona, String nom_persona, String apell_persona, int cod_id, String tipo_identificacion,
-			String usuario, String dir_persona, String tel_persona, Date fecha_inicio, Date fecha_fin, int cod_estado,
-			String estado, int cod_rol, String rol, int estado_firma) {
+	public VTusuarios(int cod_persona, int estado_cont, String admin, String nom_persona, String apell_persona,
+			int cod_id, String tipo_identificacion, String usuario, String dir_persona, String tel_persona,
+			Date fecha_inicio, Date fecha_fin, int cod_estado, String estado, int cod_rol, String rol,
+			int estado_firma) {
 		super();
 		this.cod_persona = cod_persona;
+		this.estado_cont = estado_cont;
+		this.admin = admin;
 		this.nom_persona = nom_persona;
 		this.apell_persona = apell_persona;
 		this.cod_id = cod_id;
@@ -48,7 +53,6 @@ public class VTusuarios {
 		this.cod_rol = cod_rol;
 		this.rol = rol;
 		this.estado_firma = estado_firma;
-	
 	}
 
 
@@ -60,11 +64,12 @@ public class VTusuarios {
 
 
 
-
-	public VTusuarios(String nom_persona, String apell_persona, int cod_id, String tipo_identificacion, String usuario,
-			String dir_persona, String tel_persona, Date fecha_inicio, Date fecha_fin, int cod_estado, String estado,
-			int cod_rol, String rol, int estado_firma) {
+	public VTusuarios(int estado_cont, String admin, String nom_persona, String apell_persona, int cod_id,
+			String tipo_identificacion, String usuario, String dir_persona, String tel_persona, Date fecha_inicio,
+			Date fecha_fin, int cod_estado, String estado, int cod_rol, String rol, int estado_firma) {
 		super();
+		this.estado_cont = estado_cont;
+		this.admin = admin;
 		this.nom_persona = nom_persona;
 		this.apell_persona = apell_persona;
 		this.cod_id = cod_id;
@@ -79,10 +84,7 @@ public class VTusuarios {
 		this.cod_rol = cod_rol;
 		this.rol = rol;
 		this.estado_firma = estado_firma;
-
 	}
-
-
 
 
 
@@ -94,6 +96,30 @@ public class VTusuarios {
 
 	public void setCod_persona(int cod_persona) {
 		this.cod_persona = cod_persona;
+	}
+
+
+
+	public int getEstado_cont() {
+		return estado_cont;
+	}
+
+
+
+	public void setEstado_cont(int estado_cont) {
+		this.estado_cont = estado_cont;
+	}
+
+
+
+	public String getAdmin() {
+		return admin;
+	}
+
+
+
+	public void setAdmin(String admin) {
+		this.admin = admin;
 	}
 
 
@@ -121,9 +147,11 @@ public class VTusuarios {
 	}
 
 
+
 	public int getCod_id() {
 		return cod_id;
 	}
+
 
 
 	public void setCod_id(int cod_id) {
@@ -142,9 +170,12 @@ public class VTusuarios {
 		this.tipo_identificacion = tipo_identificacion;
 	}
 
+
+
 	public String getUsuario() {
 		return usuario;
 	}
+
 
 
 	public void setUsuario(String usuario) {
@@ -152,18 +183,23 @@ public class VTusuarios {
 	}
 
 
+
 	public String getDir_persona() {
 		return dir_persona;
 	}
+
+
 
 	public void setDir_persona(String dir_persona) {
 		this.dir_persona = dir_persona;
 	}
 
 
+
 	public String getTel_persona() {
 		return tel_persona;
 	}
+
 
 
 	public void setTel_persona(String tel_persona) {
@@ -177,14 +213,17 @@ public class VTusuarios {
 	}
 
 
+
 	public void setFecha_inicio(Date fecha_inicio) {
 		this.fecha_inicio = fecha_inicio;
 	}
 
 
+
 	public Date getFecha_fin() {
 		return fecha_fin;
 	}
+
 
 
 	public void setFecha_fin(Date fecha_fin) {
@@ -204,9 +243,11 @@ public class VTusuarios {
 	}
 
 
+
 	public String getEstado() {
 		return estado;
 	}
+
 
 
 	public void setEstado(String estado) {
@@ -219,9 +260,12 @@ public class VTusuarios {
 		return cod_rol;
 	}
 
+
+
 	public void setCod_rol(int cod_rol) {
 		this.cod_rol = cod_rol;
 	}
+
 
 
 	public String getRol() {
@@ -229,20 +273,26 @@ public class VTusuarios {
 	}
 
 
+
 	public void setRol(String rol) {
 		this.rol = rol;
 	}
+
 
 
 	public int getEstado_firma() {
 		return estado_firma;
 	}
 
+
+
 	public void setEstado_firma(int estado_firma) {
 		this.estado_firma = estado_firma;
 	}
 
 
+
+	
 
 	
 

@@ -19,6 +19,7 @@
 			<thead>
 				<tr>
 					<th scope="col">Firma</th>
+					<th scope="col">Contador</th>
 					<th scope="col"></th>
 					<th scope="col">Estado</th>
 					<th scope="col">Nombre</th>
@@ -39,6 +40,7 @@
 	String apellidos = datos_usuario.get(i).getApell_persona();
 	String usuario = datos_usuario.get(i).getUsuario();
 	String rol = datos_usuario.get(i).getRol();
+	int contador = datos_usuario.get(i).getEstado_cont();
 		
 	String direccion = datos_usuario.get(i).getDir_persona();
 	String telefono = datos_usuario.get(i).getTel_persona();
@@ -48,11 +50,17 @@
 					<td>
 					<% if (firma==1){ %>
 					<img width="25px" src="img/menu/firma.png" />
-					<% }else{ %> 
-					Sin asignar
 					<% } %>
 					
 					</td>
+					
+							<td>
+					<% if (contador==1){ %>
+					<img width="25px" src="img/menu/true.png" />
+					<% } %>
+					
+					</td>
+					
 					<td>
 					
 					<% if (estado==1) { %>					
@@ -139,7 +147,7 @@
 				</button>
 				</div>
 				<input type="hidden"  name="txtCodPersona"  value="<%= cod_persona %>">
-				<input type="hidden" name="validar" value="asignarContador">  
+				<input type="hidden" name="validar" value="consultarUsuario">  
 				</form>
  				
  	<%		}

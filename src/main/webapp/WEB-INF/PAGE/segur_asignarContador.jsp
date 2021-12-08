@@ -7,11 +7,16 @@
 
 
 <%
-VTcontadores contador = (VTcontadores) request.getAttribute("contador");
+VTusuarios usuarios = (VTusuarios) request.getAttribute("usuario");
 
-String nombre_contador = contador.getNom_contador();
-int cod_persona = contador.getCod_persona();
-int estado = contador.getCod_estado();
+int cod_persona = usuarios.getCod_persona();
+int estado_cont = usuarios.getEstado_cont();
+String contador = usuarios.getAdmin();
+
+String nom_persona = usuarios.getNom_persona();
+String apell_persona = usuarios.getApell_persona();
+
+
 
 String funciones = "Los usuarios con rol de contador serán responsables de los cuadres, movimientos de ingresos y egresos, y la firma de nominas 	y cuentas de cobro entre otras responsabilidades.";
 %>
@@ -29,12 +34,12 @@ String funciones = "Los usuarios con rol de contador serán responsables de los c
 	<div class="div_content">
 
 		<%
-		if (nombre_contador != null && estado==1) {
+		if (estado_cont==1) {
 		%>
 
 		<h2>
 			<img width="50px" src="img/menu/perfil.png" />
-			<%=nombre_contador%>
+			<%=nom_persona+" "+apell_persona%>
 			es actualmente contador
 		</h2>
 
@@ -71,12 +76,18 @@ String funciones = "Los usuarios con rol de contador serán responsables de los c
 		<%=funciones%>
 
 		<p>
+		
+		<form action="${pageContext.request.contextPath}/seguridad" method="post">
 		<div style="text-align: center;">
+		
+			<input type="hidden" name="txtCodPersona" value="<%= cod_persona %>">
+			<input type="hidden" name="txtEstadoCont" value="<%= estado_cont %>">
+			<input type="hidden" name="validar" value="habilitarContador"> 	
 			<button type="submit" class="btn btn-success">Habilitar como
 				contador</button>
 			<hr>
 			<div class="input-group flex-nowrap" style="width: 180px;margin: auto;">
-				<input minlength="1" maxlength="4" onkeypress="return valideKey(event);" type="text" class="form-control" placeholder="Digite clave contador"
+				<input required name="txtCodContador" minlength="1" maxlength="4" onkeypress="return valideKey(event);" type="text" class="form-control" placeholder="Digite clave contador" autocomplete="off"
 					aria-label="Username" aria-describedby="addon-wrapping">
 					
 			</div>
@@ -86,7 +97,7 @@ String funciones = "Los usuarios con rol de contador serán responsables de los c
 		<%
 		}
 		%>
-
+			</form>		
 	</div>
 
 

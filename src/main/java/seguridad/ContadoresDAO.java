@@ -32,7 +32,7 @@ public class ContadoresDAO {
 		   
 		 	while(rs.next()){
 				cont.setCod_persona(rs.getInt("cod_persona"));	
-				cont.setCod_cont(rs.getInt("cod_cont"));
+				cont.setCod_cont(rs.getString("cod_cont"));
 				cont.setCargo_cont(rs.getString("cargo_cont"));
 				cont.setNom_contador(rs.getString("nombre_contador"));
 				cont.setTipo_doc_persona(rs.getInt("tipo_doc_persona"));
@@ -79,7 +79,7 @@ public class ContadoresDAO {
 		        stmt = con.prepareCall(sql);	
 							
 		        stmt.setInt(1, contador.getCod_persona());						        
-		        stmt.setInt(2, contador.getCod_cont());
+		        stmt.setString(2, contador.getCod_cont());
 		        stmt.setString(3, contador.getCargo_cont());
 		        stmt.setDate(4, (Date) contador.getFecha_inicio_con());
 		        stmt.setDate(5, (Date) contador.getFecha_fin_con());
@@ -91,6 +91,47 @@ public class ContadoresDAO {
 				
 			   } catch (SQLException e) {
 					System.out.println("Error al deshabilitar contador " + e);
+				}
+	        
+			finally {
+				try {
+					
+					MysqlConexion.close(stmt);
+					MysqlConexion.close(con);
+				} catch (SQLException e) {
+					System.out.println("Error al cerrar" + e);
+				}
+			}
+			return rows;
+		}
+		
+		
+		// HABILITAR CONTADOR
+		public static int habilitarContador(Contadores cont,  String cod_cont) throws SQLException {
+
+			int rows = 0;
+			
+		 	MysqlConexion conx = new MysqlConexion();
+	    	Connection con = null;
+	    	CallableStatement stmt = null;
+	    	
+			try {								
+				
+				con = conx.conectar();					
+				String sql = "{call SP_HABILITA_CONTADOR (?,?,?,?,?,?)}";
+		        stmt = con.prepareCall(sql);	
+							
+		        stmt.setInt(1, cont.getCod_persona());						        
+		        stmt.setString(2, cod_cont);
+		        stmt.setString(3, cont.getCargo_cont());
+		        stmt.setDate(4, (Date) cont.getFecha_inicio_con());
+		        stmt.setDate(5, (Date) cont.getFecha_fin_con());
+		        stmt.setInt(6, cont.getEstado_cont());
+
+		        rows = stmt.executeUpdate();
+				
+			   } catch (SQLException e) {
+					System.out.println("Error al habilitar contador " + e);
 				}
 	        
 			finally {

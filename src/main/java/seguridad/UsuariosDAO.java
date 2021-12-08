@@ -8,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.LinkedList;
 
-import admin.Entidad;
 import db.MysqlConexion;
 
 public class UsuariosDAO {
@@ -91,6 +90,8 @@ public class UsuariosDAO {
 	            	VTusuarios list_user = new VTusuarios();
 	            	
 	            	list_user.setCod_persona(rs.getInt("cod_persona"));
+	            	list_user.setEstado_cont(rs.getInt("estado_cont"));
+	            	list_user.setAdmin(rs.getString("admin"));
 	            	list_user.setNom_persona(rs.getString("nom_persona"));
 	            	list_user.setApell_persona(rs.getString("apell_persona"));
 	            	list_user.setTipo_identificacion(rs.getString("tipo_identificacion"));
@@ -412,6 +413,59 @@ public class UsuariosDAO {
 								}
 							}
 							return rows;
+						}
+						
+						
+						// CONSULTAR USUARIO
+						public static VTusuarios consultarUsuario(int cod_persona){
+						 
+						 	MysqlConexion conx = new MysqlConexion();
+							Connection con = null;
+							PreparedStatement ps = null;
+							ResultSet rs = null;						 
+						 
+							VTusuarios user = new VTusuarios();
+						  
+						  try{
+							  
+							  con = conx.conectar();					
+							  ps = con.prepareStatement("SELECT * FROM view_usuarios WHERE cod_persona="+cod_persona);							  
+							  rs=	ps.executeQuery();
+						   
+						 	while(rs.next()){
+						 		user.setCod_persona(rs.getInt("cod_persona"));	
+						 		user.setEstado_cont(rs.getInt("estado_cont"));
+						 		user.setAdmin(rs.getString("admin"));
+						 		user.setNom_persona(rs.getString("nom_persona"));
+						 		user.setApell_persona(rs.getString("apell_persona"));
+						 		user.setCod_id(rs.getInt("cod_id"));
+						 		user.setTipo_identificacion(rs.getString("tipo_identificacion"));
+						 		user.setUsuario(rs.getString("usuario"));
+						 		user.setDir_persona(rs.getString("dir_persona"));
+						 		user.setTel_persona(rs.getString("tel_persona"));
+						 		user.setFecha_inicio(rs.getDate("fecha_inicio"));
+						 		user.setFecha_fin(rs.getDate("fecha_fin"));
+						 		user.setCod_estado(rs.getInt("cod_estado"));
+						 		user.setEstado(rs.getString("estado"));
+						 		user.setCod_rol(rs.getInt("cod_rol"));
+						 		user.setRol(rs.getString("rol"));
+						 		user.setEstado_firma(rs.getInt("estado_firma"));
+						   }
+						  } catch (SQLException e) {
+								System.out.println("Error al consultar usuario" + e);
+							}
+					    
+						finally {
+							try {
+								
+								MysqlConexion.close(rs);
+								MysqlConexion.close(ps);
+								MysqlConexion.close(con);
+							} catch (SQLException e) {
+								System.out.println("Error al cerrar" + e);
+							}
+						}
+						return user;
 						}
 		
 	

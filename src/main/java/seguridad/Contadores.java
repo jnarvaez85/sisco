@@ -5,7 +5,7 @@ import java.util.Date;
 public class Contadores {
 	
 	private int cod_persona;
-	private int cod_cont;
+	private String cod_cont;
 	private String cargo_cont;
 	private int estado_cont;
 	private Date fecha_inicio_con;
@@ -18,7 +18,7 @@ public class Contadores {
 	}
 
 
-	public Contadores(int cod_persona, int cod_cont, String cargo_cont, int estado_cont, Date fecha_inicio_con,
+	public Contadores(int cod_persona, String cod_cont, String cargo_cont, int estado_cont, Date fecha_inicio_con,
 			Date fecha_fin_con) {
 		super();
 		this.cod_persona = cod_persona;
@@ -36,7 +36,7 @@ public class Contadores {
 	}
 
 
-	public Contadores(int cod_cont, String cargo_cont, int estado_cont, Date fecha_inicio_con, Date fecha_fin_con) {
+	public Contadores(String cod_cont, String cargo_cont, int estado_cont, Date fecha_inicio_con, Date fecha_fin_con) {
 		super();
 		this.cod_cont = cod_cont;
 		this.cargo_cont = cargo_cont;
@@ -56,12 +56,12 @@ public class Contadores {
 	}
 
 
-	public int getCod_cont() {
+	public String getCod_cont() {
 		return cod_cont;
 	}
 
 
-	public void setCod_cont(int cod_cont) {
+	public void setCod_cont(String cod_cont) {
 		this.cod_cont = cod_cont;
 	}
 

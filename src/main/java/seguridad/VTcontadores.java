@@ -5,7 +5,7 @@ import java.util.Date;
 public class VTcontadores {
 
 	private int cod_persona;
-	private int cod_cont;
+	private String cod_cont;
 	private String cargo_cont;
 	private int cod_estado;
 	private String estado;
@@ -25,7 +25,7 @@ public class VTcontadores {
 	}
 
 
-	public VTcontadores(int cod_persona, int cod_cont, String cargo_cont, int cod_estado, String estado,
+	public VTcontadores(int cod_persona, String cod_cont, String cargo_cont, int cod_estado, String estado,
 			String nom_contador, int tipo_doc_persona, String tipo_identificacion, String doc_persona,
 			String dir_persona, String tel_persona, Date fecha_inicio_con, Date fecha_fin_con) {
 		super();
@@ -51,7 +51,7 @@ public class VTcontadores {
 	}
 
 
-	public VTcontadores(int cod_cont, String cargo_cont, int cod_estado, String estado, String nom_contador,
+	public VTcontadores(String cod_cont, String cargo_cont, int cod_estado, String estado, String nom_contador,
 			int tipo_doc_persona, String tipo_identificacion, String doc_persona, String dir_persona,
 			String tel_persona, Date fecha_inicio_con, Date fecha_fin_con) {
 		super();
@@ -80,12 +80,12 @@ public class VTcontadores {
 	}
 
 
-	public int getCod_cont() {
+	public String getCod_cont() {
 		return cod_cont;
 	}
 
 
-	public void setCod_cont(int cod_cont) {
+	public void setCod_cont(String cod_cont) {
 		this.cod_cont = cod_cont;
 	}
 
