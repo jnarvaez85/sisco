@@ -5,16 +5,48 @@
 <%@ include file="../CONTENT/consultas.jsp" %>
 
 
+<%
+
+VTusuarios usuarios = (VTusuarios) request.getAttribute("usuario");
+
+%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
 </head>
 <body>
-<div class="div_content">
-Aqui el contenido
-</div>
 
+
+<div class="div_content">
+ <div class="col-md-3"> 
+ 
+ 
+ <div class="container">
+  <div class="row">
+  <div style="width: 25%;
+border-right: 1px solid #d0d0d0;
+position: absolute;
+top: 0;
+bottom: 0;">
+    <div style="top: 10%;
+position: relative;">
+      <div>CLAUDIA LUGO DIAZ</div>
+      <small>Contador Responsable</small>
+    </div>
+   </div> 
+    
+
+   
+  </div>
+</div>
+  
+  
+ 
+</div>
+</div>
 
 
 <div style="position: absolute;right: 3rem;">

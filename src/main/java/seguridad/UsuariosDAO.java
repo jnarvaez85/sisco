@@ -15,14 +15,6 @@ public class UsuariosDAO {
 	MysqlConexion conx = new MysqlConexion();
 
 	private static final String SELECT_USER = "SELECT * FROM view_usuarios";
-	private static final String SELECT_ROL="	SELECT \r\n"
-			+ "	distinct\r\n"
-			+ "	menu.cod_rol,\r\n"
-			+ "	menu.rol\r\n"
-			+ "	FROM segur_usuario usr \r\n"
-			+ "	INNER JOIN view_menu menu\r\n"
-			+ "	ON usr.cod_rol=menu.cod_rol WHERE usr.segur_user = ?";
-
 
 	
 	// VALIDAR LOGIN
@@ -209,12 +201,12 @@ public class UsuariosDAO {
 		
 		
 		
-		// VALIDAR EL ROL		
+		// VALIDAR EL ROL			
 			public Usuarios validarRol(String segur_user) {
 			
 		 	MysqlConexion conx = new MysqlConexion();
 	    	Connection con = null;
-	    	PreparedStatement ps = null;
+	    	CallableStatement stmt = null;
 			ResultSet rs = null;
 			
 			Usuarios rol = new Usuarios();
@@ -222,10 +214,11 @@ public class UsuariosDAO {
 			try {
 				
 				con = conx.conectar();					
-				ps = con.prepareStatement(SELECT_ROL);		
+				String sql = "{call SP_VALIDA_ROL (?)}";
+		        stmt = con.prepareCall(sql);	
 
-		         ps.setString(1, segur_user);					
-				 rs=	ps.executeQuery();
+		         stmt.setString(1, segur_user);					
+				 rs=	stmt.executeQuery();
 				
 				if(rs.next()) {
 					 rol.setCod_rol(rs.getInt("cod_rol"));				}
@@ -239,7 +232,7 @@ public class UsuariosDAO {
 				try {
 					
 					MysqlConexion.close(rs);
-					MysqlConexion.close(ps);
+					MysqlConexion.close(stmt);
 					MysqlConexion.close(con);
 				} catch (SQLException e) {
 					System.out.println("Error al cerrar" + e);
@@ -247,7 +240,10 @@ public class UsuariosDAO {
 			}
 			return rol;
 		}
-			
+		
+		
+		
+		
 			
 			// ELIMINAR USUARIO	
 			public static int eliminarUsuario(int cod_persona) throws SQLException {

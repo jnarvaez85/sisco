@@ -1,11 +1,18 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.SQLException;
+
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import seguridad.*;
+
 
 /**
  * @utor: Jairo Narvaez 2021
@@ -22,6 +29,8 @@ public class planillas extends HttpServlet {
     }
 
 	
+    
+ // INICIO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
 		String accion = request.getParameter("url");
@@ -52,7 +61,7 @@ public class planillas extends HttpServlet {
 
 	private void agregarPlanilla(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/agregarPlanilla.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_validaContador.jsp").forward(request, response);	
 	}
 	
 	private void consultarPlanilla(HttpServletRequest request, HttpServletResponse response)
@@ -68,19 +77,55 @@ public class planillas extends HttpServlet {
 	private void colaboladores(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getRequestDispatcher("WEB-INF/PAGE/colaboladores.jsp").forward(request, response);	
+	}	
+
+	// FIN GET
+
+
+	
+	
+	// INICIO POST
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
+		String accion = request.getParameter("validar");
+		
+		switch (accion) {
+
+		case "validarContador":
+			validarContador(request, response);
+			break;				
+		}
+	
 	}
 	
 	
 	
-	
-	
+	// Validar Contador
+	private void validarContador(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		int cod_persona = Integer.parseInt(request.getParameter("selectCodPersona"));
+		String cod_contador = request.getParameter("txtCodContador");
+		
+		Contadores cont= new Contadores();
+		ContadoresDAO contador= new ContadoresDAO();
+		
+		try {
 
-	/**
-	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
-	 */
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
+			cont = contador.validarContador(cod_persona, cod_contador);
+			
+			if (cont.getCod_persona() == 1) {
+				
+				request.setAttribute("cod_persona", cont.getCod_persona());	   
+				request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregarResponsables.jsp").forward(request, response);
+
+			} else {
+				request.getRequestDispatcher("WEB-INF/PAGE/no.jsp").forward(request, response);
+			}
+		} catch (SQLException e) {
+			System.out.print("Error al validar contador: " + e);
+			e.printStackTrace();
+		}
 	}
 
 }

@@ -38,6 +38,10 @@ LinkedList<VTusuarios> datos_usuario = UsuariosDAO.listarUsuarios();
 
 // PARAMETROS
 LinkedList<Parametros> parametros = ParametrosDAO.listarParametros();
+
+
+//CONTADORES
+LinkedList<VTcontadores> datos_contador = ContadoresDAO.listarContadores();
 	
 
 
