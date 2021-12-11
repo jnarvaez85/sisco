@@ -31,5 +31,6 @@
 .alert_error_login{position: absolute;    top: 14rem;    margin: auto;    width: 380px;    z-index: 999999999;    left: 0;    right: 0;}
 
 .div_content{position: absolute;border: 1px solid #0404042e;width: 73%;left: 1rem;border-radius: 6px;height: 70%;padding: 20px;}
+.layout_right{position: absolute;right: 0;width: 73%;background: #1703030d;top: 0;bottom: 0;padding: 25px;border: 1px solid #0d0d0d29;}
 
 .div_center_25{width: 25%;margin: auto;position: absolute;left: 0;right: 0;bottom: 0;text-align: center;top: 10%;}

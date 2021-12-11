@@ -22,7 +22,7 @@ int getRol = (int)session.getAttribute("mi_rol");
 if (session.getAttribute("usuario") == null) {
 	session.invalidate();  
 	request.setAttribute("errMessage", "La sessión finalizo exitosamente!");
-	RequestDispatcher requestDispatcher = request.getRequestDispatcher("../PAGE/denegado.jsp");
+	RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/PAGE/denegado.jsp");
 	requestDispatcher.forward(request, response);
 	System.out.println("Sessión cerrada!");
 

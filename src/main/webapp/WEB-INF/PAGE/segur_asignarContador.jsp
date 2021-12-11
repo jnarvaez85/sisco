@@ -9,6 +9,7 @@
 <%
 VTusuarios usuarios = (VTusuarios) request.getAttribute("usuario");
 
+
 int cod_persona = usuarios.getCod_persona();
 int estado_cont = usuarios.getEstado_cont();
 String contador = usuarios.getAdmin();

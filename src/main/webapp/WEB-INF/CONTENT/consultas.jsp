@@ -4,6 +4,7 @@
 <!--  Paquetes JAVA -->
 <%@page import="admin.*"%>
 <%@page import="seguridad.*"%>
+<%@page import="planillas.*"%>
 
 <%@ page language="java"%>
 <%@ page import="java.util.*"%>
@@ -35,13 +36,19 @@ LinkedList<Entidad> datos_entidad = EntidadDAO.datosEntidad();
 // USUARIOS
 LinkedList<VTusuarios> datos_usuario = UsuariosDAO.listarUsuarios();
 
-
 // PARAMETROS
 LinkedList<Parametros> parametros = ParametrosDAO.listarParametros();
 
-
 //CONTADORES
 LinkedList<VTcontadores> datos_contador = ContadoresDAO.listarContadores();
+
+//COLABORADORES
+LinkedList<Colaboradores> datos_colaborador = ColaboradoresDAO.listarColaboradores();
+
+//SERVICIOS
+LinkedList<Servicios> datos_servicios = ServiciosDAO.listarServicios();
+ 
+
 	
 
 

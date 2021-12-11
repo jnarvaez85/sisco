@@ -39,7 +39,6 @@ public class ContadoresDAO {
 		            	list_cont.setFecha_inicio_con(rs.getDate("fecha_inicio_cont"));
 		            	list_cont.setFecha_fin_con(rs.getDate("fecha_fin_cont"));
 		            	list_cont.setNom_contador(rs.getString("nombre_contador"));
-		            	list_cont.setTipo_doc_persona(rs.getInt("tipo_doc_persona"));
 		            	list_cont.setTipo_identificacion(rs.getString("tipo_identificacion"));
 		            	list_cont.setDoc_persona(rs.getString("doc_persona"));
 		            	list_cont.setDir_persona(rs.getString("dir_persona"));

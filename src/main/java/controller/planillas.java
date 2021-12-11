@@ -112,6 +112,8 @@ public class planillas extends HttpServlet {
 		
 		try {
 
+			
+			
 			cont = contador.validarContador(cod_persona, cod_contador);
 			
 			if (cont.getCod_persona() == 1) {
