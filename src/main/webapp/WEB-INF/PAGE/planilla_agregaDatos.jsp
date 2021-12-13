@@ -13,12 +13,75 @@ final int tmp_plan=1;
 VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPlanillaTemp(tmp_plan);
 
 		String nom_contador = tmp_dato_planilla.getNom_contador();
+		int cod_colabora1 = tmp_dato_planilla.getCod_colabora1();
 		String nom_colabora1 = tmp_dato_planilla.getNom_colabora1();
+		int cod_colabora2 = tmp_dato_planilla.getCod_colabora2();
 		String nom_colabora2 = tmp_dato_planilla.getNom_colabora2();
+		int cod_colabora3 = tmp_dato_planilla.getCod_colabora3();
 		String nom_colabora3 = tmp_dato_planilla.getNom_colabora3();
+		int codigo_servicio = tmp_dato_planilla.getCod_servicio();
 		
-		Date fecha_planilla = tmp_dato_planilla.getFecha_planilla();
+		String servicio = tmp_dato_planilla.getNom_servicio();
+		String hora = tmp_dato_planilla.getHora_servicio();
+		
+		
+		String fecha_planilla=null;
+		Date format_fecha_planilla = tmp_dato_planilla.getFecha_planilla();
+		
+		
+		
+		if(format_fecha_planilla != null){
+			SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+			fecha_planilla= formatDate.format(format_fecha_planilla);
+
+		}
+
+		
+		int cursor = 1;
+		
+		
 %>
+
+<% 
+if(fecha_planilla != null){
+ 
+	int contador = tmp_dato_planilla.getCont_colabora();
+	cursor= contador;
+ }
+
+%>
+
+
+
+
+<%
+
+// Deshabilita las opciones de la fecha y el servicio
+
+String estado_habilita;
+String estado_habilita2;
+
+
+if(codigo_servicio > 0){
+	estado_habilita= "disabled";
+}else{
+	estado_habilita= "enable";
+}
+
+// Deshabilita las opciones de los responsable
+
+if(cursor == 5){
+	estado_habilita2= "disabled";
+}else{
+	estado_habilita2= "enable";
+}
+
+
+%>
+
+
+
+
 
 
 <!DOCTYPE html>
@@ -62,16 +125,19 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 						
 						
 						<div>
-							<img width="20px" src="img/menu/colabolador.png" /> RAFAEL
-							CALDERON
+							<% if (cod_colabora1 >0) { %>
+							<img width="20px" src="img/menu/colabolador.png" /> <%=nom_colabora1 %>	
+							<% } %>						
 						</div>
 						<div>
-							<img width="20px" src="img/menu/colabolador.png" /> OLIVIA
-							OLIVERA
+							<% if (cod_colabora2 >0) { %>
+							<img width="20px" src="img/menu/colabolador.png" /> <%=nom_colabora2 %>	
+							<% } %>	
 						</div>
 						<div>
-							<img width="20px" src="img/menu/colabolador.png" /> RODRIGO
-							PRADA
+							<% if (cod_colabora3 >0) { %>
+							<img width="20px" src="img/menu/colabolador.png" /> <%=nom_colabora3 %>	
+							<% } %>	
 						</div>
 						
 						
@@ -102,8 +168,8 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 
 			<% if(fecha_planilla != null){ %>
 			
-			<div>Fecha de la planilla: <%=fecha_planilla %></div>
-			<div>Servicio: Tercera Escuela Dominical - 06:00am a 10:00am</div>
+			<div style="font-size: 1.5em;">Fecha de la planilla: <%=fecha_planilla %></div>
+			<div>Servicio: <%=servicio %> - <%=hora %></div>
 			
 			<% }else{ %>
 
@@ -112,20 +178,20 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 			<% } %>
 
 			<br>
-			<form class="row g-3">
+			<form class="row g-3" action="${pageContext.request.contextPath}/planillas" method="post">
 				<div class="input-group mb-3" style="width: 35%;">
-					<span class="input-group-text" id="basic-addon3"><img
-						width="20px" src="img/menu/fecha.png" /></span> <input type="date"
-						class="form-control" id="staticEmail2" value="email@example.com">
+					<span class="input-group-text">
+					<img width="20px" src="img/menu/fecha.png" /></span> 
+						<input type="date" class="form-control" name="txtFechaPlanilla" <%= estado_habilita %> required>
 				</div>
 				<div class="col-auto">
-					<label for="inputPassword2" class="visually-hidden">Password</label>
-					<select class="form-select" aria-label="Default select example">
+					<label class="visually-hidden">Servicio</label>
+					<select class="form-select" name="selectServPlanilla" <%= estado_habilita %> required>
 
 
 						<!-- COMBO DE LOS SERVICIOS  -->
 
-						<option selected>-- Seleccionar servicio --</option>
+						<option selected value="">-- Seleccionar servicio --</option>
 						<%
 						for (int i = 0; i < datos_servicios.size(); i++) {
 							String nom_servicio = datos_servicios.get(i).getNom_servicio();
@@ -143,10 +209,12 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 					<div>
 						<img width="25px" src="img/menu/action_mas.png" /> <img
 							width="25px" src="img/menu/btn_buscar.png" />
-						<button type="button" class="btn btn-secondary btn-sm">Agregar</button>
+						<button type="submit" class="btn btn-secondary btn-sm" <%= estado_habilita %>>Agregar</button>
 					</div>
 				</div>
 
+			<input type="hidden" name="validar" value="agregarFechaPlanilla" >
+			<input type="hidden" name="cursor" value="<%=cursor %>" >
 			</form>
 
 			<hr>
@@ -157,10 +225,12 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 			<% if(fecha_planilla != null){ %>
 			
 
+			<form action="${pageContext.request.contextPath}/planillas" method="post">
+
+
 			<div class="input-group">
-				<select class="form-select form-select-sm"
-					aria-label=".form-select-sm example">
-					<option selected>-- Seleccione el nombre del responsable
+				<select class="form-select form-select-sm" required name="selectResponPlanilla" <%= estado_habilita2 %>>
+					<option selected value="">-- Seleccione el nombre del responsable
 						--</option>
 
 
@@ -179,8 +249,8 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 				</select> <span class="input-group-text"><img width="25px"
 					src="img/menu/action_mas.png" /></span> <span class="input-group-text"><img
 					width="25px" src="img/menu/btn_buscar.png" /></span> <span
-					class="input-group-text"><button type="button"
-						class="btn btn-secondary btn-sm">Seleccionar</button></span>
+					class="input-group-text"><button type="sumbit"
+						class="btn btn-secondary btn-sm" <%= estado_habilita2 %>>Elegir</button></span>
 			</div>
 			<small>Elija min un (1) o max (3) responsables del conteo</small>
 
@@ -188,16 +258,28 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 			<br>
 			
 			<% } %>
+			
+			
+			
+			<input type="hidden" name="validar" value="agregarColaboladoresPlanillas" >
+			<input type="hidden" name="cursor" value="<%=cursor %>" >
+			</form>
+			
 
 			<!-- FOOTER  -->
 			
 			<% if(fecha_planilla != null){ %>
 
 			<button type="button" class="btn btn-danger">Cancelar</button>
+			
+			<% if(cursor >= 3){ %>
 			<button type="button" class="btn btn-primary">Continuar</button>
 			
-			<% } %>
+			<% 		}
+				}
+			%>
 		</div>
+
 
 
 

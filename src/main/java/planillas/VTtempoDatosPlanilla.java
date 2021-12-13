@@ -9,7 +9,8 @@ public class VTtempoDatosPlanilla {
 	private String nom_contador; 
 	private Date fecha_genera; 
 	private Date fecha_planilla; 
-	private int cod_servicio; 
+	private int cod_servicio;
+	private int cont_colabora; 
 	private String nom_servicio; 
 	private String hora_servicio; 
 	private int cod_colabora1; 
@@ -27,8 +28,9 @@ public class VTtempoDatosPlanilla {
 
 
 	public VTtempoDatosPlanilla(int cod_temp_planilla, int cod_persona, String nom_contador, Date fecha_genera,
-			Date fecha_planilla, int cod_servicio, String nom_servicio, String hora_servicio, int cod_colabora1,
-			String nom_colabora1, int cod_colabora2, String nom_colabora2, int cod_colabora3, String nom_colabora3) {
+			Date fecha_planilla, int cod_servicio, int cont_colabora, String nom_servicio, String hora_servicio,
+			int cod_colabora1, String nom_colabora1, int cod_colabora2, String nom_colabora2, int cod_colabora3,
+			String nom_colabora3) {
 		super();
 		this.cod_temp_planilla = cod_temp_planilla;
 		this.cod_persona = cod_persona;
@@ -36,6 +38,7 @@ public class VTtempoDatosPlanilla {
 		this.fecha_genera = fecha_genera;
 		this.fecha_planilla = fecha_planilla;
 		this.cod_servicio = cod_servicio;
+		this.cont_colabora = cont_colabora;
 		this.nom_servicio = nom_servicio;
 		this.hora_servicio = hora_servicio;
 		this.cod_colabora1 = cod_colabora1;
@@ -54,14 +57,15 @@ public class VTtempoDatosPlanilla {
 
 
 	public VTtempoDatosPlanilla(int cod_persona, String nom_contador, Date fecha_genera, Date fecha_planilla,
-			int cod_servicio, String nom_servicio, String hora_servicio, int cod_colabora1, String nom_colabora1,
-			int cod_colabora2, String nom_colabora2, int cod_colabora3, String nom_colabora3) {
+			int cod_servicio, int cont_colabora, String nom_servicio, String hora_servicio, int cod_colabora1,
+			String nom_colabora1, int cod_colabora2, String nom_colabora2, int cod_colabora3, String nom_colabora3) {
 		super();
 		this.cod_persona = cod_persona;
 		this.nom_contador = nom_contador;
 		this.fecha_genera = fecha_genera;
 		this.fecha_planilla = fecha_planilla;
 		this.cod_servicio = cod_servicio;
+		this.cont_colabora = cont_colabora;
 		this.nom_servicio = nom_servicio;
 		this.hora_servicio = hora_servicio;
 		this.cod_colabora1 = cod_colabora1;
@@ -130,6 +134,16 @@ public class VTtempoDatosPlanilla {
 
 	public void setCod_servicio(int cod_servicio) {
 		this.cod_servicio = cod_servicio;
+	}
+
+
+	public int getCont_colabora() {
+		return cont_colabora;
+	}
+
+
+	public void setCont_colabora(int cont_colabora) {
+		this.cont_colabora = cont_colabora;
 	}
 
 
@@ -211,6 +225,8 @@ public class VTtempoDatosPlanilla {
 	public void setNom_colabora3(String nom_colabora3) {
 		this.nom_colabora3 = nom_colabora3;
 	}
+
+
 	
 	
 	

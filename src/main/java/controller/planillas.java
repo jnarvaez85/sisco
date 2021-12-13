@@ -1,6 +1,7 @@
 package controller;
 
 import java.io.IOException;
+import java.sql.Date;
 import java.sql.SQLException;
 
 import javax.servlet.RequestDispatcher;
@@ -11,6 +12,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import planillas.*;
 import seguridad.*;
 
 
@@ -93,7 +95,13 @@ public class planillas extends HttpServlet {
 
 		case "validarContador":
 			validarContador(request, response);
-			break;				
+			break;	
+		case "agregarFechaPlanilla":
+			agregarFechaPlanilla(request, response);
+			break;
+		case "agregarColaboladoresPlanillas":
+			agregarColaboladoresPlanillas(request, response);
+			break;
 		}
 	
 	}
@@ -119,7 +127,7 @@ public class planillas extends HttpServlet {
 			if (cont.getCod_persona() == 1) {
 				
 				request.setAttribute("cod_persona", cont.getCod_persona());	   
-				request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregarResponsables.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
 
 			} else {
 				request.getRequestDispatcher("WEB-INF/PAGE/no.jsp").forward(request, response);
@@ -128,6 +136,54 @@ public class planillas extends HttpServlet {
 			System.out.print("Error al validar contador: " + e);
 			e.printStackTrace();
 		}
+	}
+	
+	
+	// Agregar Fecha Planilla
+	private void agregarFechaPlanilla(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		try {
+			
+			VTtempoDatosPlanilla temPlanilla = new VTtempoDatosPlanilla();		
+			
+			temPlanilla.setCod_servicio(Integer.parseInt(request.getParameter("selectServPlanilla")));
+			temPlanilla.setFecha_planilla(Date.valueOf(request.getParameter("txtFechaPlanilla")));
+			int cursor= Integer.parseInt(request.getParameter("cursor"));	
+			
+			
+			TempoDatosPlanillaDAO.preparaDatosPlanilla(temPlanilla, cursor);
+			
+		} catch (SQLException e) {
+			System.out.print("Error al ingresar fecha y servicio en tempo planilla: " + e);
+			e.printStackTrace();
+		}	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
+	
+	}
+	
+	// Agregar colaboladores del conteo de Planilla
+	private void agregarColaboladoresPlanillas(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		try {
+			
+			VTtempoDatosPlanilla temPlanilla = new VTtempoDatosPlanilla();		
+			
+			temPlanilla.setCod_colabora1(Integer.parseInt(request.getParameter("selectResponPlanilla")));			
+			int cursor= Integer.parseInt(request.getParameter("cursor"));	
+			
+			
+			TempoDatosPlanillaDAO.preparaDatosPlanilla(temPlanilla, cursor);
+			
+		} catch (SQLException e) {
+			System.out.print("Error al ingresar colaboladores en tempo planilla: " + e);
+			e.printStackTrace();
+		}	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
+	
 	}
 
 }
