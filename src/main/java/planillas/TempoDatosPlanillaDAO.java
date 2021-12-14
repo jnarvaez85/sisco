@@ -118,5 +118,45 @@ public class TempoDatosPlanillaDAO {
 		}
 		return rows;
 	}
+	
+	
+	// ELIMINAR TEMPO PLANILLA	
+				public static int eliminarTempoPlanilla(int cod_temp_planilla) throws SQLException {
+
+					int rows = 0;
+					
+				 	MysqlConexion conx = new MysqlConexion();
+			    	Connection con = null;
+			    	CallableStatement stmt = null;
+			    	
+
+					try {
+						con = conx.conectar();					
+
+						String sql = "{call SP_ELIMINA_TEMPO_PLANILLA (?)}";
+				        stmt = con.prepareCall(sql);						
+				
+				        stmt.setInt(1, cod_temp_planilla);
+											
+						rows = stmt.executeUpdate();
+						
+						
+					   } catch (SQLException e) {
+							System.out.println("Error al eliminar tempo planilla" + e);
+						}
+			        
+					finally {
+						try {
+							
+							MysqlConexion.close(stmt);
+							MysqlConexion.close(con);
+						} catch (SQLException e) {
+							System.out.println("Error al cerrar" + e);
+						}
+					}
+					return rows;
+				}
+				
+	
 
 }

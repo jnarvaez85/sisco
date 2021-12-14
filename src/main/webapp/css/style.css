@@ -1,5 +1,6 @@
 @charset "ISO-8859-1";
 
+
 #nav-link {padding: 0 !important;}
 #navbar {padding: 0 !important;}
 
@@ -34,3 +35,8 @@
 .layout_right{position: absolute;right: 0;width: 73%;background: #1703030d;top: 0;bottom: 0;padding: 25px;border: 1px solid #0d0d0d29;}
 
 .div_center_25{width: 25%;margin: auto;position: absolute;left: 0;right: 0;bottom: 0;text-align: center;top: 10%;}
+
+
+
+
+

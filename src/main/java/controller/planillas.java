@@ -102,6 +102,17 @@ public class planillas extends HttpServlet {
 		case "agregarColaboladoresPlanillas":
 			agregarColaboladoresPlanillas(request, response);
 			break;
+		case "eliminarTempoPlanilla":
+			eliminarTempoPlanilla(request, response);
+			break;
+		case "agregarNuevoServicio":
+			try {
+				agregarNuevoServicio(request, response);
+			} catch (SQLException | IOException | ServletException e) {
+				System.out.print("Error al insertar nuevo servicio: " + e);
+				e.printStackTrace();
+			}
+			break;
 		}
 	
 	}
@@ -185,5 +196,42 @@ public class planillas extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
 	
 	}
+	
+	
+	// Eliminar planilla temporal
+	private void eliminarTempoPlanilla(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		int cod_temp_planilla = Integer.parseInt(request.getParameter("txtCodTempPlanilla"));
+		try {
+			TempoDatosPlanillaDAO.eliminarTempoPlanilla(cod_temp_planilla);
+		} catch (SQLException e) {
+			System.out.print("Error al eliminar planilla temporal: " + e);
+			e.printStackTrace();
+		}
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
+	
+	}
+	
+	
+	// Agregar nuevo servicio
+	private void agregarNuevoServicio(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		Servicios serv = new Servicios();
+		ServiciosDAO addServ = new ServiciosDAO();
+		
+		serv.setNom_servicio(request.getParameter("txtNombreServicio"));
+		serv.setHora_servicio( request.getParameter("txtHoraServicio"));
+
+		
+		addServ.agregarServicio(serv);  	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+	
+	}
+	
+	
 
 }

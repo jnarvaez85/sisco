@@ -12,6 +12,8 @@ VTusuarios usuarios = (VTusuarios) request.getAttribute("usuario");
 final int tmp_plan=1;
 VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPlanillaTemp(tmp_plan);
 
+		int cod_tmp_planilla = tmp_dato_planilla.getCod_temp_planilla();
+
 		String nom_contador = tmp_dato_planilla.getNom_contador();
 		int cod_colabora1 = tmp_dato_planilla.getCod_colabora1();
 		String nom_colabora1 = tmp_dato_planilla.getNom_colabora1();
@@ -182,7 +184,7 @@ if(cursor == 5){
 				<div class="input-group mb-3" style="width: 35%;">
 					<span class="input-group-text">
 					<img width="20px" src="img/menu/fecha.png" /></span> 
-						<input type="date" class="form-control" name="txtFechaPlanilla" <%= estado_habilita %> required>
+						<input type="date" max="<%=currentDate %>" class="form-control" name="txtFechaPlanilla" <%= estado_habilita %> required>
 				</div>
 				<div class="col-auto">
 					<label class="visually-hidden">Servicio</label>
@@ -207,8 +209,8 @@ if(cursor == 5){
 
 				<div class="col-auto">
 					<div>
-						<img width="25px" src="img/menu/action_mas.png" /> <img
-							width="25px" src="img/menu/btn_buscar.png" />
+				<a href="#" data-bs-toggle="modal" data-bs-target="#agregarServicio"><img width="25px" src="img/menu/action_mas.png" /></a> 
+				<a href="#" data-bs-toggle="modal" data-bs-target="#listarServicios"><img width="25px" src="img/menu/btn_buscar.png" /></a>
 						<button type="submit" class="btn btn-secondary btn-sm" <%= estado_habilita %>>Agregar</button>
 					</div>
 				</div>
@@ -270,7 +272,14 @@ if(cursor == 5){
 			
 			<% if(fecha_planilla != null){ %>
 
-			<button type="button" class="btn btn-danger">Cancelar</button>
+			<form action="${pageContext.request.contextPath}/planillas" method="post">
+			<div style="float: left;margin-right: 2%;">
+			<button type="submit" class="btn btn-danger">Cancelar</button>
+			</div>
+			
+			<input type="hidden" name="validar" value="eliminarTempoPlanilla" >
+			<input type="hidden" name="txtCodTempPlanilla" value="<%=cod_tmp_planilla %>" >
+			</form>
 			
 			<% if(cursor >= 3){ %>
 			<button type="button" class="btn btn-primary">Continuar</button>
@@ -304,3 +313,7 @@ if(cursor == 5){
 	</div>
 </body>
 </html>
+
+
+<%@ include file="../modal/agregarServicio.jsp"%>
+<%@ include file="../modal/listarServicios.jsp"%>
