@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
-    <%@ include file="../CONTENT/lib.jsp"%>
+   
     
 <!--  Paquetes JAVA -->
 <%@page import="planillas.*"%>
@@ -45,6 +45,7 @@ LinkedList<Servicios> datos_serv = ServiciosDAO.listarServicios();
   
   <% for (int i = 0; i < datos_serv.size(); i++) {  
   
+	  int cod_servicio = datos_serv.get(i).getCod_servicio();
 	  String nom_servicio = datos_serv.get(i).getNom_servicio();
 	  String hora_servicio = datos_serv.get(i).getHora_servicio();
   %>
@@ -53,7 +54,26 @@ LinkedList<Servicios> datos_serv = ServiciosDAO.listarServicios();
        
       <td><%=nom_servicio %></td>
       <td><%=hora_servicio %></td>
-      <td>x</td>
+      <td>
+	<form action="${pageContext.request.contextPath}/planillas" method="post">
+				<div>				
+				<button type="submit" class="btn btn-link">
+				<img  width="18px" src="img/menu/eliminar.png" />
+				</button>
+				</div>
+				<input type="hidden"  name="txtCodServicio"  value="<%=cod_servicio %>">
+				<input type="hidden" name="validar" value="eliminarServicio">  
+				</form>
+		</td>
+		      
+		      <td>
+				<a href="#" 
+				data-bs-toggle="modal" data-bs-target="#modificarServicio"
+				data-bs-cod-servicio="<%= cod_servicio %>" 
+				data-bs-nom-servicio="<%= nom_servicio %>" 
+				data-bs-hor-servicio="<%= hora_servicio %>">		
+				<img width="18px" src="img/menu/editar.png" /></a>
+		</td>
     
     </tr>
     
@@ -69,3 +89,8 @@ LinkedList<Servicios> datos_serv = ServiciosDAO.listarServicios();
     </div>
   </div>
 </div>
+
+
+
+<%@ include file="../modal/modificarServicio.jsp"%>
+<%@ include file="../js/scriptServicios.jsp"%>

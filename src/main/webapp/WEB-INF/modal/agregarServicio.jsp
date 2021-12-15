@@ -12,11 +12,11 @@
 <form action="${pageContext.request.contextPath}/planillas" method="post">
 <div class="mb-3">
   <label  class="form-label">Servicio</label>
-  <input type="text" name="txtNombreServicio"  class="form-control" placeholder="ej: Escuela Dominical" required>
+  <input type="text" name="txtNombreServicio"  class="form-control" placeholder="ej: Escuela Dominical" required autocomplete="off">
 </div>
 <div class="mb-1">
   <label class="form-label">Horario</label>
-  <input type="text" name="txtHoraServicio" class="form-control" placeholder="ej: 00:00am a 12:00pm" required>
+  <input type="text" name="txtHoraServicio" class="form-control" placeholder="ej: 00:00am a 12:00pm" required autocomplete="off">
 </div>
 
 

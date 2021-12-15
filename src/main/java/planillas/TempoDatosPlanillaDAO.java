@@ -157,6 +157,84 @@ public class TempoDatosPlanillaDAO {
 					return rows;
 				}
 				
+				
+				// ELIMINAR SERVICIO
+				public static int eliminarServicio(int cod_servicio) throws SQLException {
+
+					int rows = 0;
+					
+				 	MysqlConexion conx = new MysqlConexion();
+			    	Connection con = null;
+			    	CallableStatement stmt = null;
+			    	
+
+					try {
+						con = conx.conectar();					
+
+						String sql = "{call SP_ELIMINA_SERVICIO (?)}";
+				        stmt = con.prepareCall(sql);						
+				
+				        stmt.setInt(1, cod_servicio);
+											
+						rows = stmt.executeUpdate();
+						
+						
+					   } catch (SQLException e) {
+							System.out.println("Error al eliminar servicio " + e);
+						}
+			        
+					finally {
+						try {
+							
+							MysqlConexion.close(stmt);
+							MysqlConexion.close(con);
+						} catch (SQLException e) {
+							System.out.println("Error al cerrar" + e);
+						}
+					}
+					return rows;
+				}
+				
+				
+				// MODIFICAR SERVICIO
+				public static int modificarServicio(Servicios servicio) throws SQLException {
+
+					int rows = 0;
+					
+				 	MysqlConexion conx = new MysqlConexion();
+			    	Connection con = null;
+			    	CallableStatement stmt = null;
+			    	
+					try {								
+						
+						con = conx.conectar();					
+						String sql = "{call SP_MODIFICA_SERVICIO (?,?,?)}";
+				        stmt = con.prepareCall(sql);	
+									
+				        stmt.setInt(1, servicio.getCod_servicio());						        
+				        stmt.setString(2, servicio.getNom_servicio());
+				        stmt.setString(3, servicio.getHora_servicio());
+				   
+						
+
+				        rows = stmt.executeUpdate();
+						
+					   } catch (SQLException e) {
+							System.out.println("Error al modificar servicio " + e);
+						}
+			        
+					finally {
+						try {
+							
+							MysqlConexion.close(stmt);
+							MysqlConexion.close(con);
+						} catch (SQLException e) {
+							System.out.println("Error al cerrar" + e);
+						}
+					}
+					return rows;
+				}
+				
 	
 
 }

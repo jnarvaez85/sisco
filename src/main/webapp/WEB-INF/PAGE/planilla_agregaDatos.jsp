@@ -248,10 +248,13 @@ if(cursor == 5){
 					%>
 
 
-				</select> <span class="input-group-text"><img width="25px"
-					src="img/menu/action_mas.png" /></span> <span class="input-group-text"><img
-					width="25px" src="img/menu/btn_buscar.png" /></span> <span
-					class="input-group-text"><button type="sumbit"
+				</select> 
+				<span class="input-group-text">
+				<a href="#" data-bs-toggle="modal" data-bs-target="#agregarColaborador"><img width="25px" src="img/menu/action_mas.png" /></a> 
+				</span> 
+				<span class="input-group-text">
+				<img width="25px" src="img/menu/btn_buscar.png" /></span> 
+				<span class="input-group-text"><button type="sumbit"
 						class="btn btn-secondary btn-sm" <%= estado_habilita2 %>>Elegir</button></span>
 			</div>
 			<small>Elija min un (1) o max (3) responsables del conteo</small>
@@ -317,3 +320,4 @@ if(cursor == 5){
 
 <%@ include file="../modal/agregarServicio.jsp"%>
 <%@ include file="../modal/listarServicios.jsp"%>
+<%@ include file="../modal/agregarColaborador.jsp"%>

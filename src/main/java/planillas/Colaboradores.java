@@ -7,6 +7,7 @@ public class Colaboradores {
 	private int tipo_doc_colabora;
 	private String doc_colabora;
 	private String nom_colabora;
+	private int estado_colabora;
 	
 	
 	public Colaboradores() {
@@ -16,13 +17,14 @@ public class Colaboradores {
 
 
 	public Colaboradores(int cod_colabora, int cod_param, int tipo_doc_colabora, String doc_colabora,
-			String nom_colabora) {
+			String nom_colabora, int estado_colabora) {
 		super();
 		this.cod_colabora = cod_colabora;
 		this.cod_param = cod_param;
 		this.tipo_doc_colabora = tipo_doc_colabora;
 		this.doc_colabora = doc_colabora;
 		this.nom_colabora = nom_colabora;
+		this.estado_colabora = estado_colabora;
 	}
 
 
@@ -32,12 +34,14 @@ public class Colaboradores {
 	}
 
 
-	public Colaboradores(int cod_param, int tipo_doc_colabora, String doc_colabora, String nom_colabora) {
+	public Colaboradores(int cod_param, int tipo_doc_colabora, String doc_colabora, String nom_colabora,
+			int estado_colabora) {
 		super();
 		this.cod_param = cod_param;
 		this.tipo_doc_colabora = tipo_doc_colabora;
 		this.doc_colabora = doc_colabora;
 		this.nom_colabora = nom_colabora;
+		this.estado_colabora = estado_colabora;
 	}
 
 
@@ -89,7 +93,18 @@ public class Colaboradores {
 	public void setNom_colabora(String nom_colabora) {
 		this.nom_colabora = nom_colabora;
 	}
-	
+
+
+	public int getEstado_colabora() {
+		return estado_colabora;
+	}
+
+
+	public void setEstado_colabora(int estado_colabora) {
+		this.estado_colabora = estado_colabora;
+	}
+
+
 	
 	
 	

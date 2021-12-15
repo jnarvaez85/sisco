@@ -42,8 +42,8 @@ public class planillas extends HttpServlet {
 			case "nuevaPlanilla":
 				this.agregarPlanilla(request, response);
 				break;
-			case "consultarPlanilla":
-				this.consultarPlanilla(request, response);
+			case "add":
+				this.agregarPlanillaGet(request, response);
 				break;
 			case "planillaCompartida":
 				this.planillaCompartida(request, response);
@@ -51,6 +51,7 @@ public class planillas extends HttpServlet {
 			case "colaboladores":
 				this.colaboladores(request, response);
 				break;
+				
 			}
 			
 		} else {
@@ -66,9 +67,9 @@ public class planillas extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_validaContador.jsp").forward(request, response);	
 	}
 	
-	private void consultarPlanilla(HttpServletRequest request, HttpServletResponse response)
+	private void agregarPlanillaGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/consultarPlanilla.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);	
 	}
 	
 	private void planillaCompartida(HttpServletRequest request, HttpServletResponse response)
@@ -110,6 +111,25 @@ public class planillas extends HttpServlet {
 				agregarNuevoServicio(request, response);
 			} catch (SQLException | IOException | ServletException e) {
 				System.out.print("Error al insertar nuevo servicio: " + e);
+				e.printStackTrace();
+			}
+			break;
+		case "eliminarServicio":
+			eliminarServicio(request, response);
+			break;
+		case "modificarServicio":
+			try {
+				modificarServicio(request, response);
+			} catch (SQLException | IOException | ServletException e) {
+				System.out.print("Error al modificar servicio : " + e);
+				e.printStackTrace();
+			}
+			break;
+		case "agregarColaborador":
+			try {
+				agregarColaborador(request, response);
+			} catch (SQLException | IOException | ServletException e) {
+				System.out.print("Error al agregar colaborador : " + e);
 				e.printStackTrace();
 			}
 			break;
@@ -227,6 +247,58 @@ public class planillas extends HttpServlet {
 
 		
 		addServ.agregarServicio(serv);  	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+	
+	}
+	
+	// Eliminar Servicio
+	private void eliminarServicio(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		
+		int cod_servicio = Integer.parseInt(request.getParameter("txtCodServicio"));
+		try {
+			TempoDatosPlanillaDAO.eliminarServicio(cod_servicio);
+		} catch (SQLException e) {
+			System.out.print("Error al eliminar servicio: " + e);
+			e.printStackTrace();
+		}
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
+	
+	}
+	
+	
+	// Modificar Servicio
+	private void modificarServicio(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		Servicios serv = new Servicios();		
+		
+		serv.setCod_servicio(Integer.parseInt(request.getParameter("txtCodServicio")));
+		serv.setNom_servicio(request.getParameter("txtNombreServicio"));
+		serv.setHora_servicio(request.getParameter("txtHoraServicio"));
+	
+		TempoDatosPlanillaDAO.modificarServicio(serv);	
+	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);	
+	
+	}
+	
+	// Agregar Colaborador
+	private void agregarColaborador(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		Colaboradores colabora = new Colaboradores();
+		ColaboradoresDAO addColabora = new ColaboradoresDAO();
+		
+	
+		colabora.setTipo_doc_colabora(Integer.parseInt(request.getParameter("selectTipoId")));
+		colabora.setDoc_colabora(request.getParameter("txtDocColabora"));
+		colabora.setNom_colabora(request.getParameter("txtNomColabora"));
+	
+		
+		addColabora.insertarColaborador(colabora);    	
 	
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
 	
