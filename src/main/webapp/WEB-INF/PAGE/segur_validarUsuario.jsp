@@ -6,8 +6,8 @@
 
 
 
-<% if(request.getAttribute("alert") != null){ %>
-<jsp:include page="/WEB-INF/ALERT/usuarioRegistrado.jsp" />
+<% if(request.getAttribute("alert") == "101"){ %>
+<jsp:include page="/WEB-INF/ALERT/usuarioExiste.jsp" />
 <% } %>
 
 

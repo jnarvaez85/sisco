@@ -187,7 +187,7 @@
 				</h6>
 				<p class="card-text">Listado de usuarios con acceso a los
 					privilegios de SISCO</p>
-				<a href="seguridad?url=validarExisteUsuario" id="a_link"><img
+				<a href="${pageContext.request.contextPath}/seguridad?url=validate" id="a_link"><img
 					width="20px" src="img/menu/nuevo_cierre.png" /> Agregar Usuario</a>
 			</div>
 		</div>

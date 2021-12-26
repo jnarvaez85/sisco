@@ -9,6 +9,7 @@ import java.util.LinkedList;
 
 import db.MysqlConexion;
 import seguridad.Personas;
+import seguridad.VTusuarios;
 
 public class ServiciosDAO {
 	
@@ -87,6 +88,52 @@ public class ServiciosDAO {
 							System.out.println("Error al cerrar" + e);
 						}
 					}
+			}
+			
+			
+			
+			// CONSULTAR SERVICIO			
+			public int validarServicio(String nom_servicio) {
+				
+			 	MysqlConexion conx = new MysqlConexion();
+		    	Connection con = null;
+		    	CallableStatement stmt = null;
+				ResultSet rs = null;
+				
+				
+				try {
+					
+					con = conx.conectar();			
+					
+					 String sql = "{call SP_VALIDA_SERVICIO (?)}";
+			         stmt = con.prepareCall(sql);			
+
+			         stmt.setString(1, nom_servicio);					
+					 rs=	stmt.executeQuery();
+					
+					if(rs.next()) {
+						return rs.getInt(1);
+					}
+					MysqlConexion.close(rs);
+					MysqlConexion.close(stmt);
+					MysqlConexion.close(con);
+					return 1;
+					
+				   } catch (SQLException e) {
+						System.out.println("Error al validar  servicio " + e);
+					}
+		        
+				finally {
+					try {
+						
+						MysqlConexion.close(rs);
+						MysqlConexion.close(stmt);
+						MysqlConexion.close(con);
+					} catch (SQLException e) {
+						System.out.println("Error al cerrar" + e);
+					}
+				}
+				return 1;
 			}
 			
 			

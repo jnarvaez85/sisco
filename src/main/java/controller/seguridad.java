@@ -42,7 +42,7 @@ public class seguridad extends HttpServlet {
 		case "usuarios":
 			listarUsuarios(request, response);
 			break;
-		case "validarExisteUsuario":
+		case "validate":
 			validarExisteUsuario(request, response);
 			break;
 		}

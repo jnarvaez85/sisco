@@ -133,6 +133,27 @@ public class planillas extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+		case "bloquearColaborador":
+			try {
+				bloquearColaborador(request, response);
+			} catch (SQLException | IOException | ServletException e) {
+				System.out.print("Error al bloquear colaborador : " + e);
+				e.printStackTrace();
+			}
+			break;
+		case "desbloquearColaborador":
+			try {
+				desbloquearColaborador(request, response);
+			} catch (SQLException | IOException | ServletException e) {
+				System.out.print("Error al desbloquear colaborador : " + e);
+				e.printStackTrace();
+			}
+			break;
+			/*
+		case "validarServicio":
+			validarServicio(request, response);
+			break;
+			*/	
 		}
 	
 	}
@@ -230,7 +251,7 @@ public class planillas extends HttpServlet {
 			e.printStackTrace();
 		}
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_validaContador.jsp").forward(request, response);			
 	
 	}
 	
@@ -240,15 +261,24 @@ public class planillas extends HttpServlet {
 			throws SQLException, IOException, ServletException {
 		
 		Servicios serv = new Servicios();
-		ServiciosDAO addServ = new ServiciosDAO();
+		ServiciosDAO servicio = new ServiciosDAO();	
+		
+		if(servicio.validarServicio(request.getParameter("txtNombreServicio")) == 0) {
+
 		
 		serv.setNom_servicio(request.getParameter("txtNombreServicio"));
 		serv.setHora_servicio( request.getParameter("txtHoraServicio"));
-
 		
-		addServ.agregarServicio(serv);  	
+		servicio.agregarServicio(serv);  	
 	
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+		
+		}else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
+			request.setAttribute("alert", "101");	
+			dispatcher.forward(request, response);	
+
+		}
 	
 	}
 	
@@ -273,7 +303,11 @@ public class planillas extends HttpServlet {
 	private void modificarServicio(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		
-		Servicios serv = new Servicios();		
+		
+		Servicios serv = new Servicios();
+		ServiciosDAO servicio = new ServiciosDAO();	
+		
+		if(servicio.validarServicio(request.getParameter("txtNombreServicio")) == 0) {			
 		
 		serv.setCod_servicio(Integer.parseInt(request.getParameter("txtCodServicio")));
 		serv.setNom_servicio(request.getParameter("txtNombreServicio"));
@@ -282,6 +316,13 @@ public class planillas extends HttpServlet {
 		TempoDatosPlanillaDAO.modificarServicio(serv);	
 	
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);	
+		
+		}else {
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
+			request.setAttribute("alert", "101");	
+			dispatcher.forward(request, response);	
+		}
 	
 	}
 	
@@ -290,20 +331,68 @@ public class planillas extends HttpServlet {
 			throws SQLException, IOException, ServletException {
 		
 		Colaboradores colabora = new Colaboradores();
-		ColaboradoresDAO addColabora = new ColaboradoresDAO();
+		ColaboradoresDAO colaborador = new ColaboradoresDAO();
 		
+		
+		if(colaborador.validarColaborador(request.getParameter("txtDocColabora")) == 0) {
 	
 		colabora.setTipo_doc_colabora(Integer.parseInt(request.getParameter("selectTipoId")));
 		colabora.setDoc_colabora(request.getParameter("txtDocColabora"));
 		colabora.setNom_colabora(request.getParameter("txtNomColabora"));
 	
 		
-		addColabora.insertarColaborador(colabora);    	
+		colaborador.insertarColaborador(colabora);    	
 	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+		
+		}else {
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
+			request.setAttribute("alert", "102");	
+			dispatcher.forward(request, response);	
+			
+		}
+	
+	}
+	
+	
+	// Bloquear colaborador
+	
+	private void bloquearColaborador(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+	
+		
+		Colaboradores editColabora = new Colaboradores();		
+		
+		editColabora.setCod_colabora(Integer.parseInt(request.getParameter("txtCodColabora")));
+		editColabora.setEstado_colabora(Integer.parseInt(request.getParameter("txtEstadoColabora")));
+	
+		ColaboradoresDAO.bloquearColaborador(editColabora);
+	
+		
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
 	
 	}
 	
 	
+	// Desbloquear colaborador
+	
+	private void desbloquearColaborador(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+	
+		
+		Colaboradores editColabora = new Colaboradores();		
+		
+		editColabora.setCod_colabora(Integer.parseInt(request.getParameter("txtCodColabora")));
+		editColabora.setEstado_colabora(Integer.parseInt(request.getParameter("txtEstadoColabora")));
+	
+		ColaboradoresDAO.desbloquearColaborador(editColabora);
+	
+		
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+	
+	}
+	
+
 
 }

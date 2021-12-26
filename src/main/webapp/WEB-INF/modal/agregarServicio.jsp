@@ -1,4 +1,14 @@
 
+
+<%
+
+String txtNombreServicio="txtNombreServicio";
+String txtHoraServicio="txtHoraServicio";
+
+%>
+
+
+
 <div class="modal fade" id="agregarServicio" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" >
     <div class="modal-content">
@@ -12,11 +22,11 @@
 <form action="${pageContext.request.contextPath}/planillas" method="post">
 <div class="mb-3">
   <label  class="form-label">Servicio</label>
-  <input type="text" name="txtNombreServicio"  class="form-control" placeholder="ej: Escuela Dominical" required autocomplete="off">
+  <input type="text" name="<%= txtNombreServicio %>"  class="form-control" placeholder="ej: Escuela Dominical" required autocomplete="off">
 </div>
 <div class="mb-1">
   <label class="form-label">Horario</label>
-  <input type="text" name="txtHoraServicio" class="form-control" placeholder="ej: 00:00am a 12:00pm" required autocomplete="off">
+  <input type="text" name="<%= txtHoraServicio %>" class="form-control" placeholder="ej: 00:00am a 12:00pm" required autocomplete="off">
 </div>
 
 

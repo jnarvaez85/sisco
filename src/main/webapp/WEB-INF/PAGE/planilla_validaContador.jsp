@@ -5,6 +5,25 @@
 <%@ include file="../CONTENT/consultas.jsp" %>
 
 
+
+<%
+final int tmp_cod_plan=1;
+String fecha_planilla=null;
+VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPlanillaTemp(tmp_cod_plan);
+
+		int cod_tmp_planilla = tmp_dato_planilla.getCod_temp_planilla();
+		
+		Date format_fecha_planilla = tmp_dato_planilla.getFecha_genera();
+		
+		if(format_fecha_planilla != null){
+			SimpleDateFormat formatDate = new SimpleDateFormat("dd/MM/yyyy");
+			fecha_planilla= formatDate.format(format_fecha_planilla);
+
+		}
+
+%>
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,9 +33,11 @@
 
 
 <div class="div_content">
+
+
+<% if(cod_tmp_planilla <= 0){  %> 
+
  <div class="col-md-3"> 
- 
- 
  <div class="div_center_25">
  <form action="${pageContext.request.contextPath}/planillas" method="post"> 
  
@@ -51,7 +72,34 @@
   </div>
   
 
+  <% } else{ %> 
   
+  
+  <div class="alert alert-success" role="alert">
+  <h4 class="alert-heading">Advertencia!</h4>
+  <p>El sistema ha detectado que existe una planilla del día <%=fecha_planilla %> que aún 
+  no ha sido completada.</p>
+  <hr>
+  <p class="mb-0">¿Desea coantinuar con la gestión de la planilla aún sin completar?</p>
+  <br>
+  <div><a href="planillas?url=add" class="btn btn-success">Si, deseo continuar</a>
+  
+			<div style="float: left;margin-right: 1%;">
+			<form action="${pageContext.request.contextPath}/planillas" method="post">
+			
+			<button type="submit" class="btn btn-danger">No, deseo eliminarla</button>
+			</div>
+			
+			<input type="hidden" name="validar" value="eliminarTempoPlanilla" >
+			<input type="hidden" name="txtCodTempPlanilla" value="<%=cod_tmp_planilla %>" >
+			</form>
+			</div>
+  </div>
+  
+</div>
+  
+  
+   <% } %> 
   
  
 </div>
