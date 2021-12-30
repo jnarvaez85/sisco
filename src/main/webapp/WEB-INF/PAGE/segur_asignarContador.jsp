@@ -15,7 +15,7 @@ int estado_cont = usuarios.getEstado_cont();
 String contador = usuarios.getAdmin();
 
 String nom_persona = usuarios.getNom_persona();
-String apell_persona = usuarios.getApell_persona();
+
 
 
 
@@ -40,7 +40,7 @@ String funciones = "Los usuarios con rol de contador serán responsables de los c
 
 		<h2>
 			<img width="50px" src="img/menu/perfil.png" />
-			<%=nom_persona+" "+apell_persona%>
+			<%=nom_persona%>
 			es actualmente contador
 		</h2>
 

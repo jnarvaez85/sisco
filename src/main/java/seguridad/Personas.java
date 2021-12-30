@@ -3,8 +3,7 @@ package seguridad;
 public class Personas {
 	
 	private int cod_persona;
-	private String nom_persona;
-	private String apell_persona;
+	private String nom_persona;	
 	private int tipo_doc_persona;
 	private String doc_persona;
 	private String dir_persona;
@@ -18,12 +17,11 @@ public class Personas {
 	}
 
 
-	public Personas(int cod_persona, String nom_persona, String apell_persona, int tipo_doc_persona, String doc_persona,
+	public Personas(int cod_persona, String nom_persona, int tipo_doc_persona, String doc_persona,
 			String dir_persona, String tel_persona, int rol_persona) {
 		super();
 		this.cod_persona = cod_persona;
-		this.nom_persona = nom_persona;
-		this.apell_persona = apell_persona;
+		this.nom_persona = nom_persona;		
 		this.tipo_doc_persona = tipo_doc_persona;
 		this.doc_persona = doc_persona;
 		this.dir_persona = dir_persona;
@@ -38,11 +36,10 @@ public class Personas {
 	}
 
 
-	public Personas(String nom_persona, String apell_persona, int tipo_doc_persona, String doc_persona,
+	public Personas(String nom_persona, int tipo_doc_persona, String doc_persona,
 			String dir_persona, String tel_persona, int rol_persona) {
 		super();
-		this.nom_persona = nom_persona;
-		this.apell_persona = apell_persona;
+		this.nom_persona = nom_persona;		
 		this.tipo_doc_persona = tipo_doc_persona;
 		this.doc_persona = doc_persona;
 		this.dir_persona = dir_persona;
@@ -68,16 +65,6 @@ public class Personas {
 
 	public void setNom_persona(String nom_persona) {
 		this.nom_persona = nom_persona;
-	}
-
-
-	public String getApell_persona() {
-		return apell_persona;
-	}
-
-
-	public void setApell_persona(String apell_persona) {
-		this.apell_persona = apell_persona;
 	}
 
 

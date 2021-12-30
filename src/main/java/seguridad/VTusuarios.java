@@ -7,8 +7,7 @@ public class VTusuarios {
 	private int cod_persona;
 	private int estado_cont;
 	private String admin;
-	private String nom_persona;
-	private String apell_persona;
+	private String nom_persona;	
 	private int cod_id;
 	private String tipo_identificacion;
 	private String usuario;
@@ -31,7 +30,7 @@ public class VTusuarios {
 
 
 
-	public VTusuarios(int cod_persona, int estado_cont, String admin, String nom_persona, String apell_persona,
+	public VTusuarios(int cod_persona, int estado_cont, String admin, String nom_persona, 
 			int cod_id, String tipo_identificacion, String usuario, String dir_persona, String tel_persona,
 			Date fecha_inicio, Date fecha_fin, int cod_estado, String estado, int cod_rol, String rol,
 			int estado_firma) {
@@ -39,8 +38,7 @@ public class VTusuarios {
 		this.cod_persona = cod_persona;
 		this.estado_cont = estado_cont;
 		this.admin = admin;
-		this.nom_persona = nom_persona;
-		this.apell_persona = apell_persona;
+		this.nom_persona = nom_persona;		
 		this.cod_id = cod_id;
 		this.tipo_identificacion = tipo_identificacion;
 		this.usuario = usuario;
@@ -64,14 +62,13 @@ public class VTusuarios {
 
 
 
-	public VTusuarios(int estado_cont, String admin, String nom_persona, String apell_persona, int cod_id,
+	public VTusuarios(int estado_cont, String admin, String nom_persona,  int cod_id,
 			String tipo_identificacion, String usuario, String dir_persona, String tel_persona, Date fecha_inicio,
 			Date fecha_fin, int cod_estado, String estado, int cod_rol, String rol, int estado_firma) {
 		super();
 		this.estado_cont = estado_cont;
 		this.admin = admin;
-		this.nom_persona = nom_persona;
-		this.apell_persona = apell_persona;
+		this.nom_persona = nom_persona;		
 		this.cod_id = cod_id;
 		this.tipo_identificacion = tipo_identificacion;
 		this.usuario = usuario;
@@ -132,18 +129,6 @@ public class VTusuarios {
 
 	public void setNom_persona(String nom_persona) {
 		this.nom_persona = nom_persona;
-	}
-
-
-
-	public String getApell_persona() {
-		return apell_persona;
-	}
-
-
-
-	public void setApell_persona(String apell_persona) {
-		this.apell_persona = apell_persona;
 	}
 
 

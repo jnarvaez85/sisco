@@ -43,7 +43,7 @@ LinkedList<Parametros> parametros = ParametrosDAO.listarParametros();
 LinkedList<VTcontadores> datos_contador = ContadoresDAO.listarContadores();
 
 //COLABORADORES
-LinkedList<Colaboradores> datos_colaborador = ColaboradoresDAO.listarColaboradores();
+LinkedList<VTcolaboradores> datos_colaborador = ColaboradoresDAO.listarColaboradores();
 
 //SERVICIOS
 LinkedList<Servicios> datos_servicios = ServiciosDAO.listarServicios();

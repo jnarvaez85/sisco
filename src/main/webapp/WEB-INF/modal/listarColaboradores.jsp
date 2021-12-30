@@ -14,7 +14,7 @@
 <%@ page import="java.text.SimpleDateFormat"%>
 
 <%
-LinkedList<Colaboradores> mostrar_colabora = ColaboradoresDAO.mostrarColaboradores();
+LinkedList<VTcolaboradores> mostrar_colabora = ColaboradoresDAO.mostrarColaboradores();
 %>
 
 
@@ -52,9 +52,9 @@ LinkedList<Colaboradores> mostrar_colabora = ColaboradoresDAO.mostrarColaborador
 								for (int i = 0; i < mostrar_colabora.size(); i++) {
 
 									int cod_colabora = mostrar_colabora.get(i).getCod_colabora();
-									String nom_colabora = mostrar_colabora.get(i).getNom_colabora();
-									String doc_colabora = mostrar_colabora.get(i).getDoc_colabora();
-									int estado_colabora = mostrar_colabora.get(i).getEstado_colabora();
+									String nom_colabora = mostrar_colabora.get(i).getNombre_colaborador();
+									String doc_colabora = mostrar_colabora.get(i).getIdentificacion();
+									int estado_colabora = mostrar_colabora.get(i).getCod_estado();
 
 									if (estado_colabora == 0) {
 

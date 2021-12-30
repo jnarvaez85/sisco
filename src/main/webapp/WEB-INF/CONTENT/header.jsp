@@ -48,7 +48,7 @@ String version_sys = software.get(0).getVer_sys();
      
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            <img width="25px" src="img/white/user.png"/> ${usuario.getNom_persona()} ${usuario.getApell_persona()}
+            <img width="25px" src="img/white/user.png"/> ${usuario.getNom_persona()}
           </a>
           <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
             <li><a class="dropdown-item" href="#"><img width="18px" src="img/menu/config.png"/> Configuración</a></li>

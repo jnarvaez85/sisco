@@ -38,8 +38,7 @@ public class UsuariosDAO {
 			rs = stmt.executeQuery();
 
 			while (rs.next()) {
-				user.setNom_persona(rs.getString("nom_persona"));
-				user.setApell_persona(rs.getString("apell_persona"));
+				user.setNom_persona(rs.getString("nom_persona"));				
 				user.setTipo_identificacion(rs.getString("tipo_identificacion"));
 				user.setUsuario(rs.getString("usuario"));
 				user.setDir_persona(rs.getString("dir_persona"));
@@ -84,8 +83,7 @@ public class UsuariosDAO {
 	            	list_user.setCod_persona(rs.getInt("cod_persona"));
 	            	list_user.setEstado_cont(rs.getInt("estado_cont"));
 	            	list_user.setAdmin(rs.getString("admin"));
-	            	list_user.setNom_persona(rs.getString("nom_persona"));
-	            	list_user.setApell_persona(rs.getString("apell_persona"));
+	            	list_user.setNom_persona(rs.getString("nom_persona"));	            	
 	            	list_user.setTipo_identificacion(rs.getString("tipo_identificacion"));
 	            	list_user.setUsuario(rs.getString("usuario"));
 	            	list_user.setDir_persona(rs.getString("dir_persona"));
@@ -172,16 +170,15 @@ public class UsuariosDAO {
 			try {
 				con = conx.conectar();
 				
-				 String sql = "{call SP_INSERT_PERSONA (?,?,?,?,?,?,?)}";
+				 String sql = "{call SP_INSERT_PERSONA (?,?,?,?,?,?)}";
 		         stmt = con.prepareCall(sql);
 			
-		         stmt.setString(1, user.getNom_persona());
-		         stmt.setString(2, user.getApell_persona());
-		         stmt.setInt(3, user.getTipo_doc_persona());
-		         stmt.setString(4, user.getDoc_persona());
-		         stmt.setString(5, user.getDir_persona());
-		         stmt.setString(6, user.getTel_persona());
-		         stmt.setInt(7, user.getRol_persona());			
+		         stmt.setString(1, user.getNom_persona());		         
+		         stmt.setInt(2, user.getTipo_doc_persona());
+		         stmt.setString(3, user.getDoc_persona());
+		         stmt.setString(4, user.getDir_persona());
+		         stmt.setString(5, user.getTel_persona());
+		         stmt.setInt(6, user.getRol_persona());			
 		         stmt.executeUpdate();
 				
 	        } catch (SQLException e) {
@@ -380,17 +377,16 @@ public class UsuariosDAO {
 							try {								
 								
 								con = conx.conectar();					
-								String sql = "{call SP_MODIFICA_USUARIO (?,?,?,?,?,?,?,?)}";
+								String sql = "{call SP_MODIFICA_USUARIO (?,?,?,?,?,?,?)}";
 						        stmt = con.prepareCall(sql);	
 											
 						        stmt.setInt(1, persona.getCod_persona());						        
 						        stmt.setInt(2, persona.getTipo_doc_persona());
 						        stmt.setString(3, persona.getDoc_persona());
-						        stmt.setString(4, persona.getNom_persona());
-						        stmt.setString(5, persona.getApell_persona());
-						        stmt.setString(6, persona.getDir_persona());
-						        stmt.setString(7, persona.getTel_persona());
-						        stmt.setInt(8, persona.getRol_persona() );
+						        stmt.setString(4, persona.getNom_persona());						       
+						        stmt.setString(5, persona.getDir_persona());
+						        stmt.setString(6, persona.getTel_persona());
+						        stmt.setInt(7, persona.getRol_persona() );
 								
 
 						        rows = stmt.executeUpdate();
@@ -432,8 +428,7 @@ public class UsuariosDAO {
 						 		user.setCod_persona(rs.getInt("cod_persona"));	
 						 		user.setEstado_cont(rs.getInt("estado_cont"));
 						 		user.setAdmin(rs.getString("admin"));
-						 		user.setNom_persona(rs.getString("nom_persona"));
-						 		user.setApell_persona(rs.getString("apell_persona"));
+						 		user.setNom_persona(rs.getString("nom_persona"));						 		
 						 		user.setCod_id(rs.getInt("cod_id"));
 						 		user.setTipo_identificacion(rs.getString("tipo_identificacion"));
 						 		user.setUsuario(rs.getString("usuario"));
@@ -448,7 +443,7 @@ public class UsuariosDAO {
 						 		user.setEstado_firma(rs.getInt("estado_firma"));
 						   }
 						  } catch (SQLException e) {
-								System.out.println("Error al consultar usuario" + e);
+								System.out.println("Error al consultar usuario " + e);
 							}
 					    
 						finally {

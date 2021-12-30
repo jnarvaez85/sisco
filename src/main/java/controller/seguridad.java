@@ -10,6 +10,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import seguridad.*;
 
@@ -118,25 +119,111 @@ public class seguridad extends HttpServlet {
 	
 	
 	// Validar existencia de Usuario
+	
 	private void validarUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+
+		UsuariosDAO userValidate = new UsuariosDAO();
 		
-		UsuariosDAO userValidate = new UsuariosDAO();		
+		PersonasDAO per = new PersonasDAO();
+		Personas persona = new Personas();
+		
+
+		String doc = request.getParameter("txtIdentificacion");
+		
+
+
+		try {
+
+			persona = per.consultarPersona(doc);
+			
+			
+			if (userValidate.validarUsuario(request.getParameter("txtIdentificacion")) == 0) {
+				
+				request.setAttribute("doc_user", doc);
+	    		
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_agregarUsuario.jsp");
+				dispatcher.forward(request, response);	
+				
+
+			} else {
+
+
+				String redireccionarUrl = request.getParameter("validarUrl");
+				
+				
+				switch (redireccionarUrl) {
+
+				case "redirectUsuarios":
+					redireccionarUrl="WEB-INF/PAGE/segur_usuarios.jsp";
+					break;
+				case "redirectColaboradores":
+					redireccionarUrl="WEB-INF/PAGE/planilla_agregaDatos.jsp";
+					break;	
+				}
+				
+				
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher(redireccionarUrl);
+				request.setAttribute("alert", "101");
+				request.setAttribute("persona", persona);
+				dispatcher.forward(request, response);
+				
+			}
+		} catch (SQLException e) {
+			System.out.print("Error al logearse: " + e);
+			e.printStackTrace();
+		}
+		
+		
+	}
+	
+	
+	/*
+	private void validarUsuario(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException, SQLException {
+		
+		UsuariosDAO userValidate = new UsuariosDAO();
+		
 		
 		if(userValidate.validarUsuario(request.getParameter("txtIdentificacion")) == 0) {
 			
-		    String doc = request.getParameter("txtIdentificacion");	
+			Personas persona= new Personas();
+			
+		    String doc = request.getParameter("txtIdentificacion");
+		    persona = PersonasDAO.consultarPersona(doc);
+		    
 		
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_agregarUsuario.jsp");
-			request.setAttribute("doc_user", doc);	
+			request.setAttribute("doc_user", doc);
+			request.setAttribute("per", persona);
 			dispatcher.forward(request, response);				
 		
-		}else {	
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_validarUsuario.jsp");
+		}else {
+			
+			String redireccionarUrl = request.getParameter("validarUrl");
+			
+			switch (redireccionarUrl) {
+
+			case "redirectUsuarios":
+				redireccionarUrl="WEB-INF/PAGE/segur_usuarios.jsp";
+				break;
+			case "redirectColaboradores":
+				redireccionarUrl="WEB-INF/PAGE/planilla_agregaDatos.jsp";
+				break;
+
+			}
+			
+			
+		
+			
+			RequestDispatcher dispatcher = request.getRequestDispatcher(redireccionarUrl);
 			request.setAttribute("alert", "101");	
 			dispatcher.forward(request, response);
 		}
 	}
+	
+	*/
 	
 	
 	// Agregar nuevo usuario
@@ -146,8 +233,7 @@ public class seguridad extends HttpServlet {
 		Personas per = new Personas();
 		UsuariosDAO addUser = new UsuariosDAO();
 		
-		per.setNom_persona(request.getParameter("txtNombres"));
-		per.setApell_persona( request.getParameter("txtApellidos"));
+		per.setNom_persona(request.getParameter("txtNombres"));		
 		per.setTipo_doc_persona(Integer.parseInt(request.getParameter("selectTipoId")));
 		per.setDoc_persona(request.getParameter("txtIdentificacion"));
 		per.setDir_persona(request.getParameter("txtDireccion"));
@@ -227,8 +313,7 @@ public class seguridad extends HttpServlet {
 		
 		editPersona.setCod_persona(Integer.parseInt(request.getParameter("txtCodPersona")));
 		editPersona.setRol_persona(Integer.parseInt(request.getParameter("selectPermisos")));
-		editPersona.setNom_persona(request.getParameter("txtNomPersona"));
-		editPersona.setApell_persona(request.getParameter("txtApellPersona"));
+		editPersona.setNom_persona(request.getParameter("txtNomPersona"));		
 		editPersona.setDir_persona(request.getParameter("txtDirPersona"));
 		editPersona.setTel_persona(request.getParameter("txtTelPersona"));
 	

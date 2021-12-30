@@ -5,13 +5,22 @@
 <%@ include file="../CONTENT/consultas.jsp"%>
 
 
-<% if (request.getAttribute("alert") == "101") { %>
-<jsp:include page="/WEB-INF/ALERT/servicioExiste.jsp" />
+
+<% if(request.getAttribute("alert") == "101"){ %>
+<jsp:include page="/WEB-INF/ALERT/colaboradorExiste.jsp" />
 <% } %>
 
 <% if (request.getAttribute("alert") == "102") { %>
+<jsp:include page="/WEB-INF/ALERT/servicioExiste.jsp" />
+<% } %>
+
+<% if (request.getAttribute("alert") == "103") { %>
 <jsp:include page="/WEB-INF/ALERT/colaboradorExiste.jsp" />
 <% } %>
+
+
+
+
 
 
 <%
@@ -87,7 +96,6 @@ if (cursor == 5) {
 	estado_habilita2 = "enable";
 }
 %>
-
 
 
 
@@ -183,7 +191,7 @@ if (cursor == 5) {
 						<br> <br> <br>
 						<div>
 							<img width="20px" src="img/menu/desblock.png" />
-							${usuario.getNom_persona()} ${usuario.getApell_persona()}
+							${usuario.getNom_persona()}
 						</div>
 						<small>Usuario que genera</small>
 					</div>
@@ -291,9 +299,9 @@ if (cursor == 5) {
 
 						<%
 						for (int i = 0; i < datos_colaborador.size(); i++) {
-							String nom_colaborador = datos_colaborador.get(i).getNom_colabora();
+							String nom_colaborador = datos_colaborador.get(i).getNombre_colaborador();
 							int cod_colabora = datos_colaborador.get(i).getCod_colabora();
-							int estado_cola = datos_colaborador.get(i).getEstado_colabora();
+							int estado_cola = datos_colaborador.get(i).getCod_estado();
 						%>
 						<option value="<%=cod_colabora%>"><%=nom_colaborador%></option>
 
@@ -317,7 +325,7 @@ if (cursor == 5) {
 						if (param == 12 && tipo == 0 && opcion == "Agregar") { // opciones de colaboradores, enlace tipo modal=0
 					%>
 					<span class="input-group-text"> <a href="#"
-						data-bs-toggle="modal" data-bs-target="#<%=link%>"><img
+						data-bs-toggle="modal" data-bs-target="#<%=link%>" data-bs-url="redirectColaboradores"><img
 							width="25px" src="img/menu/<%=icon%>.png" /></a> <%
  }
  }
@@ -334,7 +342,7 @@ if (cursor == 5) {
  	int tipo = menuColabora.get(y).getCod_enlace();
 
  	if (param == 12 && tipo == 0) { // opciones de colaboradores, enlace tipo modal=0
- %> <a href="#" data-bs-toggle="modal" data-bs-target="#<%=link%>"><img
+ %> <a href="#" data-bs-toggle="modal" data-bs-target="#<%=link%>" data-bs-url="redirectColaboradores"><img
 							width="25px" src="img/menu/<%=icon%>.png" /></a> <%
  }
  }
@@ -415,8 +423,9 @@ if (cursor == 5) {
 
 
 
-
+<%@ include file="../modal/validarPersona.jsp"%>
 <%@ include file="../modal/agregarServicio.jsp"%>
 <%@ include file="../modal/listarServicios.jsp"%>
 <%@ include file="../modal/agregarColaborador.jsp"%>
 <%@ include file="../modal/listarColaboradores.jsp"%>
+<%@ include file="../js/scriptUsuarios.jsp"%>

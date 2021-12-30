@@ -275,7 +275,7 @@ public class planillas extends HttpServlet {
 		
 		}else {
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
-			request.setAttribute("alert", "101");	
+			request.setAttribute("alert", "102");	
 			dispatcher.forward(request, response);	
 
 		}
@@ -320,7 +320,7 @@ public class planillas extends HttpServlet {
 		}else {
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
-			request.setAttribute("alert", "101");	
+			request.setAttribute("alert", "102");	
 			dispatcher.forward(request, response);	
 		}
 	
@@ -336,9 +336,7 @@ public class planillas extends HttpServlet {
 		
 		if(colaborador.validarColaborador(request.getParameter("txtDocColabora")) == 0) {
 	
-		colabora.setTipo_doc_colabora(Integer.parseInt(request.getParameter("selectTipoId")));
-		colabora.setDoc_colabora(request.getParameter("txtDocColabora"));
-		colabora.setNom_colabora(request.getParameter("txtNomColabora"));
+		colabora.setCod_persona(Integer.parseInt(request.getParameter("selectTipoId")));
 	
 		
 		colaborador.insertarColaborador(colabora);    	
@@ -348,7 +346,7 @@ public class planillas extends HttpServlet {
 		}else {
 			
 			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
-			request.setAttribute("alert", "102");	
+			request.setAttribute("alert", "103");	
 			dispatcher.forward(request, response);	
 			
 		}

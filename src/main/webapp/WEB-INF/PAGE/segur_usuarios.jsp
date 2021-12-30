@@ -5,6 +5,13 @@
 <%@ include file="../CONTENT/consultas.jsp"%>
 
 
+<% if(request.getAttribute("alert") == "101"){ %>
+<jsp:include page="/WEB-INF/ALERT/usuarioExiste.jsp" />
+<% } %>
+
+
+
+
 
 
 
@@ -36,8 +43,7 @@
 	int estado = datos_usuario.get(i).getCod_estado();
 	String estado_user = datos_usuario.get(i).getEstado();
 	int firma = datos_usuario.get(i).getEstado_firma();
-	String nombre = datos_usuario.get(i).getNom_persona();
-	String apellidos = datos_usuario.get(i).getApell_persona();
+	String nombre = datos_usuario.get(i).getNom_persona();	
 	String usuario = datos_usuario.get(i).getUsuario();
 	String rol = datos_usuario.get(i).getRol();
 	int contador = datos_usuario.get(i).getEstado_cont();
@@ -72,7 +78,7 @@
 					
 					</td>
 					<td><%=  estado_user %></td>
-					<td><%=  nombre+" "+apellidos %></td>
+					<td><%=  nombre %></td>
 					<td><%=  usuario %></td>					
 					<td><%=  rol %></td>
 					<td>
@@ -122,8 +128,7 @@
     		%> <a href="#" class="dropdown-item"
 				data-bs-toggle="modal" data-bs-target="#<%= link %>"
 				data-bs-cod-persona="<%= cod_persona %>" 
-				data-bs-nom-persona="<%= nombre %>" 
-				data-bs-apell-persona="<%= apellidos %>"
+				data-bs-nom-persona="<%= nombre %>" 				
 				data-bs-dir-persona="<%= direccion %>"
 				data-bs-tel-persona="<%= telefono %>"
 				data-bs-rol-persona="<%= rol %>"
@@ -139,7 +144,7 @@
  					
  			%>
  			
-				
+			
 				<form action="${pageContext.request.contextPath}/seguridad" method="post">
 				<div>				
 				<button type="submit" class="btn btn-link dropdown-item">
@@ -187,7 +192,10 @@
 				</h6>
 				<p class="card-text">Listado de usuarios con acceso a los
 					privilegios de SISCO</p>
-				<a href="${pageContext.request.contextPath}/seguridad?url=validate" id="a_link"><img
+				<!--  <a href="${pageContext.request.contextPath}/seguridad?url=validate" id="a_link"><img
+					width="20px" src="img/menu/nuevo_cierre.png" /> Agregar Usuario</a>-->
+					
+<a href="#" id="a_link" data-bs-toggle="modal" data-bs-target="#validarPersona" data-bs-url="redirectUsuarios"><img
 					width="20px" src="img/menu/nuevo_cierre.png" /> Agregar Usuario</a>
 			</div>
 		</div>
@@ -196,6 +204,7 @@
 </html>
 
 
+<%@ include file="../modal/validarPersona.jsp"%>
 <%@ include file="../modal/bloquearUsuario.jsp"%>
 <%@ include file="../modal/eliminarUsuario.jsp"%>
 <%@ include file="../modal/modificarUsuario.jsp"%>

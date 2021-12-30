@@ -30,10 +30,9 @@ LinkedList<Parametros> param_mod_user = ParametrosDAO.listarParametros();
       <form action="${pageContext.request.contextPath}/seguridad" method="post">
       <div class="modal-body">
 
-<div class="input-group mb-3">
-  <div id="nom_persona"><input type="text" name="txtNomPersona" class="form-control" placeholder="Nombres" aria-label="Nombres" id="nom_persona"></div>
+<div >
+  <div id="nom_persona"><input type="text" name="txtNomPersona" class="form-control" placeholder="Nombres y Apellidos" aria-label="Nombres" id="nom_persona"></div>
   <br>
-  <div id="apell_persona"><input type="text" name="txtApellPersona" class="form-control" placeholder="Apellidos" aria-label="Apellidos" id="apell_persona"></div>
 </div>
 
      
