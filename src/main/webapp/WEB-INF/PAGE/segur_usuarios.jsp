@@ -6,7 +6,17 @@
 
 
 <% if(request.getAttribute("alert") == "101"){ %>
-<jsp:include page="/WEB-INF/ALERT/usuarioExiste.jsp" />
+<jsp:include page="/WEB-INF/validate/agregarUsuario.jsp" />
+<% } %>
+
+
+<% if (request.getAttribute("alert") == "103") { %>
+<jsp:include page="/WEB-INF/ALERT/colaboradorExiste.jsp" />
+<% } %>
+
+
+<% if (request.getAttribute("alert") == "104") { %>
+<jsp:include page="/WEB-INF/ALERT/noExistePersona.jsp" />
 <% } %>
 
 
@@ -195,7 +205,12 @@
 				<!--  <a href="${pageContext.request.contextPath}/seguridad?url=validate" id="a_link"><img
 					width="20px" src="img/menu/nuevo_cierre.png" /> Agregar Usuario</a>-->
 					
-<a href="#" id="a_link" data-bs-toggle="modal" data-bs-target="#validarPersona" data-bs-url="redirectUsuarios"><img
+<a href="#" id="a_link" data-bs-toggle="modal" data-bs-target="#validarDocumento" 
+data-bs-url="redirectUsuarios"
+ data-bs-canc="seguridad?url=usuarios"
+ data-bs-modl="agregarUsuario"
+ data-bs-doc="data-bs-docUsu"
+><img
 					width="20px" src="img/menu/nuevo_cierre.png" /> Agregar Usuario</a>
 			</div>
 		</div>
@@ -204,12 +219,15 @@
 </html>
 
 
-<%@ include file="../modal/validarPersona.jsp"%>
+<%@ include file="../modal/validarDocumento.jsp"%>
 <%@ include file="../modal/bloquearUsuario.jsp"%>
 <%@ include file="../modal/eliminarUsuario.jsp"%>
 <%@ include file="../modal/modificarUsuario.jsp"%>
 <%@ include file="../modal/resetearPassword.jsp"%>
+<%@ include file="../modal/agregarUsuario.jsp"%>
+
 <%@ include file="../js/scriptUsuarios.jsp"%>
+<%@ include file="../js/scriptPersonas.jsp"%>
 
 
 

@@ -17,7 +17,8 @@ public class ColaboradoresDAO {
 	private final static int status_colabora=1;
 	private static final String SELECT_COLABORA = "SELECT * FROM view_colaboradores WHERE cod_estado="+status_colabora;
 	private static final String VER_COLABORADORES = "SELECT * FROM view_colaboradores";
-
+	
+	private static final String EXISTE_COLABORA = "SELECT COUNT(identificacion) identificacion FROM view_colaboradores WHERE identificacion= ?";
 	
 	// LISTAR NOMBRE DE COLABORADORES
 			public static  LinkedList<VTcolaboradores> listarColaboradores() {
@@ -114,9 +115,9 @@ public class ColaboradoresDAO {
 				return mostrar_colabora;
 			}
 			
-			
+					
 			// AGREGAR COLABORADOR	
-			public void insertarColaborador(Colaboradores colabora) throws SQLException {
+			public void insertarColaborador(String nom_persona, int tipo_doc, String doc_persona, String dir_persona, String tel_persona, int cursor) throws SQLException {
 				
 		    	MysqlConexion conx = new MysqlConexion();
 		    	Connection con = null;
@@ -125,10 +126,15 @@ public class ColaboradoresDAO {
 				try {
 					con = conx.conectar();
 					
-					 String sql = "{call SP_INSERT_COLABORADOR (?)}";
+					 String sql = "{call SP_INSERT_COLABORADOR (?,?,?,?,?,?)}";
 			         stmt = con.prepareCall(sql);
 				
-			         stmt.setInt(1, colabora.getCod_persona());
+			         stmt.setString(1, nom_persona);
+			         stmt.setInt(2, tipo_doc);
+			         stmt.setString(3, doc_persona);
+			         stmt.setString(4, dir_persona);
+			         stmt.setString(5, tel_persona);
+			         stmt.setInt(6, cursor);
 			   			      		
 			         stmt.executeUpdate();
 					
@@ -227,7 +233,7 @@ public class ColaboradoresDAO {
 						
 						
 						// CONSULTAR COLABORADOR			
-						public int validarColaborador(String doc_colabora) {
+						public int validarColaborador(String doc_persona) {
 							
 						 	MysqlConexion conx = new MysqlConexion();
 					    	Connection con = null;
@@ -242,7 +248,7 @@ public class ColaboradoresDAO {
 								 String sql = "{call SP_VALIDA_COLABORADOR (?)}";
 						         stmt = con.prepareCall(sql);			
 
-						         stmt.setString(1, doc_colabora);					
+						         stmt.setString(1, doc_persona);					
 								 rs=	stmt.executeQuery();
 								
 								if(rs.next()) {
@@ -269,5 +275,9 @@ public class ColaboradoresDAO {
 							}
 							return 1;
 						}
+						
+						
+						
+						
 
 }

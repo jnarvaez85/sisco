@@ -7,7 +7,7 @@
 
 
 <% if(request.getAttribute("alert") == "101"){ %>
-<jsp:include page="/WEB-INF/ALERT/colaboradorExiste.jsp" />
+<jsp:include page="/WEB-INF/validate/agregarColaborador.jsp" />
 <% } %>
 
 <% if (request.getAttribute("alert") == "102") { %>
@@ -17,6 +17,13 @@
 <% if (request.getAttribute("alert") == "103") { %>
 <jsp:include page="/WEB-INF/ALERT/colaboradorExiste.jsp" />
 <% } %>
+
+
+<% if (request.getAttribute("alert") == "104") { %>
+<jsp:include page="/WEB-INF/ALERT/noExistePersona.jsp" />
+<% } %>
+
+
 
 
 
@@ -325,7 +332,10 @@ if (cursor == 5) {
 						if (param == 12 && tipo == 0 && opcion == "Agregar") { // opciones de colaboradores, enlace tipo modal=0
 					%>
 					<span class="input-group-text"> <a href="#"
-						data-bs-toggle="modal" data-bs-target="#<%=link%>" data-bs-url="redirectColaboradores"><img
+						data-bs-toggle="modal" data-bs-target="#<%=link%>" data-bs-url="redirectColaboradores"
+						 data-bs-canc="planillas?url=add"
+						 data-bs-modl="agregarColaborador"
+						><img
 							width="25px" src="img/menu/<%=icon%>.png" /></a> <%
  }
  }
@@ -342,11 +352,16 @@ if (cursor == 5) {
  	int tipo = menuColabora.get(y).getCod_enlace();
 
  	if (param == 12 && tipo == 0) { // opciones de colaboradores, enlace tipo modal=0
- %> <a href="#" data-bs-toggle="modal" data-bs-target="#<%=link%>" data-bs-url="redirectColaboradores"><img
+ %> <a href="#" data-bs-toggle="modal" data-bs-target="#<%=link%>" 
+ data-bs-url="redirectColaboradores"
+ data-bs-canc="planillas?url=add"
+ data-bs-modl="agregarColaborador"
+ data-bs-doc="data-bs-docCol"
+ ><img
 							width="25px" src="img/menu/<%=icon%>.png" /></a> <%
  }
  }
- %>
+					 %>
 
 					</span> <span class="input-group-text"><button type="sumbit"
 							class="btn btn-secondary btn-sm" <%=estado_habilita2%>>Elegir</button></span>
@@ -358,7 +373,7 @@ if (cursor == 5) {
 
 				<%
 				}
-				%>
+			%>
 
 
 
@@ -423,9 +438,11 @@ if (cursor == 5) {
 
 
 
-<%@ include file="../modal/validarPersona.jsp"%>
+<%@ include file="../modal/validarDocumento.jsp"%>
 <%@ include file="../modal/agregarServicio.jsp"%>
 <%@ include file="../modal/listarServicios.jsp"%>
-<%@ include file="../modal/agregarColaborador.jsp"%>
 <%@ include file="../modal/listarColaboradores.jsp"%>
+<%@ include file="../modal/agregarColaborador.jsp"%>
+
 <%@ include file="../js/scriptUsuarios.jsp"%>
+<%@ include file="../js/scriptPersonas.jsp"%>

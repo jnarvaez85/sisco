@@ -1,19 +1,6 @@
 <script>
 
 
-/* Validar Persona*/
-var validarPersona = document.getElementById('validarPersona')
-validarPersona.addEventListener('show.bs.modal', function (event) { 
-  var button = event.relatedTarget
-  
-  var url = button.getAttribute('data-bs-url') 
-  
-  var urlInput = validarPersona.querySelector('#url input')
-  urlInput.value = url
-  
-})
-
-
 
 /* Bloquear Usuario*/
 var bloquearUsuario = document.getElementById('bloquearUsuario')

@@ -14,8 +14,7 @@ public class PersonasDAO {
 	
 	MysqlConexion conx = new MysqlConexion();
 	
-	// CONSULTAR PERSONA
-	
+	// CONSULTAR PERSONA	
 	@SuppressWarnings("static-access")
 	public Personas consultarPersona(String segur_user) throws SQLException {
 		Connection conn = null;
@@ -28,7 +27,7 @@ public class PersonasDAO {
 
 			conn = conx.conectar();
 			
-			String sql = "{call SP_VALIDA_PERSONA (?)}";
+			String sql = "{call SP_CONSULTA_PERSONA (?)}";
 	        stmt = conn.prepareCall(sql);			
 			
 	        stmt.setString(1, segur_user);	    
@@ -54,55 +53,86 @@ public class PersonasDAO {
 	}
 	
 	
-	
-	/*
-	public Personas consultarPersona(String doc_persona){
-	 
-	 	MysqlConexion conx = new MysqlConexion();
-		Connection con = null;
-		PreparedStatement ps = null;
-		ResultSet rs = null;						 
-	 
-		Personas per = new Personas();
-	  
-	  try{
-		  
-		  con = conx.conectar();					
-		  ps = con.prepareStatement("SELECT * FROM segur_persona WHERE doc_persona="+doc_persona);							  
-		  
-		  
-	     ps.setString(1, doc_persona);
-	     rs=	ps.executeQuery();
+	// INSERTAR USUARIO		
+	public void agregarPersona(Personas persona) throws SQLException {
+		
+    	MysqlConexion conx = new MysqlConexion();
+    	Connection con = null;
+		CallableStatement stmt = null;
+		
+		try {
+			con = conx.conectar();
 			
-
-	   
-	 	while(rs.next()){
-	 		
-	 		
-	 		per.setCod_persona(rs.getInt("cod_persona"));	
-	 		per.setNom_persona(rs.getString("nom_persona"));
-	 		per.setTipo_doc_persona(rs.getInt("tipo_doc_persona"));
-	 		per.setDoc_persona(rs.getString("doc_persona"));						 		
-	 		per.setDir_persona(rs.getString("dir_persona"));
-	 		per.setTel_persona(rs.getString("tel_persona"));
-	 		
-	 	
-	   }
-	  } catch (SQLException e) {
-			System.out.println("Error al consultar persona " + e);
-		}
-    
-	finally {
+			 String sql = "{call SP_INSERT_PERSONA (?,?,?,?,?)}";
+	         stmt = con.prepareCall(sql);
+		
+	         stmt.setString(1, persona.getNom_persona());		         
+	         stmt.setInt(2, persona.getTipo_doc_persona());
+	         stmt.setString(3, persona.getDoc_persona());
+	         stmt.setString(4, persona.getDir_persona());
+	         stmt.setString(5, persona.getTel_persona());
+	         stmt.executeUpdate();
+			
+        } catch (SQLException e) {
+				System.out.println("Error al agregar persona " + e);
+			}
+			
+			finally {
+				try {
+					
+					MysqlConexion.close(stmt);
+					MysqlConexion.close(con);
+				} catch (SQLException e) {
+					System.out.println("Error al cerrar" + e);
+				}
+			}
+	}
+	
+	
+	// VALIDAR PERSONA
+	public int validarPersona(String usuario) {
+		
+	 	MysqlConexion conx = new MysqlConexion();
+    	Connection con = null;
+    	CallableStatement stmt = null;
+		ResultSet rs = null;
+		
 		try {
 			
+			con = conx.conectar();			
+			
+			 String sql = "{call SP_VALIDA_PERSONA (?)}";
+	         stmt = con.prepareCall(sql);			
+
+	         stmt.setString(1, usuario);					
+			 rs=	stmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
 			MysqlConexion.close(rs);
-			MysqlConexion.close(ps);
+			MysqlConexion.close(stmt);
 			MysqlConexion.close(con);
-		} catch (SQLException e) {
-			System.out.println("Error al cerrar" + e);
+			return 1;
+			
+		   } catch (SQLException e) {
+				System.out.println("Error al validar persona " + e);
+			}
+        
+		finally {
+			try {
+				
+				MysqlConexion.close(rs);
+				MysqlConexion.close(stmt);
+				MysqlConexion.close(con);
+			} catch (SQLException e) {
+				System.out.println("Error al cerrar" + e);
+			}
 		}
+		return 1;
 	}
-	return per;
-	}
-*/
+	
+	
+	
+	
 }

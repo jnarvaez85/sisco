@@ -100,9 +100,11 @@ public class planillas extends HttpServlet {
 		case "agregarFechaPlanilla":
 			agregarFechaPlanilla(request, response);
 			break;
+			
 		case "agregarColaboladoresPlanillas":
 			agregarColaboladoresPlanillas(request, response);
 			break;
+		
 		case "eliminarTempoPlanilla":
 			eliminarTempoPlanilla(request, response);
 			break;
@@ -171,8 +173,6 @@ public class planillas extends HttpServlet {
 		ContadoresDAO contador= new ContadoresDAO();
 		
 		try {
-
-			
 			
 			cont = contador.validarContador(cod_persona, cod_contador);
 			
@@ -216,6 +216,8 @@ public class planillas extends HttpServlet {
 	}
 	
 	// Agregar colaboladores del conteo de Planilla
+	
+	
 	private void agregarColaboladoresPlanillas(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		
@@ -330,18 +332,24 @@ public class planillas extends HttpServlet {
 	private void agregarColaborador(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		
-		Colaboradores colabora = new Colaboradores();
+		//Colaboradores colabora = new Colaboradores();
 		ColaboradoresDAO colaborador = new ColaboradoresDAO();
 		
 		
-		if(colaborador.validarColaborador(request.getParameter("txtDocColabora")) == 0) {
+		if(colaborador.validarColaborador(request.getParameter("txtIdentificacion")) == 0) {
 	
-		colabora.setCod_persona(Integer.parseInt(request.getParameter("selectTipoId")));
-	
+		int cursor = Integer.parseInt(request.getParameter("cursor"));	
+		int tipo_doc = Integer.parseInt(request.getParameter("selectTipoId"));		
+
+		String doc_persona = request.getParameter("txtIdentificacion");
+		String nom_persona = request.getParameter("txtNomColabora");
+		String tel_persona = request.getParameter("txtTelColabora");
+		String dir_persona = request.getParameter("txtDirColabora");
 		
-		colaborador.insertarColaborador(colabora);    	
+		colaborador.insertarColaborador(nom_persona, tipo_doc, doc_persona, dir_persona, tel_persona, cursor);    	
 	
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+		
 		
 		}else {
 			
@@ -350,6 +358,8 @@ public class planillas extends HttpServlet {
 			dispatcher.forward(request, response);	
 			
 		}
+	
+		
 	
 	}
 	

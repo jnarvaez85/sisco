@@ -80,8 +80,11 @@ public class seguridad extends HttpServlet {
 		try {
 			switch (accion) {
 		
-			case "validarUsuario":
-				validarUsuario(request, response);
+			case "agregarPersona":
+				agregarPersona(request, response);
+				break;
+			case "validarDocumento":
+				validarDocumento(request, response);
 				break;
 			case "agregarUsuario":
 				agregarUsuario(request, response);
@@ -116,56 +119,82 @@ public class seguridad extends HttpServlet {
 	
 	
 	
+	// Agregar Persona
+	private void agregarPersona(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		
+		
+		String redireccionarUrl = request.getParameter("validarUrl");
+		
+		Personas per = new Personas();
+		PersonasDAO addPersona = new PersonasDAO();
+		
+		per.setNom_persona(request.getParameter("txtNombres"));		
+		per.setTipo_doc_persona(Integer.parseInt(request.getParameter("selectTipoId")));
+		per.setDoc_persona(request.getParameter("txtIdentificacion"));
+		per.setDir_persona(request.getParameter("txtDireccion"));
+		per.setTel_persona(request.getParameter("txtTelefono"));
+		
+		addPersona.agregarPersona(per);  
+		
+		
+		switch (redireccionarUrl) {
+
+		case "agregarPersona":
+			redireccionarUrl="WEB-INF/PAGE/planilla_agregaDatos.jsp";
+			break;		
+		}			
+		
+	
+		RequestDispatcher dispatcher = request.getRequestDispatcher(redireccionarUrl);		
+		dispatcher.forward(request, response);	
+	}
 	
 	
-	// Validar existencia de Usuario
 	
-	private void validarUsuario(HttpServletRequest request, HttpServletResponse response)
+	// Consultar persona
+	private void validarDocumento(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		UsuariosDAO userValidate = new UsuariosDAO();
 		
 		PersonasDAO per = new PersonasDAO();
-		Personas persona = new Personas();
-		
+		Personas persona = new Personas();		
 
-		String doc = request.getParameter("txtIdentificacion");
-		
+		String documento = request.getParameter("txtIdentificacion");		
+		String redireccionarUrl = request.getParameter("validarUrl");
+		String cancelar = request.getParameter("cancelar");
+		String doc = request.getParameter("doc");
+		String modal = request.getParameter("modal");
 
-
-		try {
-
-			persona = per.consultarPersona(doc);
+		try {			
 			
+			switch (redireccionarUrl) {
+
+			case "redirectUsuarios":
+				redireccionarUrl="WEB-INF/PAGE/segur_usuarios.jsp";
+				break;
+			case "redirectColaboradores":
+				redireccionarUrl="WEB-INF/PAGE/planilla_agregaDatos.jsp";
+				break;	
+			}	
 			
-			if (userValidate.validarUsuario(request.getParameter("txtIdentificacion")) == 0) {
-				
-				request.setAttribute("doc_user", doc);
-	    		
-				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_agregarUsuario.jsp");
-				dispatcher.forward(request, response);	
-				
 
-			} else {
-
-
-				String redireccionarUrl = request.getParameter("validarUrl");
-				
-				
-				switch (redireccionarUrl) {
-
-				case "redirectUsuarios":
-					redireccionarUrl="WEB-INF/PAGE/segur_usuarios.jsp";
-					break;
-				case "redirectColaboradores":
-					redireccionarUrl="WEB-INF/PAGE/planilla_agregaDatos.jsp";
-					break;	
-				}
-				
-				
+			persona = per.consultarPersona(documento);			
+			
+			if (per.validarPersona(request.getParameter("txtIdentificacion")) == 0) {
 				
 				RequestDispatcher dispatcher = request.getRequestDispatcher(redireccionarUrl);
-				request.setAttribute("alert", "101");
+				request.setAttribute("alert", "104");
+				request.setAttribute("doc_user", documento);
+				request.setAttribute("cancelar", cancelar);
+				request.setAttribute("modal", modal);
+				request.setAttribute("doc", doc);
+				dispatcher.forward(request, response);				
+
+			} else {		
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher(redireccionarUrl);
+				request.setAttribute("alert", "101"); //Despliega modal para agregar persona
 				request.setAttribute("persona", persona);
 				dispatcher.forward(request, response);
 				
@@ -178,52 +207,7 @@ public class seguridad extends HttpServlet {
 		
 	}
 	
-	
-	/*
-	private void validarUsuario(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException, SQLException {
-		
-		UsuariosDAO userValidate = new UsuariosDAO();
-		
-		
-		if(userValidate.validarUsuario(request.getParameter("txtIdentificacion")) == 0) {
-			
-			Personas persona= new Personas();
-			
-		    String doc = request.getParameter("txtIdentificacion");
-		    persona = PersonasDAO.consultarPersona(doc);
-		    
-		
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_agregarUsuario.jsp");
-			request.setAttribute("doc_user", doc);
-			request.setAttribute("per", persona);
-			dispatcher.forward(request, response);				
-		
-		}else {
-			
-			String redireccionarUrl = request.getParameter("validarUrl");
-			
-			switch (redireccionarUrl) {
 
-			case "redirectUsuarios":
-				redireccionarUrl="WEB-INF/PAGE/segur_usuarios.jsp";
-				break;
-			case "redirectColaboradores":
-				redireccionarUrl="WEB-INF/PAGE/planilla_agregaDatos.jsp";
-				break;
-
-			}
-			
-			
-		
-			
-			RequestDispatcher dispatcher = request.getRequestDispatcher(redireccionarUrl);
-			request.setAttribute("alert", "101");	
-			dispatcher.forward(request, response);
-		}
-	}
-	
-	*/
 	
 	
 	// Agregar nuevo usuario
