@@ -45,8 +45,8 @@ public class planillas extends HttpServlet {
 			case "add":
 				this.agregarPlanillaGet(request, response);
 				break;
-			case "planillaCompartida":
-				this.planillaCompartida(request, response);
+			case "addSobres":
+				this.agregarSobres(request, response);
 				break;
 			case "colaboladores":
 				this.colaboladores(request, response);
@@ -72,9 +72,9 @@ public class planillas extends HttpServlet {
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);	
 	}
 	
-	private void planillaCompartida(HttpServletRequest request, HttpServletResponse response)
+	private void agregarSobres(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/planillaCompartida.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);	
 	}
 	
 	private void colaboladores(HttpServletRequest request, HttpServletResponse response)

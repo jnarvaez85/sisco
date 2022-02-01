@@ -163,7 +163,7 @@ public class seguridad extends HttpServlet {
 		String documento = request.getParameter("txtIdentificacion");		
 		String redireccionarUrl = request.getParameter("validarUrl");
 		String cancelar = request.getParameter("cancelar");
-		String doc = request.getParameter("doc");
+		String data_bs = request.getParameter("doc");
 		String modal = request.getParameter("modal");
 
 		try {			
@@ -188,7 +188,7 @@ public class seguridad extends HttpServlet {
 				request.setAttribute("doc_user", documento);
 				request.setAttribute("cancelar", cancelar);
 				request.setAttribute("modal", modal);
-				request.setAttribute("doc", doc);
+				request.setAttribute("data_bs", data_bs);
 				dispatcher.forward(request, response);				
 
 			} else {		
@@ -217,14 +217,16 @@ public class seguridad extends HttpServlet {
 		Personas per = new Personas();
 		UsuariosDAO addUser = new UsuariosDAO();
 		
-		per.setNom_persona(request.getParameter("txtNombres"));		
+		int cursor = Integer.parseInt(request.getParameter("cursor"));
+		
+		per.setNom_persona(request.getParameter("txtNomUsuario"));		
 		per.setTipo_doc_persona(Integer.parseInt(request.getParameter("selectTipoId")));
 		per.setDoc_persona(request.getParameter("txtIdentificacion"));
-		per.setDir_persona(request.getParameter("txtDireccion"));
-		per.setTel_persona(request.getParameter("txtTelefono"));
+		per.setDir_persona(request.getParameter("txtDirUsuario"));
+		per.setTel_persona(request.getParameter("txtTelUsuario"));
 		per.setRol_persona(Integer.parseInt(request.getParameter("selectPermisos")));
 		
-		addUser.insertarUsuario(per);    	
+		addUser.insertarUsuario(per, cursor);    	
 	
 		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
 	

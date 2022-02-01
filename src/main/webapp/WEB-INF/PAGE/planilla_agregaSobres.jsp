@@ -42,6 +42,11 @@ VTusuarios usuarios = (VTusuarios) request.getAttribute("usuario");
 int getRolColabor = (int) session.getAttribute("mi_rol");
 LinkedList<VTmenu> menuColabora = MenuDAO.datosMenu(getRolColabor);
 
+//LISTADO DE PERSONAS
+LinkedList<Personas> datos_per = PersonasDAO.listarPersonas();
+
+
+
 //DATOS TEMPORALES DE PLANILLAS
 final int tmp_plan = 1;
 VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPlanillaTemp(tmp_plan);
@@ -83,29 +88,6 @@ if (fecha_planilla != null) {
 
 
 
-<%
-// Deshabilita las opciones de la fecha y el servicio
-
-String estado_habilita;
-String estado_habilita2;
-
-if (codigo_servicio > 0) {
-	estado_habilita = "disabled";
-} else {
-	estado_habilita = "enable";
-}
-
-// Deshabilita las opciones de los responsable
-
-if (cursor == 5) {
-	estado_habilita2 = "disabled";
-} else {
-	estado_habilita2 = "enable";
-}
-%>
-
-
-
 
 
 <!DOCTYPE html>
@@ -125,9 +107,11 @@ if (cursor == 5) {
 			<div class="container">
 				<div class="row">
 					<div>
-						<div>
+					<strong><small>Fecha planilla: <%=fecha_planilla%></small></strong>
+					
+						<div>						
 							<img width="20px" src="img/menu/auditoria.png" />
-							<%=nom_contador%>
+							<small><%=nom_contador%></small>
 						</div>
 						<small>Contador Responsable</small>
 
@@ -136,9 +120,7 @@ if (cursor == 5) {
 						if (fecha_planilla != null) {
 						%>
 						<br> <br> <strong>Responsables del conteo</strong>
-						<p>
-
-
+						
 							<%
 							if (nom_colabora1 == null && nom_colabora2 == null && nom_colabora3 == null) {
 							%>
@@ -161,7 +143,7 @@ if (cursor == 5) {
 							if (cod_colabora1 > 0) {
 							%>
 							<img width="20px" src="img/menu/colabolador.png" />
-							<%=nom_colabora1%>
+							<small><%=nom_colabora1%></small>
 							<%
 							}
 							%>
@@ -171,7 +153,7 @@ if (cursor == 5) {
 							if (cod_colabora2 > 0) {
 							%>
 							<img width="20px" src="img/menu/colabolador.png" />
-							<%=nom_colabora2%>
+							<small><%=nom_colabora2%></small>
 							<%
 							}
 							%>
@@ -181,7 +163,7 @@ if (cursor == 5) {
 							if (cod_colabora3 > 0) {
 							%>
 							<img width="20px" src="img/menu/colabolador.png" />
-							<%=nom_colabora3%>
+							<small><%=nom_colabora3%></small>
 							<%
 							}
 							%>
@@ -194,15 +176,17 @@ if (cursor == 5) {
 						}
 						%>
 
-
-						<br> <br> <br>
+									
+						<br> 
 						<div>
 							<img width="20px" src="img/menu/desblock.png" />
-							${usuario.getNom_persona()}
+							<small>${usuario.getNom_persona()}</small>
 						</div>
 						<small>Usuario que genera</small>
+						<br><br>
 					</div>
-
+					
+<small><%=servicio%> -	<%=hora%></small>
 				</div>
 
 			</div>
@@ -213,77 +197,7 @@ if (cursor == 5) {
 
 		<div class="layout_right">
 
-			<%
-			if (fecha_planilla != null) {
-			%>
-
-			<div style="font-size: 1.5em;">
-				Fecha de la planilla:
-				<%=fecha_planilla%></div>
-			<div>
-				Servicio:
-				<%=servicio%>
-				-
-				<%=hora%></div>
-
-			<%
-			} else {
-			%>
-
-			<div>Por favor seleccione una fecha y un servicio</div>
-
-			<%
-			}
-			%>
-
-			<br>
-			<form class="row g-3"
-				action="${pageContext.request.contextPath}/planillas" method="post">
-				<div class="input-group mb-3" style="width: 35%;">
-					<span class="input-group-text"> <img width="20px"
-						src="img/menu/fecha.png" /></span> <input type="date"
-						max="<%=currentDate%>" class="form-control"
-						name="<%=txtFechaPlanilla%>" <%=estado_habilita%> required>
-				</div>
-				<div class="col-auto">
-					<label class="visually-hidden">Servicio</label> <select
-						class="form-select" name="<%=selectServPlanilla%>"
-						<%=estado_habilita%> required>
-
-
-						<!-- COMBO DE LOS SERVICIOS  -->
-
-						<option selected value="">-- Seleccionar servicio --</option>
-						<%
-						for (int i = 0; i < datos_servicios.size(); i++) {
-							String nom_servicio = datos_servicios.get(i).getNom_servicio();
-							int cod_servicio = datos_servicios.get(i).getCod_servicio();
-						%>
-						<option value="<%=cod_servicio%>"><%=nom_servicio%></option>
-
-						<%
-						}
-						%>
-					</select>
-				</div>
-
-				<div class="col-auto">
-					<div>
-						<a href="#" data-bs-toggle="modal"
-							data-bs-target="#agregarServicio"><img width="25px"
-							src="img/menu/action_mas.png" /></a> <a href="#"
-							data-bs-toggle="modal" data-bs-target="#listarServicios"><img
-							width="25px" src="img/menu/btn_buscar.png" /></a>
-						<button type="submit" class="btn btn-secondary btn-sm"
-							<%=estado_habilita%>>Agregar</button>
-					</div>
-				</div>
-
-				<input type="hidden" name="validar" value="agregarFechaPlanilla">
-				<input type="hidden" name="cursor" value="<%=cursor%>">
-			</form>
-
-			<hr>
+	
 
 			<!-- COMBO DE LOS  RESPONSABLES DEL CONTEO -->
 
@@ -298,26 +212,17 @@ if (cursor == 5) {
 
 
 				<div class="input-group">
-					<select class="form-select form-select-sm" required
-						name="<%=selectResponPlanilla%>" <%=estado_habilita2%>>
-						<option selected value="">-- Seleccione el nombre del
-							responsable --</option>
+<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Ingresa el nombre del aportante">
+<datalist id="datalistOptions">
 
+<%for (int x = 0; x < datos_per.size(); x++) { 
 
-						<%
-						for (int i = 0; i < datos_colaborador.size(); i++) {
-							String nom_colaborador = datos_colaborador.get(i).getNombre_colaborador();
-							int cod_colabora = datos_colaborador.get(i).getCod_colabora();
-							int estado_cola = datos_colaborador.get(i).getCod_estado();
-						%>
-						<option value="<%=cod_colabora%>"><%=nom_colaborador%></option>
-
-						<%
-						}
-						%>
-
-
-					</select>
+	String nom_persona = datos_per.get(x).getNom_persona();
+%>
+  <option value="<%=nom_persona %>">
+<% }%>
+ 
+</datalist>
 
 
 					<%
@@ -363,17 +268,52 @@ if (cursor == 5) {
  }
 					 %>
 
-					</span> <span class="input-group-text"><button type="sumbit"
-							class="btn btn-secondary btn-sm" <%=estado_habilita2%>>Elegir</button></span>
+		<img width="25px" src="img/menu/especial.png" />		
 				</div>
-				<small>Elija min un (1) o max (3) responsables del conteo</small>
 
 				<hr>
-				<br>
+				
 
 				<%
 				}
 			%>
+
+
+
+<!-- CONTENT  -->
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">$</span>
+  <input type="text" class="form-control-sm" placeholder="Diezmos" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">$</span>
+  <input type="text" class="form-control-sm" placeholder="Ofrendas" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">$</span>
+  <input type="text" class="form-control-sm" placeholder="Necesitados" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">$</span>
+  <input type="text" class="form-control-sm" placeholder="Mercados" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">$</span>
+  <input type="text" class="form-control-sm" placeholder="Construcción" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+<div class="input-group mb-3">
+  <span class="input-group-text" id="basic-addon1">$</span>
+  <input type="text" class="form-control-sm" placeholder="Misiones" aria-label="Username" aria-describedby="basic-addon1">
+</div>
+
+
+
 
 
 
@@ -391,9 +331,12 @@ if (cursor == 5) {
 
 			<form action="${pageContext.request.contextPath}/planillas"
 				method="post">
-				<div style="float: left; margin-right: 2%;">
-					<button type="submit" class="btn btn-danger">Cancelar</button>
-				</div>
+				<div style="position: absolute;
+top: 7rem;
+left: 37%;
+bottom: 0;">
+					<button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+				
 
 				<input type="hidden" name="validar" value="eliminarTempoPlanilla">
 				<input type="hidden" name="txtCodTempPlanilla"
@@ -403,15 +346,28 @@ if (cursor == 5) {
 			<%
 			if (cursor >= 3) {
 			%>
-			<a href="${pageContext.request.contextPath}/planillas?url=addSobres"  class="btn btn-primary">Siguiente</a>
+			<button type="button" class="btn btn-primary btn-sm">Agregar sobre</button>
+			<button type="button" class="btn btn-secondary btn-sm">Compartir</button>
+			<button type="button" class="btn btn-success btn-sm">Finalizar ingreso</button>
 
 			<%
 			}
 			}
 			%>
+			<hr>
+			<div>Cantidad de sobres ingresados: 0</div>
+			<div>Diezmos: $0</div>
+			<div>Ofrendas: $0</div>
+			<div>Necesitados: $0</div>
+			<div>Mercados: $0</div>
+			<div>Construcción: $0</div>
+			<div>Misiones: $0</div>
+			<div>Otros: $0</div>
+			<hr>
+			<strong>TOTAL: $0</strong>
 		</div>
 
-
+</div>
 
 
 	</div>

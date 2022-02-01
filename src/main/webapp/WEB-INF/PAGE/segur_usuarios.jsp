@@ -5,9 +5,7 @@
 <%@ include file="../CONTENT/consultas.jsp"%>
 
 
-<% if(request.getAttribute("alert") == "101"){ %>
-<jsp:include page="/WEB-INF/validate/agregarUsuario.jsp" />
-<% } %>
+
 
 
 <% if (request.getAttribute("alert") == "103") { %>
@@ -20,7 +18,9 @@
 <% } %>
 
 
-
+<% if (request.getAttribute("alert") == "101") { %>
+<jsp:include page="/WEB-INF/ALERT/usuarioExiste.jsp" />
+<% } %>
 
 
 
@@ -31,9 +31,28 @@
 <meta charset="ISO-8859-1">
 </head>
 <body>
+
+
+
+
+
+
+
+
+
+
+
+
+
 	<div class="div_content">
-		<table class="table table-hover">
-			<thead>
+	
+	
+
+		
+	<%-- --%>
+	<div class="scroll">
+		<table class="table" >
+			<thead class="table-dark">
 				<tr>
 					<th scope="col">Firma</th>
 					<th scope="col">Contador</th>
@@ -41,9 +60,11 @@
 					<th scope="col">Estado</th>
 					<th scope="col">Nombre</th>
 					<th scope="col">Usuario</th>					
-					<th scope="col">Acciones</th>
+					<th scope="col">Permisos</th>
+					<th scope="col" style="z-index:999"></th>
 				</tr>
 			</thead>
+			
 			<tbody>
 
 
@@ -88,9 +109,9 @@
 					
 					</td>
 					<td><%=  estado_user %></td>
-					<td><%=  nombre %></td>
+					<td width="150px"><%=  nombre %></td>
 					<td><%=  usuario %></td>					
-					<td><%=  rol %></td>
+					<td ><%=  rol %></td>
 					<td>
 
 						<nav class="navbar navbar-expand-lg navbar-light" id="nav-link">
@@ -190,6 +211,7 @@
 			</tbody>
 		</table>
 	</div>
+	</div>
 
 
 
@@ -208,8 +230,8 @@
 <a href="#" id="a_link" data-bs-toggle="modal" data-bs-target="#validarDocumento" 
 data-bs-url="redirectUsuarios"
  data-bs-canc="seguridad?url=usuarios"
- data-bs-modl="agregarUsuario"
- data-bs-doc="data-bs-docUsu"
+ data-bs-modl="getIdentificacion"
+ data-bs-doc="data-bs-getDoc"
 ><img
 					width="20px" src="img/menu/nuevo_cierre.png" /> Agregar Usuario</a>
 			</div>

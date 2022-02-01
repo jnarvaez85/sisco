@@ -25,28 +25,18 @@ validarDocumento.addEventListener('show.bs.modal', function (event) {
 })
 
 
-/* Agregar Colaborador*/
-var agregarColaborador = document.getElementById('agregarColaborador')
-agregarColaborador.addEventListener('show.bs.modal', function (event) { 
+/* Muestra identificacion en input readonly*/
+var getIdentificacion = document.getElementById('getIdentificacion')
+getIdentificacion.addEventListener('show.bs.modal', function (event) { 
 var button = event.relatedTarget
   
-  var docCol = button.getAttribute('data-bs-docCol')   
-  var  docColInput = agregarColaborador.querySelector('#docCol input') 
-  docColInput.value = docCol
+  var getDoc = button.getAttribute('data-bs-getDoc')   
+  var  getDocInput = getIdentificacion.querySelector('#getDoc input') 
+  getDocInput.value = getDoc
   
   
 })
 
-/* Agregar Usuario*/
-var agregarUsuario = document.getElementById('agregarUsuario')
-agregarUsuario.addEventListener('show.bs.modal', function (event) { 
-  var button = event.relatedTarget
-  
-  var docUsu = button.getAttribute('data-bs-docUsu')   
-  var  docUsuInput = agregarUsuario.querySelector('#docUsu input') 
-  docUsuInput.value = docUsu
-  
-})
 
 
 

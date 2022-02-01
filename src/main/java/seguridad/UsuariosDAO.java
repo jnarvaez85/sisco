@@ -117,7 +117,7 @@ public class UsuariosDAO {
 		
 		
 		// VALIDAR EXISTENCIA DE UN USUARIO
-		public int validarUsuario(String usuario) {
+		public int validarUsuario(String identificacion) {
 			
 		 	MysqlConexion conx = new MysqlConexion();
 	    	Connection con = null;
@@ -131,7 +131,7 @@ public class UsuariosDAO {
 				 String sql = "{call SP_VALIDA_USUARIO (?)}";
 		         stmt = con.prepareCall(sql);			
 
-		         stmt.setString(1, usuario);					
+		         stmt.setString(1, identificacion);					
 				 rs=	stmt.executeQuery();
 				
 				if(rs.next()) {
@@ -161,7 +161,7 @@ public class UsuariosDAO {
 		
 		
 		// INSERTAR USUARIO		
-		public void insertarUsuario(Personas user) throws SQLException {
+		public void insertarUsuario(Personas user, int cursor) throws SQLException {
 			
 	    	MysqlConexion conx = new MysqlConexion();
 	    	Connection con = null;
@@ -170,7 +170,7 @@ public class UsuariosDAO {
 			try {
 				con = conx.conectar();
 				
-				 String sql = "{call SP_INSERT_PERSONA (?,?,?,?,?,?)}";
+				 String sql = "{call SP_INSERT_USUARIO (?,?,?,?,?,?,?)}";
 		         stmt = con.prepareCall(sql);
 			
 		         stmt.setString(1, user.getNom_persona());		         
@@ -178,7 +178,8 @@ public class UsuariosDAO {
 		         stmt.setString(3, user.getDoc_persona());
 		         stmt.setString(4, user.getDir_persona());
 		         stmt.setString(5, user.getTel_persona());
-		         stmt.setInt(6, user.getRol_persona());			
+		         stmt.setInt(6, user.getRol_persona());
+		         stmt.setInt(7, cursor);	
 		         stmt.executeUpdate();
 				
 	        } catch (SQLException e) {

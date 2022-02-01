@@ -19,7 +19,7 @@
 <% LinkedList<Parametros> paramPersona = ParametrosDAO.listarParametros(); %>
 
 
-<div class="modal fade" id="agregarColaborador" tabindex="-1"  aria-hidden="true">
+<div class="modal fade" id="getIdentificacion" tabindex="-1"  aria-hidden="true">
   <div class="modal-dialog" >
     <div class="modal-content">
       <div class="modal-header">
@@ -56,7 +56,7 @@
 
   </div>
   <div class="col-md-6">
-    <div id="docCol"><input type="text"  readonly class="form-control" name="txtIdentificacion" id="docCol" placeholder="Identificación"></div>
+    <div id="getDoc"><input type="text"  readonly class="form-control" name="txtIdentificacion" id="getDoc" placeholder="Identificación"></div>
     
   </div>
   <div class="col-12">

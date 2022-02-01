@@ -19,7 +19,7 @@ LinkedList<Parametros> param = ParametrosDAO.listarParametros();
     
     
 
-<div class="modal fade" id="agregarUsuario" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="getIdentificacion" tabindex="-1"  aria-hidden="true">
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
@@ -55,21 +55,21 @@ LinkedList<Parametros> param = ParametrosDAO.listarParametros();
     <br>
   </div>
   <div class="col">
-    <div id="docUsu"><input type="text" readonly class="form-control" id="docUsu" placeholder="Número identificación" ></div>
+    <div id="getDoc"><input type="text" readonly class="form-control" name="txtIdentificacion" id="getDoc" placeholder="Número identificación" ></div>
   </div>
 </div>
       
       
 
 <div >
-  <input type="text" name="txtNomPersona" class="form-control" placeholder="Nombres y Apellidos" aria-label="Nombres" id="nom_persona">
+  <input type="text" name="txtNomUsuario" class="form-control" placeholder="Nombres y Apellidos"  id="nom_persona" autocomplete="off">
   <br>
 </div>
 
       
-      <input type="text"  name="txtDirPersona" class="form-control" id="dir_persona" placeholder="Dirección residencia">
+      <input type="text"  name="txtDirUsuario" class="form-control" id="dir_persona" placeholder="Dirección residencia" autocomplete="off">
       <label for="exampleFormControlInput1" class="form-label"></label>
-      <input type="text"  name="txtTelPersona" class="form-control" id="tel_persona" placeholder="Telefóno celular o fijo">
+      <input type="text"  name="txtTelUsuario" class="form-control" id="tel_persona" placeholder="Telefóno celular o fijo" autocomplete="off">
        </div>
        
        <div style="text-align:center">
@@ -98,8 +98,8 @@ LinkedList<Parametros> param = ParametrosDAO.listarParametros();
        
       
       <div class="modal-footer">
-      <input type="hidden"  name="txtCodPersona" class="form-control" id="cod_persona">
-      <input type="hidden" name="validar" value="modificarUsuario">  
+      <input type="hidden" name="cursor" value="0"> 
+      <input type="hidden" name="validar" value="agregarUsuario">  
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
         <button type="submit" class="btn btn-primary">Guardar</button>
         </form>

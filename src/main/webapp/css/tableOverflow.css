@@ -20,6 +20,102 @@
   top:-20px;
   z-index:2;
   height:20px;
-  width:100%;
+  width:80%;
   
 }
+
+
+/*TABLE FIXED 920 */
+
+.table-fixed_920 tbody {
+  height: 230px;
+  overflow-y: auto;
+  width: 920px;
+  background:#fff;
+  font-size:14px;  
+}
+
+.table-fixed_920 thead,
+.table-fixed_920 tfoot,
+.table-fixed_920 tbody,
+.table-fixed_920 td,
+.table-fixed_920 th {
+  display: block;
+   width: 920px;
+}
+
+.table-fixed_920 thead th{
+color:#fff !important;
+font-weight:400 !important;
+}
+
+
+.table-fixed_920 tfoot th{
+font-weight:400 !important;
+
+}
+
+.table-fixed_920 tbody td,
+.table-fixed_920 thead > tr> th,
+.table-fixed_920 tfoot > tr> th
+{
+  float: left;
+  border-bottom-width: 0;
+}
+
+
+/* Tabla de resultado*/
+
+
+
+.scroll {
+  /*max-width: 40em;*/
+  max-height: 20em;
+  overflow-y: scroll;
+  position: relative;
+}
+
+table {
+  position: relative;
+  border-collapse: collapse;
+}
+
+td, th {
+  padding: 0.25em;
+}
+
+thead th {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  top: 0;
+  background: #a19ee3 !important;
+  color: #fff;
+  
+}
+
+thead th:first-child {
+  left: 0;
+  z-index: 1;
+}
+
+tbody th {
+  position: -webkit-sticky; /* for Safari */
+  position: sticky;
+  left: 0;
+  background: #FFF;
+  border-right: 1px solid #CCC;
+}
+
+
+
+
+
+
+
+.tableFixHead          { overflow-y: auto; height: 100px; }
+.tableFixHead thead th { position: sticky; top: 0; }
+
+/* Just common table stuff. Really. */
+table  { border-collapse: collapse; width: 100%; }
+th, td { padding: 8px 16px; }
+th     { background:#eee; }

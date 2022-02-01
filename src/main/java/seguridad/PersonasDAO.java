@@ -5,6 +5,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.LinkedList;
 
 import db.MysqlConexion;
 
@@ -13,6 +14,56 @@ import db.MysqlConexion;
 public class PersonasDAO {
 	
 	MysqlConexion conx = new MysqlConexion();
+	
+	private static final String SELECT_PERSONA = "SELECT * FROM segur_persona";
+
+	
+	// LISTAR PERSONAS
+			public static  LinkedList<Personas> listarPersonas() {
+		    	LinkedList<Personas> list_personas = new LinkedList<Personas> ();
+		    	
+		    	MysqlConexion conx = new MysqlConexion();
+		    	Connection con = null;
+				PreparedStatement ps = null;
+				ResultSet rs = null;	
+		     
+				try {
+					con = conx.conectar();
+					ps = con.prepareStatement(SELECT_PERSONA);	
+					rs = ps.executeQuery();
+					
+		            while (rs.next()) {
+		            	
+		            	Personas list_per = new Personas();
+		            	
+		            	list_per.setCod_persona(rs.getInt("cod_persona"));
+		            	list_per.setNom_persona(rs.getString("nom_persona"));
+		            	list_per.setTipo_doc_persona(rs.getInt("tipo_doc_persona"));
+		            	list_per.setDoc_persona(rs.getString("doc_persona"));	            	
+		            	list_per.setDir_persona(rs.getString("dir_persona"));
+		            	list_per.setTel_persona(rs.getString("tel_persona"));
+		            	list_per.setRol_persona(rs.getInt("rol_persona"));		            		
+		            	list_personas.add(list_per);
+		            }
+		        } catch (SQLException e) {
+					System.out.println("Error al mostrar listado de personas " + e);
+				}
+				
+				finally {
+					try {
+						
+						MysqlConexion.close(rs);
+						MysqlConexion.close(ps);
+						MysqlConexion.close(con);
+					} catch (SQLException e) {
+						System.out.println("Error al cerrar" + e);
+					}
+				}
+				
+				return list_personas;
+			}
+			
+	
 	
 	// CONSULTAR PERSONA	
 	@SuppressWarnings("static-access")
@@ -53,7 +104,7 @@ public class PersonasDAO {
 	}
 	
 	
-	// INSERTAR USUARIO		
+	// INSERTAR PERSONA		
 	public void agregarPersona(Personas persona) throws SQLException {
 		
     	MysqlConexion conx = new MysqlConexion();
