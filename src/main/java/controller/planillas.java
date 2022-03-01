@@ -151,6 +151,14 @@ public class planillas extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+		case "agregarSobre":
+			try {
+				agregarSobre(request, response);
+			} catch (SQLException | IOException | ServletException e) {
+				System.out.print("Error al agregar sobre : " + e);
+				e.printStackTrace();
+			}
+			break;
 			/*
 		case "validarServicio":
 			validarServicio(request, response);
@@ -401,6 +409,37 @@ public class planillas extends HttpServlet {
 	
 	}
 	
+	
+	
+	// Agregar Sobres
+		private void agregarSobre(HttpServletRequest request, HttpServletResponse response)
+				throws SQLException, IOException, ServletException {
+			
+			TempoSobresPlanilla sobres = new TempoSobresPlanilla();
+			SobresPlanillasDAO sobre = new SobresPlanillasDAO();
+			
+			
+				
+
+			String nom_persona = request.getParameter("txtNombrePersona");
+			
+			sobres.setDiezmos(Integer.parseInt(request.getParameter("txtDiezmos")));
+			sobres.setOfrendas(Integer.parseInt(request.getParameter("txtOfrendas")));
+			sobres.setNecesitados(Integer.parseInt(request.getParameter("txtNecesitados")));
+			sobres.setMercados(Integer.parseInt(request.getParameter("txtMercados")));
+			sobres.setConstruccion(Integer.parseInt(request.getParameter("txtConstruccion")));
+			sobres.setMisiones(Integer.parseInt(request.getParameter("txtMisiones")));			
+			sobre.agregarSobre(nom_persona, sobres);    	
+		
+			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);
+			
+			
+				
+			}
+		
+			
+		
+		
 
 
 }

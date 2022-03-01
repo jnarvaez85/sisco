@@ -41,7 +41,18 @@
 
 .div_center_25{width: 25%;margin: auto;position: absolute;left: 0;right: 0;bottom: 0;text-align: center;top: 10%;}
 
-
+.bts_sobres{position: absolute;top: 7rem;left: 37%;bottom: 0;}
+.cant_sobres{text-align: center;
+border: 2px solid #1111119c;
+border-radius: 100%;
+padding: 3px;
+font-size: 4rem;
+font-weight: bold;
+color: #713030;
+position: absolute;
+margin: auto 0;
+width: 30%;
+left: 35%;}
 
 
 

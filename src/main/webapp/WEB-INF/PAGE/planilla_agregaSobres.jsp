@@ -6,29 +6,6 @@
 
 
 
-<% if(request.getAttribute("alert") == "101"){ %>
-<jsp:include page="/WEB-INF/validate/agregarColaborador.jsp" />
-<% } %>
-
-<% if (request.getAttribute("alert") == "102") { %>
-<jsp:include page="/WEB-INF/ALERT/servicioExiste.jsp" />
-<% } %>
-
-<% if (request.getAttribute("alert") == "103") { %>
-<jsp:include page="/WEB-INF/ALERT/colaboradorExiste.jsp" />
-<% } %>
-
-
-<% if (request.getAttribute("alert") == "104") { %>
-<jsp:include page="/WEB-INF/ALERT/noExistePersona.jsp" />
-<% } %>
-
-
-
-
-
-
-
 
 <%
 String txtFechaPlanilla = "txtFechaPlanilla";
@@ -83,6 +60,20 @@ if (fecha_planilla != null) {
 	int contador = tmp_dato_planilla.getCont_colabora();
 	cursor = contador;
 }
+
+
+
+// CANTIDAD DE SOBRES
+VTtempoSobresPlanilla cant_sobres = SobresPlanillasDAO.contarSobres();
+int sobres = cant_sobres.getCod_sobre();
+
+
+
+
+// SUMA DIEZMOS
+VTtempoSobresPlanilla sum_diezmos = SobresPlanillasDAO.sumarDiezmos();
+int diezmos = sum_diezmos.getDiezmos();
+
 %>
 
 
@@ -199,20 +190,16 @@ if (fecha_planilla != null) {
 
 	
 
-			<!-- COMBO DE LOS  RESPONSABLES DEL CONTEO -->
 
 
-			<%
-			if (fecha_planilla != null) {
-			%>
-
+	
 
 			<form action="${pageContext.request.contextPath}/planillas"
 				method="post">
 
 
 				<div class="input-group">
-<input class="form-control" list="datalistOptions" id="exampleDataList" placeholder="Ingresa el nombre del aportante">
+<input required class="form-control" name="txtNombrePersona" list="datalistOptions" id="exampleDataList" placeholder="Ingresa el nombre del aportante" autocomplete="off">
 <datalist id="datalistOptions">
 
 <%for (int x = 0; x < datos_per.size(); x++) { 
@@ -274,97 +261,70 @@ if (fecha_planilla != null) {
 				<hr>
 				
 
-				<%
-				}
-			%>
-
 
 
 <!-- CONTENT  -->
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" class="form-control-sm" placeholder="Diezmos" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtDiezmos" class="form-control-sm" placeholder="Diezmos" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" class="form-control-sm" placeholder="Ofrendas" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtOfrendas" class="form-control-sm" placeholder="Ofrendas" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" class="form-control-sm" placeholder="Necesitados" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtNecesitados" class="form-control-sm" placeholder="Necesitados" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" class="form-control-sm" placeholder="Mercados" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtMercados" class="form-control-sm" placeholder="Mercados" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" class="form-control-sm" placeholder="Construcción" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtConstruccion" class="form-control-sm" placeholder="Construcción" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" class="form-control-sm" placeholder="Misiones" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtMisiones" class="form-control-sm" placeholder="Misiones" aria-label="Username" aria-describedby="basic-addon1">
 </div>
 
 
 
 
 
-
-				<input type="hidden" name="validar"
-					value="agregarColaboladoresPlanillas"> <input type="hidden"
-					name="cursor" value="<%=cursor%>">
-			</form>
-
-
-			<!-- FOOTER  -->
-
-			<%
-			if (fecha_planilla != null) {
-			%>
-
-			<form action="${pageContext.request.contextPath}/planillas"
-				method="post">
-				<div style="position: absolute;
-top: 7rem;
-left: 37%;
-bottom: 0;">
-					<button type="submit" class="btn btn-danger btn-sm">Cancelar</button>
+		
+			
+				<div class="bts_sobres">
+			<div>
+<span class="badge btn-secondary">Compartir planilla</span>
+<span class="badge bg-danger">Eliminar planilla</span>
+</div>
+<br>
+<br>		
 				
+		    <input type="hidden" name="validar"	value="agregarSobre">
+		
+			<div style="text-align:center">
+			<button type="subbmit" class="btn btn-primary btn-lg">Agregar sobre</button>
+			<button type="subbmit" class="btn btn-success btn-lg">Finalizar ingreso</button>
+			</div>
+			
+<hr>
+<div class="cant_sobres">
+<%=sobres %>
+</div>
 
-				<input type="hidden" name="validar" value="eliminarTempoPlanilla">
-				<input type="hidden" name="txtCodTempPlanilla"
-					value="<%=cod_tmp_planilla%>">
-			</form>
 
-			<%
-			if (cursor >= 3) {
-			%>
-			<button type="button" class="btn btn-primary btn-sm">Agregar sobre</button>
-			<button type="button" class="btn btn-secondary btn-sm">Compartir</button>
-			<button type="button" class="btn btn-success btn-sm">Finalizar ingreso</button>
+	</form>
+	
 
-			<%
-			}
-			}
-			%>
-			<hr>
-			<div>Cantidad de sobres ingresados: 0</div>
-			<div>Diezmos: $0</div>
-			<div>Ofrendas: $0</div>
-			<div>Necesitados: $0</div>
-			<div>Mercados: $0</div>
-			<div>Construcción: $0</div>
-			<div>Misiones: $0</div>
-			<div>Otros: $0</div>
-			<hr>
-			<strong>TOTAL: $0</strong>
 		</div>
 
 </div>
@@ -378,14 +338,47 @@ bottom: 0;">
 	<div style="position: absolute; right: 3rem;">
 		<div class="card" style="width: 18rem;">
 			<div class="card-body">
-				<h5 class="card-title">Nueva Planillas</h5>
-				<h6 class="card-subtitle mb-2 text-muted">
-					<img width="15px" src="img/menu/about.png" /> Modulo: Planillas
-				</h6>
-				<p class="card-text">Permite generar el ingreso de sobres para
-					una nueva planilla de cuadre</p>
-				<a href="#" id="a_link"><img width="20px"
-					src="img/menu/buscar.png" /> Consultar planilla</a>
+				<h5 class="card-title">Resumen de ingresos</h5>
+				
+			<table class="table">
+
+  <tbody>
+    <tr>
+      <th scope="row">Diezmos</th>
+      <td>$<%=diezmos %></td>
+      
+    </tr>
+    <tr>
+      <th scope="row">Ofrendas</th>
+      <td>$0</td>
+     
+    </tr>
+    <tr>
+      <th scope="row">Necesitados</th>
+      <td>$0</td>      
+    </tr>
+        <tr>
+      <th scope="row">Mercados</th>
+      <td>$0</td>      
+    </tr>
+        <tr>
+      <th scope="row">Construcción</th>
+      <td>$0</td>      
+    </tr>
+        <tr>
+      <th scope="row">Misiones</th>
+      <td>$0</td>      
+    </tr>
+        <tr>
+      <th scope="row">Otros</th>
+      <td>$0</td>      
+    </tr>
+        <tr>
+      <th scope="row">TOTAL</th>
+      <td>$0</td>      
+    </tr>
+  </tbody>
+</table>
 			</div>
 		</div>
 	</div>
@@ -395,10 +388,7 @@ bottom: 0;">
 
 
 <%@ include file="../modal/validarDocumento.jsp"%>
-<%@ include file="../modal/agregarServicio.jsp"%>
-<%@ include file="../modal/listarServicios.jsp"%>
 <%@ include file="../modal/listarColaboradores.jsp"%>
-<%@ include file="../modal/agregarColaborador.jsp"%>
 
 <%@ include file="../js/scriptUsuarios.jsp"%>
 <%@ include file="../js/scriptPersonas.jsp"%>

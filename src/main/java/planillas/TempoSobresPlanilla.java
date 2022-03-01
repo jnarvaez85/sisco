@@ -5,14 +5,14 @@ public class TempoSobresPlanilla {
 	private int cod_sobre;
 	private int cod_planilla;
 	private int cod_persona;
-	private double diezmos;
-	private double ofrendas;
-	private double necesitados;
-	private double mercados;
-	private double construccion;
-	private double misiones;
-	private double otros;
-	private double especial;
+	private int diezmos;
+	private int ofrendas;
+	private int necesitados;
+	private int mercados;
+	private int construccion;
+	private int misiones;
+	private int otros;
+	private int especial;
 	
 	
 	public TempoSobresPlanilla() {
@@ -21,8 +21,8 @@ public class TempoSobresPlanilla {
 	}
 
 
-	public TempoSobresPlanilla(int cod_sobre, int cod_planilla, int cod_persona, double diezmos, double ofrendas,
-			double necesitados, double mercados, double construccion, double misiones, double otros, double especial) {
+	public TempoSobresPlanilla(int cod_sobre, int cod_planilla, int cod_persona, int diezmos, int ofrendas,
+			int necesitados, int mercados, int construccion, int misiones, int otros, int especial) {
 		super();
 		this.cod_sobre = cod_sobre;
 		this.cod_planilla = cod_planilla;
@@ -44,8 +44,8 @@ public class TempoSobresPlanilla {
 	}
 
 
-	public TempoSobresPlanilla(int cod_planilla, int cod_persona, double diezmos, double ofrendas, double necesitados,
-			double mercados, double construccion, double misiones, double otros, double especial) {
+	public TempoSobresPlanilla(int cod_planilla, int cod_persona, int diezmos, int ofrendas, int necesitados,
+			int mercados, int construccion, int misiones, int otros, int especial) {
 		super();
 		this.cod_planilla = cod_planilla;
 		this.cod_persona = cod_persona;
@@ -90,84 +90,86 @@ public class TempoSobresPlanilla {
 	}
 
 
-	public double getDiezmos() {
+	public int getDiezmos() {
 		return diezmos;
 	}
 
 
-	public void setDiezmos(double diezmos) {
+	public void setDiezmos(int diezmos) {
 		this.diezmos = diezmos;
 	}
 
 
-	public double getOfrendas() {
+	public int getOfrendas() {
 		return ofrendas;
 	}
 
 
-	public void setOfrendas(double ofrendas) {
+	public void setOfrendas(int ofrendas) {
 		this.ofrendas = ofrendas;
 	}
 
 
-	public double getNecesitados() {
+	public int getNecesitados() {
 		return necesitados;
 	}
 
 
-	public void setNecesitados(double necesitados) {
+	public void setNecesitados(int necesitados) {
 		this.necesitados = necesitados;
 	}
 
 
-	public double getMercados() {
+	public int getMercados() {
 		return mercados;
 	}
 
 
-	public void setMercados(double mercados) {
+	public void setMercados(int mercados) {
 		this.mercados = mercados;
 	}
 
 
-	public double getConstruccion() {
+	public int getConstruccion() {
 		return construccion;
 	}
 
 
-	public void setConstruccion(double construccion) {
+	public void setConstruccion(int construccion) {
 		this.construccion = construccion;
 	}
 
 
-	public double getMisiones() {
+	public int getMisiones() {
 		return misiones;
 	}
 
 
-	public void setMisiones(double misiones) {
+	public void setMisiones(int misiones) {
 		this.misiones = misiones;
 	}
 
 
-	public double getOtros() {
+	public int getOtros() {
 		return otros;
 	}
 
 
-	public void setOtros(double otros) {
+	public void setOtros(int otros) {
 		this.otros = otros;
 	}
 
 
-	public double getEspecial() {
+	public int getEspecial() {
 		return especial;
 	}
 
 
-	public void setEspecial(double especial) {
+	public void setEspecial(int especial) {
 		this.especial = especial;
 	}
+
+
 	
 	
 	
