@@ -159,6 +159,9 @@ public class planillas extends HttpServlet {
 				e.printStackTrace();
 			}
 			break;
+			case "eliminarSobre":
+			eliminarSobre(request, response);
+			break;
 			/*
 		case "validarServicio":
 			validarServicio(request, response);
@@ -418,27 +421,72 @@ public class planillas extends HttpServlet {
 			TempoSobresPlanilla sobres = new TempoSobresPlanilla();
 			SobresPlanillasDAO sobre = new SobresPlanillasDAO();
 			
+			String txtDiezmos= request.getParameter("txtDiezmos");
+			String txtOfrendas= request.getParameter("txtOfrendas");
+			String txtNecesitados= request.getParameter("txtNecesitados");
+			String txtMercados= request.getParameter("txtMercados");
+			String txtConstruccion= request.getParameter("txtConstruccion");
+			String txtMisiones= request.getParameter("txtMisiones");
 			
+			
+			if(txtDiezmos=="" && txtOfrendas=="" && txtNecesitados==""	&& txtMercados==""	
+					&& txtConstruccion==""	&& txtMisiones==""
+					
+			) 	{
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp");
+				request.setAttribute("alert", "103");	
+				dispatcher.forward(request, response);
+				
+			}else {
 				
 
 			String nom_persona = request.getParameter("txtNombrePersona");
 			
-			sobres.setDiezmos(Integer.parseInt(request.getParameter("txtDiezmos")));
-			sobres.setOfrendas(Integer.parseInt(request.getParameter("txtOfrendas")));
-			sobres.setNecesitados(Integer.parseInt(request.getParameter("txtNecesitados")));
-			sobres.setMercados(Integer.parseInt(request.getParameter("txtMercados")));
-			sobres.setConstruccion(Integer.parseInt(request.getParameter("txtConstruccion")));
-			sobres.setMisiones(Integer.parseInt(request.getParameter("txtMisiones")));			
+			if(txtDiezmos=="") { txtDiezmos="0";}else {			
+			sobres.setDiezmos(Integer.parseInt(txtDiezmos));}
+			
+			if(txtOfrendas=="") { txtOfrendas="0";}else {			
+			sobres.setOfrendas(Integer.parseInt(txtOfrendas));}
+			
+			if(txtNecesitados=="") { txtNecesitados="0";}else {			
+			sobres.setNecesitados(Integer.parseInt(txtNecesitados));}
+			
+			if(txtMercados=="") { txtMercados="0";}else {			
+			sobres.setMercados(Integer.parseInt(txtMercados));}
+			
+			if(txtConstruccion=="") { txtConstruccion="0";}else {			
+			sobres.setConstruccion(Integer.parseInt(txtConstruccion));}
+			
+			if(txtMisiones=="") { txtMisiones="0";}else {			
+			sobres.setMisiones(Integer.parseInt(txtMisiones));}
+			
 			sobre.agregarSobre(nom_persona, sobres);    	
 		
 			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);
 			
-			
+				
+				}
 				
 			}
 		
 			
+		// Eliminar Sobre
+		private void eliminarSobre(HttpServletRequest request, HttpServletResponse response)
+				throws ServletException, IOException {
+			
+			int cod_sobre = Integer.parseInt(request.getParameter("txtCodigoSobre"));
+			try {
+				SobresPlanillasDAO.eliminarSobre(cod_sobre);
+			} catch (SQLException e) {
+				System.out.print("Error al eliminar sobre: " + e);
+				e.printStackTrace();
+			}
 		
+			//request.getRequestDispatcher("WEB-INF/PAGE/planillas?url=addSobres").forward(request, response);		
+			response.sendRedirect("planillas?url=addSobres");
+		
+		}
 		
 
 

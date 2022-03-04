@@ -1,6 +1,6 @@
 package admin;
 
-public class Systems {
+public class Systemas {
 
 	private int cod_sys;
 	private String nom_sys;
@@ -8,13 +8,13 @@ public class Systems {
 	private String desing_sys;
 	
 	
-	public Systems() {
+	public Systemas() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
 
-	public Systems(int cod_sys, String nom_sys, String ver_sys, String desing_sys) {
+	public Systemas(int cod_sys, String nom_sys, String ver_sys, String desing_sys) {
 		super();
 		this.cod_sys = cod_sys;
 		this.nom_sys = nom_sys;
@@ -23,13 +23,13 @@ public class Systems {
 	}
 
 
-	public Systems(int cod_sys) {
+	public Systemas(int cod_sys) {
 		super();
 		this.cod_sys = cod_sys;
 	}
 
 
-	public Systems(String nom_sys, String ver_sys, String desing_sys) {
+	public Systemas(String nom_sys, String ver_sys, String desing_sys) {
 		super();
 		this.nom_sys = nom_sys;
 		this.ver_sys = ver_sys;

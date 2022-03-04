@@ -5,7 +5,9 @@
 <%@ include file="../CONTENT/consultas.jsp"%>
 
 
-
+<% if (request.getAttribute("alert") == "103") { %>
+<jsp:include page="/WEB-INF/ALERT/agregarValorSobre.jsp" />
+<% } %>
 
 <%
 String txtFechaPlanilla = "txtFechaPlanilla";
@@ -73,6 +75,38 @@ int sobres = cant_sobres.getCod_sobre();
 // SUMA DIEZMOS
 VTtempoSobresPlanilla sum_diezmos = SobresPlanillasDAO.sumarDiezmos();
 int diezmos = sum_diezmos.getDiezmos();
+
+//SUMA OFRENDAS
+VTtempoSobresPlanilla sum_ofrendas = SobresPlanillasDAO.sumarOfrendas();
+int ofrendas = sum_ofrendas.getOfrendas();
+
+//SUMA NECESITADOS
+VTtempoSobresPlanilla sum_necesitados = SobresPlanillasDAO.sumarNecesitados();
+int necesitados = sum_necesitados.getNecesitados();
+
+//SUMA MERCADOS
+VTtempoSobresPlanilla sum_mercados = SobresPlanillasDAO.sumarMercados();
+int mercados = sum_mercados.getMercados();
+
+//SUMA CONSTRUCCION
+VTtempoSobresPlanilla sum_construccion = SobresPlanillasDAO.sumarConstruccion();
+int construccion = sum_construccion.getConstruccion();
+
+//SUMA MISIONES
+VTtempoSobresPlanilla sum_misiones = SobresPlanillasDAO.sumarMisiones();
+int misiones = sum_misiones.getMisiones();
+
+//SUMA OTROS
+VTtempoSobresPlanilla sum_otros = SobresPlanillasDAO.sumarOtros();
+int otros = sum_otros.getOtros();
+
+//SUMA ESPECIAL
+VTtempoSobresPlanilla sum_especial = SobresPlanillasDAO.sumarEspeciales();
+int especial = sum_especial.getEspecial();
+
+
+
+int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ otros+ especial;
 
 %>
 
@@ -317,10 +351,13 @@ int diezmos = sum_diezmos.getDiezmos();
 			</div>
 			
 <hr>
+<a href="#" data-bs-toggle="modal" data-bs-target="#listarSobres">
 <div class="cant_sobres">
-<%=sobres %>
-</div>
 
+<%=sobres %>
+
+</div>
+</a>
 
 	</form>
 	
@@ -350,32 +387,32 @@ int diezmos = sum_diezmos.getDiezmos();
     </tr>
     <tr>
       <th scope="row">Ofrendas</th>
-      <td>$0</td>
+      <td>$<%=ofrendas %></td>
      
     </tr>
     <tr>
       <th scope="row">Necesitados</th>
-      <td>$0</td>      
+      <td>$<%=necesitados %></td>      
     </tr>
         <tr>
       <th scope="row">Mercados</th>
-      <td>$0</td>      
+      <td>$<%=mercados %></td>      
     </tr>
         <tr>
       <th scope="row">Construcción</th>
-      <td>$0</td>      
+      <td>$<%=construccion %></td>      
     </tr>
         <tr>
       <th scope="row">Misiones</th>
-      <td>$0</td>      
+      <td>$<%=misiones %></td>      
     </tr>
         <tr>
       <th scope="row">Otros</th>
-      <td>$0</td>      
+      <td>$<%=otros %></td>      
     </tr>
         <tr>
       <th scope="row">TOTAL</th>
-      <td>$0</td>      
+      <th>$<%=total %></th>      
     </tr>
   </tbody>
 </table>
@@ -389,6 +426,8 @@ int diezmos = sum_diezmos.getDiezmos();
 
 <%@ include file="../modal/validarDocumento.jsp"%>
 <%@ include file="../modal/listarColaboradores.jsp"%>
+<%@ include file="../modal/listarSobres.jsp"%>
+
 
 <%@ include file="../js/scriptUsuarios.jsp"%>
 <%@ include file="../js/scriptPersonas.jsp"%>

@@ -9,14 +9,13 @@
 
 
 <%
-	LinkedList<Systems> system = SystemsDAO.datosSystema();	
+LinkedList<Systemas> system = SystemsDAO.datosSystema();	
 
 	for (int i = 0; i < system.size(); i++) {
 
 		String nombre_entidad = system.get(i).getNom_sys();
 		String version_entidad = system.get(i).getVer_sys();
-	
-		%>
+%>
 
 
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"

@@ -8,8 +8,7 @@
 <%@ page import="java.util.*"%>
 <%@ page import="java.util.LinkedList"%>
 
-<% 
-
+<%
 // recibe el rol
 int cod_rol = (int)session.getAttribute("mi_rol");
 LinkedList<VTmenu> menu = MenuDAO.datosMenu(cod_rol);
@@ -17,13 +16,9 @@ LinkedList<VTmenu> menu = MenuDAO.datosMenu(cod_rol);
 LinkedList<Entidad> entidad = EntidadDAO.datosEntidad();
 String nombre_ent = entidad.get(0).getNom_entidad();
 
-LinkedList<Systems> software = SystemsDAO.datosSystema();
+LinkedList<Systemas> software = SystemsDAO.datosSystema();
 String nombre_sys = software.get(0).getNom_sys();
 String version_sys = software.get(0).getVer_sys();
-
-
-
-
 %>
 
 

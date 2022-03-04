@@ -15,44 +15,36 @@
 
 
 
-<% 
+<%
+ // INFORMACION DEL SOFTWARE
+ int var_sys=0;
+ LinkedList<Systemas> datos_software = SystemsDAO.datosSystema();
+ 	String nom_sys = datos_software.get(var_sys).getNom_sys();
+ 	String ver_sys = datos_software.get(var_sys).getVer_sys();
+ 	String desing_sys = datos_software.get(var_sys).getDesing_sys();
+ 	
+ 	
+ // INFORMACION DE LA ENTIDAD
+ int var_ent=0;
+ LinkedList<Entidad> datos_entidad = EntidadDAO.datosEntidad();
+ 	String nom_ent = datos_entidad.get(var_sys).getNom_entidad();
+ 	
+ 	
+ // USUARIOS
+ LinkedList<VTusuarios> datos_usuario = UsuariosDAO.listarUsuarios();
 
+ // PARAMETROS
+ LinkedList<Parametros> parametros = ParametrosDAO.listarParametros();
 
+ //CONTADORES
+ LinkedList<VTcontadores> datos_contador = ContadoresDAO.listarContadores();
 
-// INFORMACION DEL SOFTWARE
-int var_sys=0;
-LinkedList<Systems> datos_software = SystemsDAO.datosSystema();
-	String nom_sys = datos_software.get(var_sys).getNom_sys();
-	String ver_sys = datos_software.get(var_sys).getVer_sys();
-	String desing_sys = datos_software.get(var_sys).getDesing_sys();
-	
-	
-// INFORMACION DE LA ENTIDAD
-int var_ent=0;
-LinkedList<Entidad> datos_entidad = EntidadDAO.datosEntidad();
-	String nom_ent = datos_entidad.get(var_sys).getNom_entidad();
-	
-	
-// USUARIOS
-LinkedList<VTusuarios> datos_usuario = UsuariosDAO.listarUsuarios();
+ //COLABORADORES
+ LinkedList<VTcolaboradores> datos_colaborador = ColaboradoresDAO.listarColaboradores();
 
-// PARAMETROS
-LinkedList<Parametros> parametros = ParametrosDAO.listarParametros();
-
-//CONTADORES
-LinkedList<VTcontadores> datos_contador = ContadoresDAO.listarContadores();
-
-//COLABORADORES
-LinkedList<VTcolaboradores> datos_colaborador = ColaboradoresDAO.listarColaboradores();
-
-//SERVICIOS
-LinkedList<Servicios> datos_servicios = ServiciosDAO.listarServicios();
- 
-
-	
-
-
-%>
+ //SERVICIOS
+ LinkedList<Servicios> datos_servicios = ServiciosDAO.listarServicios();
+ %>
 
 
 

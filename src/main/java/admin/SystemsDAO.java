@@ -14,8 +14,8 @@ public class SystemsDAO {
 	
 	// MOSTRAR DATOS DEL SISTEMA
 	
-		public static  LinkedList<Systems> datosSystema() {
-	    	LinkedList<Systems> systems = new LinkedList<Systems> ();
+		public static  LinkedList<Systemas> datosSystema() {
+	    	LinkedList<Systemas> systems = new LinkedList<Systemas> ();
 	    	
 	    	MysqlConexion conx = new MysqlConexion();
 	    	Connection con = null;
@@ -31,7 +31,7 @@ public class SystemsDAO {
 	     
 	            while (rs.next()) {
 	            	
-	            	Systems sys = new Systems();
+	            	Systemas sys = new Systemas();
 	            	
 	            	sys.setCod_sys(rs.getInt("cod_sys"));
 	            	sys.setNom_sys(rs.getString("nom_sys"));
