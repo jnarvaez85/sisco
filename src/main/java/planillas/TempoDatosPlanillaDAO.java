@@ -47,6 +47,7 @@ public class TempoDatosPlanillaDAO {
 	 		tempDatosPlanilla.setNom_colabora2(rs.getString("nom_colabora2"));
 	 		tempDatosPlanilla.setCod_colabora3(rs.getInt("cod_colabora3"));
 	 		tempDatosPlanilla.setNom_colabora3(rs.getString("nom_colabora3"));
+	 		tempDatosPlanilla.setCompartida(rs.getInt("compartida"));
 	 	
 	   }
 	  } catch (SQLException e) {

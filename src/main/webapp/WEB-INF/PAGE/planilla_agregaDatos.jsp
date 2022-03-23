@@ -40,7 +40,28 @@ VTusuarios usuarios = (VTusuarios) request.getAttribute("usuario");
 
 //DEFINIENDO LAS OPCIONES DE LOS ROLES
 int getRolColabor = (int) session.getAttribute("mi_rol");
-LinkedList<VTmenu> menuColabora = MenuDAO.datosMenu(getRolColabor);
+
+
+// Boton para cancelar planilla
+// Recibe por parametro cod_menu
+VTmenu btn_cancelar = MenuDAO.menuGeneral(getRolColabor, 44);
+
+String btn_opcion = btn_cancelar.getOpcion();
+String btn_link = btn_cancelar.getLink_menu();
+
+
+//Opcion para Agregar colaboradores de planilla
+// Recibe por parametro cod_menu
+VTmenu btn_add_colabora = MenuDAO.menuGeneral(getRolColabor, 40);
+
+int btn_add_colabora_permiso = btn_add_colabora.getPermiso();
+String btn_add_colabora_icon = btn_add_colabora.getIcon_menu();
+String btn_add_colabora_opcion = btn_add_colabora.getOpcion();
+String btn_add_colabora_link = btn_add_colabora.getLink_menu();
+
+
+
+
 
 //DATOS TEMPORALES DE PLANILLAS
 final int tmp_plan = 1;
@@ -268,7 +289,7 @@ if (cursor == 5) {
 				</div>
 
 				<div class="col-auto">
-					<div>
+					<div style="position: absolute;">
 						<a href="#" data-bs-toggle="modal"
 							data-bs-target="#agregarServicio"><img width="25px"
 							src="img/menu/action_mas.png" /></a> <a href="#"
@@ -320,48 +341,22 @@ if (cursor == 5) {
 					</select>
 
 
-					<%
-					for (int y = 0; y < menuColabora.size(); y++) {
-
-						int param = menuColabora.get(y).getCod_modulo();
-						String opcion = menuColabora.get(y).getOpcion();
-						String icon = menuColabora.get(y).getIcon_menu();
-						String link = menuColabora.get(y).getLink_menu();
-						int tipo = menuColabora.get(y).getCod_enlace();
-
-						if (param == 12 && tipo == 0 && opcion == "Agregar") { // opciones de colaboradores, enlace tipo modal=0
-					%>
-					<span class="input-group-text"> <a href="#"
-						data-bs-toggle="modal" data-bs-target="#<%=link%>" data-bs-url="redirectColaboradores"
-						 data-bs-canc="planillas?url=add"
-						 data-bs-modl="agregarColaborador"
-						><img
-							width="25px" src="img/menu/<%=icon%>.png" /></a> <%
- }
- }
- %>
 
 
-					</span> <span class="input-group-text"> <%
- for (int y = 0; y < menuColabora.size(); y++) {
 
- 	int param = menuColabora.get(y).getCod_modulo();
- 	String opcion = menuColabora.get(y).getOpcion();
- 	String icon = menuColabora.get(y).getIcon_menu();
- 	String link = menuColabora.get(y).getLink_menu();
- 	int tipo = menuColabora.get(y).getCod_enlace();
+					</span> <span class="input-group-text"> 
+ 
 
- 	if (param == 12 && tipo == 0) { // opciones de colaboradores, enlace tipo modal=0
- %> <a href="#" data-bs-toggle="modal" data-bs-target="#<%=link%>" 
- data-bs-url="redirectColaboradores"
- data-bs-canc="planillas?url=add"
- data-bs-modl="getIdentificacion"
- data-bs-doc="data-bs-getDoc"
- ><img
-							width="25px" src="img/menu/<%=icon%>.png" /></a> <%
- }
- }
-					 %>
+ <%	if (btn_add_colabora_permiso == 1) { %> 
+ 
+ 	<a href="#" data-bs-toggle="modal" data-bs-target="#<%=btn_add_colabora_link%>" 
+	 data-bs-url="redirectColaboradores"
+	 data-bs-canc="planillas?url=add"
+	 data-bs-modl="getIdentificacion"
+	 data-bs-doc="data-bs-getDoc" >
+	 <img width="25px" src="img/menu/<%=btn_add_colabora_icon%>.png" /></a> 
+  
+ <% } %>
 
 					</span> <span class="input-group-text"><button type="sumbit"
 							class="btn btn-secondary btn-sm" <%=estado_habilita2%>>Elegir</button></span>
@@ -391,9 +386,12 @@ if (cursor == 5) {
 
 			<form action="${pageContext.request.contextPath}/planillas"
 				method="post">
-				<div style="float: left; margin-right: 2%;">
-					<button type="submit" class="btn btn-danger">Cancelar</button>
-				</div>
+				<div style="float: left; margin-right: 2%;">			
+				
+					
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<%=btn_link %>"><%=btn_opcion %></button>
+
+			</div>
 
 				<input type="hidden" name="validar" value="eliminarTempoPlanilla">
 				<input type="hidden" name="txtCodTempPlanilla"
@@ -443,6 +441,8 @@ if (cursor == 5) {
 <%@ include file="../modal/listarServicios.jsp"%>
 <%@ include file="../modal/listarColaboradores.jsp"%>
 <%@ include file="../modal/agregarColaborador.jsp"%>
+<%@ include file="../modal/cancelarPlanilla.jsp"%>
+
 
 <%@ include file="../js/scriptUsuarios.jsp"%>
 <%@ include file="../js/scriptPersonas.jsp"%>

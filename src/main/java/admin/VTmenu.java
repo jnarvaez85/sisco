@@ -3,6 +3,7 @@ package admin;
 public class VTmenu {
 	
 	private int cod_rol;
+	private int cod_menu;
 	private String rol;
 	private String opcion;
 	private int cod_modulo;
@@ -27,11 +28,12 @@ public class VTmenu {
 
 
 
-	public VTmenu(int cod_rol, String rol, String opcion, int cod_modulo, String modulo, int cod_tipo_menu,
+	public VTmenu(int cod_rol, int cod_menu, String rol, String opcion, int cod_modulo, String modulo, int cod_tipo_menu,
 			String tipo_menu, String icon_menu, String link_menu, int permiso, String estado_permiso, int estado_menu,
 			String menu, int cod_enlace, String tipo_enlace) {
 		super();
 		this.cod_rol = cod_rol;
+		this.cod_menu = cod_menu;
 		this.rol = rol;
 		this.opcion = opcion;
 		this.cod_modulo = cod_modulo;
@@ -60,10 +62,11 @@ public class VTmenu {
 
 
 
-	public VTmenu(String rol, String opcion, int cod_modulo, String modulo, int cod_tipo_menu, String tipo_menu,
+	public VTmenu(int cod_menu, String rol, String opcion, int cod_modulo, String modulo, int cod_tipo_menu, String tipo_menu,
 			String icon_menu, String link_menu, int permiso, String estado_permiso, int estado_menu, String menu,
 			int cod_enlace, String tipo_enlace) {
 		super();
+		this.cod_menu = cod_menu;
 		this.rol = rol;
 		this.opcion = opcion;
 		this.cod_modulo = cod_modulo;
@@ -78,6 +81,20 @@ public class VTmenu {
 		this.menu = menu;
 		this.cod_enlace = cod_enlace;
 		this.tipo_enlace = tipo_enlace;
+	}
+
+
+
+
+	public int getCod_menu() {
+		return cod_menu;
+	}
+
+
+
+
+	public void setCod_menu(int cod_menu) {
+		this.cod_menu = cod_menu;
 	}
 
 

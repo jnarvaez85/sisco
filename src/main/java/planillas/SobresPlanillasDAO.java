@@ -498,5 +498,44 @@ public class SobresPlanillasDAO {
 					return rows;
 				}
 				
+				
+				// COMPARTIR PLANILLA
+				public static int compartirPlanilla(VTtempoDatosPlanilla compartir) throws SQLException {
+
+					int rows = 0;
+					
+				 	MysqlConexion conx = new MysqlConexion();
+			    	Connection con = null;
+			    	CallableStatement stmt = null;
+			    	
+					try {								
+						
+						con = conx.conectar();					
+						String sql = "{call SP_COMPARTIR_PLANILLA (?,?)}";
+				        stmt = con.prepareCall(sql);	
+									
+				        stmt.setInt(1, compartir.getCod_temp_planilla());						        
+				        stmt.setInt(2, compartir.getCompartida());
+				   
+						
+
+				        rows = stmt.executeUpdate();
+						
+					   } catch (SQLException e) {
+							System.out.println("Error al compartir planilla " + e);
+						}
+			        
+					finally {
+						try {
+							
+							MysqlConexion.close(stmt);
+							MysqlConexion.close(con);
+						} catch (SQLException e) {
+							System.out.println("Error al cerrar" + e);
+						}
+					}
+					return rows;
+				}
+				
 
 }

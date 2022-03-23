@@ -87,7 +87,10 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 			<div style="float: left;margin-right: 1%;">
 			<form action="${pageContext.request.contextPath}/planillas" method="post">
 			
-			<button type="submit" class="btn btn-danger">No, deseo eliminarla</button>
+			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarPlanilla">No, deseo eliminarla</button>
+			
+
+			
 			</div>
 			
 			<input type="hidden" name="validar" value="eliminarTempoPlanilla" >
@@ -118,3 +121,6 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 </div>
 </body>
 </html>
+
+
+<%@ include file="../modal/cancelarPlanilla.jsp"%>

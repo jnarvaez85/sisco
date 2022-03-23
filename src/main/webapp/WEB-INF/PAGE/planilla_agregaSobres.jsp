@@ -19,7 +19,55 @@ VTusuarios usuarios = (VTusuarios) request.getAttribute("usuario");
 
 //DEFINIENDO LAS OPCIONES DE LOS ROLES
 int getRolColabor = (int) session.getAttribute("mi_rol");
-LinkedList<VTmenu> menuColabora = MenuDAO.datosMenu(getRolColabor);
+
+//Opcion para Agregar colaboradores de planilla
+//Recibe por parametro cod_menu
+VTmenu btn_add_colabora = MenuDAO.menuGeneral(getRolColabor, 40);
+
+int btn_add_colabora_permiso = btn_add_colabora.getPermiso();
+String btn_add_colabora_icon = btn_add_colabora.getIcon_menu();
+String btn_add_colabora_opcion = btn_add_colabora.getOpcion();
+String btn_add_colabora_link = btn_add_colabora.getLink_menu();
+
+
+//Opcion para Agregar sobres especiales
+VTmenu btn_add_especial = MenuDAO.menuGeneral(getRolColabor, 43);
+
+int btn_add_especial_permiso = btn_add_especial.getPermiso();
+String btn_add_especial_icon = btn_add_especial.getIcon_menu();
+String btn_add_especial_opcion = btn_add_especial.getOpcion();
+String btn_add_especial_link = btn_add_especial.getLink_menu();
+
+
+//Opcion para compartir planilla
+VTmenu btn_add_share = MenuDAO.menuGeneral(getRolColabor, 45);
+
+int btn_add_share_permiso = btn_add_share.getPermiso();
+String btn_add_share_opcion = btn_add_share.getOpcion();
+String btn_add_share_link = btn_add_share.getLink_menu();
+
+//Opcion para dejar de compartir planilla
+VTmenu btn_add_no_share = MenuDAO.menuGeneral(getRolColabor, 46);
+
+int btn_add_no_share_permiso = btn_add_no_share.getPermiso();
+String btn_add_no_share_opcion = btn_add_no_share.getOpcion();
+String btn_add_no_share_link = btn_add_no_share.getLink_menu();
+
+
+//Boton para cancelar planilla
+VTmenu btn_cancelar = MenuDAO.menuGeneral(getRolColabor, 44);
+
+int btn_permiso = btn_cancelar.getPermiso();
+String btn_opcion = btn_cancelar.getOpcion();
+String btn_link = btn_cancelar.getLink_menu();
+
+//Boton para finalizar ingreso planilla
+VTmenu btn_finalizar = MenuDAO.menuGeneral(getRolColabor, 47);
+
+int btn_finalizar_permiso = btn_finalizar.getPermiso();
+String btn_finalizar_opcion = btn_finalizar.getOpcion();
+String btn_finalizar_link = btn_finalizar.getLink_menu();
+
 
 //LISTADO DE PERSONAS
 LinkedList<Personas> datos_per = PersonasDAO.listarPersonas();
@@ -31,6 +79,8 @@ final int tmp_plan = 1;
 VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPlanillaTemp(tmp_plan);
 
 int cod_tmp_planilla = tmp_dato_planilla.getCod_temp_planilla();
+int compartida = tmp_dato_planilla.getCompartida();
+
 
 String nom_contador = tmp_dato_planilla.getNom_contador();
 int cod_colabora1 = tmp_dato_planilla.getCod_colabora1();
@@ -246,50 +296,33 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 </datalist>
 
 
-					<%
-					for (int y = 0; y < menuColabora.size(); y++) {
-
-						int param = menuColabora.get(y).getCod_modulo();
-						String opcion = menuColabora.get(y).getOpcion();
-						String icon = menuColabora.get(y).getIcon_menu();
-						String link = menuColabora.get(y).getLink_menu();
-						int tipo = menuColabora.get(y).getCod_enlace();
-
-						if (param == 12 && tipo == 0 && opcion == "Agregar") { // opciones de colaboradores, enlace tipo modal=0
-					%>
-					<span class="input-group-text"> <a href="#"
-						data-bs-toggle="modal" data-bs-target="#<%=link%>" data-bs-url="redirectColaboradores"
-						 data-bs-canc="planillas?url=add"
-						 data-bs-modl="agregarColaborador"
-						><img
-							width="25px" src="img/menu/<%=icon%>.png" /></a> <%
- }
- }
- %>
 
 
-					</span> <span class="input-group-text"> <%
- for (int y = 0; y < menuColabora.size(); y++) {
 
- 	int param = menuColabora.get(y).getCod_modulo();
- 	String opcion = menuColabora.get(y).getOpcion();
- 	String icon = menuColabora.get(y).getIcon_menu();
- 	String link = menuColabora.get(y).getLink_menu();
- 	int tipo = menuColabora.get(y).getCod_enlace();
+ <%	if (btn_add_colabora_permiso == 1) { %> 
+ 
+ 	<a href="#" data-bs-toggle="modal" data-bs-target="#<%=btn_add_colabora_link%>" 
+	 data-bs-url="redirectColaboradores"
+	 data-bs-canc="planillas?url=add"
+	 data-bs-modl="getIdentificacion"
+	 data-bs-doc="data-bs-getDoc" >
+	 <img width="25px" src="img/menu/<%=btn_add_colabora_icon%>.png" /></a> 
+  
+ <% } %>
 
- 	if (param == 12 && tipo == 0) { // opciones de colaboradores, enlace tipo modal=0
- %> <a href="#" data-bs-toggle="modal" data-bs-target="#<%=link%>" 
+
+
+
+
+ <a href="#" data-bs-toggle="modal" data-bs-target="#<%=btn_add_especial_link %>" 
  data-bs-url="redirectColaboradores"
  data-bs-canc="planillas?url=add"
  data-bs-modl="getIdentificacion"
  data-bs-doc="data-bs-getDoc"
- ><img
-							width="25px" src="img/menu/<%=icon%>.png" /></a> <%
- }
- }
-					 %>
+ ><img width="25px" src="img/menu/<%=btn_add_especial_icon %>.png" /></a> 
 
-		<img width="25px" src="img/menu/especial.png" />		
+</span> 
+			
 				</div>
 
 				<hr>
@@ -337,8 +370,34 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 			
 				<div class="bts_sobres">
 			<div>
-<span class="badge btn-secondary">Compartir planilla</span>
-<span class="badge bg-danger">Eliminar planilla</span>
+
+<% if (compartida == 0) { 
+
+     if (btn_add_share_permiso == 1) {
+
+%>
+
+			
+			
+<a href="#" style="text-decoration: none;" class="badge btn-secondary" data-bs-toggle="modal" data-bs-target="#<%=btn_add_share_link %>"><%=btn_add_share_opcion %></a>
+
+<% }
+     
+}else { 
+
+	if (btn_add_no_share_permiso  == 1) {
+%>	
+
+<a href="#" style="text-decoration: none;" class="badge btn-secondary" data-bs-toggle="modal" data-bs-target="#<%=btn_add_no_share_link %>"><%=btn_add_no_share_opcion %></a>
+
+<% } 
+}
+%>	
+
+
+<% if(btn_permiso==1){ %>
+<a href="#" style="text-decoration: none;" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#<%=btn_link %>"><%=btn_opcion  %></a>
+<% } %>
 </div>
 <br>
 <br>		
@@ -347,22 +406,27 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 		
 			<div style="text-align:center">
 			<button type="subbmit" class="btn btn-primary btn-lg">Agregar sobre</button>
-			<button type="subbmit" class="btn btn-success btn-lg">Finalizar ingreso</button>
+			
+			
+			<% if (btn_finalizar_permiso ==1) {%>
+			<button type="subbmit" class="btn btn-success btn-lg"><%=btn_finalizar_opcion  %></button>
+			<% } %>
 			</div>
 			
 <hr>
-<a href="#" data-bs-toggle="modal" data-bs-target="#listarSobres">
+
+
+	</form>
+	
+
+		</div>
+		<a href="#" data-bs-toggle="modal" data-bs-target="#listarSobres">
 <div class="cant_sobres">
 
 <%=sobres %>
 
 </div>
 </a>
-
-	</form>
-	
-
-		</div>
 
 </div>
 
@@ -425,8 +489,12 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 
 
 <%@ include file="../modal/validarDocumento.jsp"%>
-<%@ include file="../modal/listarColaboradores.jsp"%>
+<%@ include file="../modal/listarAportantes.jsp"%>
 <%@ include file="../modal/listarSobres.jsp"%>
+<%@ include file="../modal/agregarSobreEspecial.jsp"%>
+<%@ include file="../modal/cancelarPlanilla.jsp"%>
+<%@ include file="../modal/compartirPlanilla.jsp"%>
+<%@ include file="../modal/compartirPlanillaNO.jsp"%>
 
 
 <%@ include file="../js/scriptUsuarios.jsp"%>

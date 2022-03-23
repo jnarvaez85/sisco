@@ -51,6 +51,9 @@ public class planillas extends HttpServlet {
 			case "colaboladores":
 				this.colaboladores(request, response);
 				break;
+			case "planillaCompartida":
+				this.sharePlanilla(request, response);
+				break;
 				
 			}
 			
@@ -80,6 +83,11 @@ public class planillas extends HttpServlet {
 	private void colaboladores(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getRequestDispatcher("WEB-INF/PAGE/colaboladores.jsp").forward(request, response);	
+	}
+	
+	private void sharePlanilla(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_compartida.jsp").forward(request, response);	
 	}	
 
 	// FIN GET
@@ -167,6 +175,14 @@ public class planillas extends HttpServlet {
 			validarServicio(request, response);
 			break;
 			*/	
+			case "compartirPlanilla":
+				try {
+					compartirPlanilla(request, response);
+				} catch (SQLException | IOException | ServletException e) {
+					System.out.print("Error al compartir planilla : " + e);
+					e.printStackTrace();
+				}
+				break;
 		}
 	
 	}
@@ -485,6 +501,27 @@ public class planillas extends HttpServlet {
 		
 			//request.getRequestDispatcher("WEB-INF/PAGE/planillas?url=addSobres").forward(request, response);		
 			response.sendRedirect("planillas?url=addSobres");
+		
+		}
+		
+		
+		// Compartir Planilla
+		private void compartirPlanilla(HttpServletRequest request, HttpServletResponse response)
+				throws SQLException, IOException, ServletException {
+			
+			
+			VTtempoDatosPlanilla comp = new VTtempoDatosPlanilla();
+			//SobresPlanillasDAO compartir = new SobresPlanillasDAO();	
+			
+			
+			comp.setCod_temp_planilla(Integer.parseInt(request.getParameter("txtCodPlanilla")));
+			comp.setCompartida(Integer.parseInt(request.getParameter("txtCompartir")));
+		
+			SobresPlanillasDAO.compartirPlanilla(comp);	
+		
+			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);	
+			
+		
 		
 		}
 		
