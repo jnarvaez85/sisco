@@ -3,6 +3,7 @@
 <%@ include file="../CONTENT/header.jsp"%>
 <%@ include file="../CONTENT/funciones.jsp"%>
 <%@ include file="../CONTENT/consultas.jsp"%>
+<%@ include file="../CONTENT/botones.jsp"%>
 
 
 
@@ -37,27 +38,6 @@ String selectServPlanilla = "selectServPlanilla";
 String selectResponPlanilla = "selectResponPlanilla";
 
 VTusuarios usuarios = (VTusuarios) request.getAttribute("usuario");
-
-//DEFINIENDO LAS OPCIONES DE LOS ROLES
-int getRolColabor = (int) session.getAttribute("mi_rol");
-
-
-// Boton para cancelar planilla
-// Recibe por parametro cod_menu
-VTmenu btn_cancelar = MenuDAO.menuGeneral(getRolColabor, 44);
-
-String btn_opcion = btn_cancelar.getOpcion();
-String btn_link = btn_cancelar.getLink_menu();
-
-
-//Opcion para Agregar colaboradores de planilla
-// Recibe por parametro cod_menu
-VTmenu btn_add_colabora = MenuDAO.menuGeneral(getRolColabor, 40);
-
-int btn_add_colabora_permiso = btn_add_colabora.getPermiso();
-String btn_add_colabora_icon = btn_add_colabora.getIcon_menu();
-String btn_add_colabora_opcion = btn_add_colabora.getOpcion();
-String btn_add_colabora_link = btn_add_colabora.getLink_menu();
 
 
 
@@ -388,8 +368,10 @@ if (cursor == 5) {
 				method="post">
 				<div style="float: left; margin-right: 2%;">			
 				
-					
-			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<%=btn_link %>"><%=btn_opcion %></button>
+			<% if(btn_permiso== 1){ %>		
+			<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<%=btn_link %>"><%=btn_opcion %></a>
+			<% } %>		
+
 
 			</div>
 

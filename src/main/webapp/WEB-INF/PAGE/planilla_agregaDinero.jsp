@@ -231,158 +231,160 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 			<form action="${pageContext.request.contextPath}/planillas"
 				method="post">
 
-
-				<div class="input-group">
-<input required class="form-control" name="txtNombrePersona" list="datalistOptions" id="exampleDataList" placeholder="Ingresa el nombre del aportante" autocomplete="off">
-<datalist id="datalistOptions">
-
-<%for (int x = 0; x < datos_per.size(); x++) { 
-
-	String nom_persona = datos_per.get(x).getNom_persona();
-%>
-  <option value="<%=nom_persona %>">
-<% }%>
- 
-</datalist>
-
-
-
-
-
- <%	if (btn_add_colabora_permiso == 1) { %> 
- 
- 	<a href="#" data-bs-toggle="modal" data-bs-target="#<%=btn_add_colabora_link%>" 
-	 data-bs-url="redirectColaboradores"
-	 data-bs-canc="planillas?url=add"
-	 data-bs-modl="getIdentificacion"
-	 data-bs-doc="data-bs-getDoc" >
-	 <img width="25px" src="img/menu/<%=btn_add_colabora_icon%>.png" /></a> 
-  
- <% } %>
-
-
-
-
-
- <a href="#" data-bs-toggle="modal" data-bs-target="#<%=btn_add_especial_link %>" 
- data-bs-url="redirectColaboradores"
- data-bs-canc="planillas?url=add"
- data-bs-modl="getIdentificacion"
- data-bs-doc="data-bs-getDoc"
- ><img width="25px" src="img/menu/<%=btn_add_especial_icon %>.png" /></a> 
-
-</span> 
-			
-				</div>
-
-				<hr>
 				
 
 
 
 <!-- CONTENT  -->
 
-<div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtDiezmos" class="form-control-sm" placeholder="Diezmos" aria-label="Username" aria-describedby="basic-addon1">
+<div class="container">
+  <div class="row align-items-start">
+    <div class="col">
+    
+    <strong>Billetes</strong>
+    
+      <div class="input-group mb-3">
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control b_cien" id="cantidad_b_100"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="100000" id="total_b_100" />
+  <input type="text" name="txtDiezmos" class="form-control-sm b_cien" placeholder="$100.000" id="aporte_b_100" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_b_cien"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
 </div>
 
 <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtOfrendas" class="form-control-sm" placeholder="Ofrendas" aria-label="Username" aria-describedby="basic-addon1">
-</div>
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control b_cincuenta" id="cantidad_b_50"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="50000" id="total_b_50"  />
+  <input type="text" name="txtOfrendas" class="form-control-sm b_cincuenta" placeholder="$50.000" id="aporte_b_50" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_b_cincuenta"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
 
 <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtNecesitados" class="form-control-sm" placeholder="Necesitados" aria-label="Username" aria-describedby="basic-addon1">
-</div>
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control b_veinte" id="cantidad_b_20"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="20000" id="total_b_20"  />
+  <input type="text" name="txtNecesitados" class="form-control-sm b_veinte" placeholder="$20.000" id="aporte_b_20" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_b_veinte"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
 
 <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtMercados" class="form-control-sm" placeholder="Mercados" aria-label="Username" aria-describedby="basic-addon1">
-</div>
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control b_diez" id="cantidad_b_10"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="10000" id="total_b_10"  />
+  <input type="text" name="txtMercados" class="form-control-sm b_diez" placeholder="$10.000" id="aporte_b_10" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_b_diez"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
 
 <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtConstruccion" class="form-control-sm" placeholder="Construcción" aria-label="Username" aria-describedby="basic-addon1">
-</div>
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control b_cinco" id="cantidad_b_5"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="5000" id="total_b_5"  />
+  <input type="text" name="txtConstruccion" class="form-control-sm b_cinco" placeholder="$5.000" id="aporte_b_5" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_b_cinco"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
 
 <div class="input-group mb-3">
-  <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtMisiones" class="form-control-sm" placeholder="Misiones" aria-label="Username" aria-describedby="basic-addon1">
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control b_dos" id="cantidad_b_2"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="2000" id="total_b_2"  />
+  <input type="text" name="txtMisiones" class="form-control-sm b_dos" placeholder="$2.000" id="aporte_b_2" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_b_dos"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
+
+<div class="input-group mb-3">
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control b_mil" id="cantidad_b_1"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="1000" id="total_b_1"  />
+  <input type="text" name="txtMisiones" class="form-control-sm b_mil" placeholder="$1.000" id="aporte_b_1" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_b_mil"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
+</div>    
+    
+    
+    
+    
+    
+    <div class="col">
+    <strong>Monedas</strong>
+
+<div class="input-group mb-3">
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control m_mil" id="cantidad_m_1"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="1000" id="total_m_1"  />
+  <input type="text" name="txtMisiones" class="form-control-sm m_mil" placeholder="$1.000" id="aporte_m_1" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_m_mil"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
+
+<div class="input-group mb-3">
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control m_quiniento" id="cantidad_m_5"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="500" id="total_m_5"  />
+  <input type="text" name="txtMisiones" class="form-control-sm m_quiniento" placeholder="$500" id="aporte_m_5" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_m_quiniento"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
+
+<div class="input-group mb-3">
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control m_dos" id="cantidad_m_2"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="200" id="total_m_2"  />
+  <input type="text" name="txtMisiones" class="form-control-sm m_dos" placeholder="$200" id="aporte_m_2" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_m_dos"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
+
+<div class="input-group mb-3">
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control m_cien" id="cantidad_m_100"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="100" id="total_m_100"  />
+  <input type="text" name="txtMisiones" class="form-control-sm m_cien" placeholder="$100" id="aporte_m_100" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_m_cien"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
+
+<div class="input-group mb-3">
+  <span style="width:50px" id="basic-addon1">
+  <input type="text"  class="form-control m_cincuenta" id="cantidad_m_50"  placeholder="0" autocomplete="off">
+  </span>
+  <input type="hidden" value="50" id="total_m_50"  />
+  <input type="text" name="txtMisiones" class="form-control-sm m_cincuenta" placeholder="$50" id="aporte_m_50" readonly="readonly">
+<button type="button" class="btn btn-light" id="cl_m_cincuenta"> <img width="20px" src="img/menu/btn_eliminar.png" /></button>
+  </div>
+ </div>   
+    
+    
 </div>
+</div>
+
 
 
 
 
 
 		
-			
-				<div class="bts_sobres">
-			<div>
 
-<% if (compartida == 0) { 
-
-     if (btn_add_share_permiso == 1) {
-
-%>
-
-			
-			
-<a href="#" style="text-decoration: none;" class="badge btn-secondary" data-bs-toggle="modal" data-bs-target="#<%=btn_add_share_link %>"><%=btn_add_share_opcion %></a>
-
-<% }
-     
-}else { 
-
-	if (btn_add_no_share_permiso  == 1) {
-%>	
-
-<a href="#" style="text-decoration: none;" class="badge btn-secondary" data-bs-toggle="modal" data-bs-target="#<%=btn_add_no_share_link %>"><%=btn_add_no_share_opcion %></a>
-
-<% } 
-}
-%>	
-
-
-<% if(btn_permiso==1){ %>
-<a href="#" style="text-decoration: none;" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#<%=btn_link %>">Cancelar planilla</a>
-<% } %>
 </div>
-<br>
-<br>		
-				
-		    <input type="hidden" name="validar"	value="agregarSobre">
-		
-			<div style="text-align:center">
-			<button type="subbmit" class="btn btn-primary btn-lg">Agregar sobre</button>
-			
-			
-			<% if (btn_finalizar_permiso ==1) {%>
-			<a href="#" style="text-decoration: none;" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#<%=btn_finalizar_link %>"><%=btn_finalizar_opcion  %></a>
-			
-			<% } %>
-			</div>
-			
-<hr>
 
 
-	</form>
+
+
 	
 
 		</div>
-		<a href="#" data-bs-toggle="modal" data-bs-target="#listarSobres">
-<div class="cant_sobres">
-
-<%=sobres %>
-
-</div>
-</a>
-
-</div>
+	
 
 
-	</div>
+
+
+
 
 
 
@@ -431,13 +433,22 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
     </tr>
   </tbody>
 </table>
+
+
 			</div>
+			
+			
 		</div>
 	</div>
 </body>
 </html>
 
 
+
+
+
+
+<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
 <%@ include file="../modal/validarDocumento.jsp"%>
 <%@ include file="../modal/listarAportantes.jsp"%>
@@ -451,5 +462,10 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 
 <%@ include file="../js/scriptUsuarios.jsp"%>
 <%@ include file="../js/scriptPersonas.jsp"%>
+<%@ include file="../js/scriptPersonas.jsp"%>
+
+<%@ include file="../jquery/calcularMonedas.jsp"%>
+
+
 
 

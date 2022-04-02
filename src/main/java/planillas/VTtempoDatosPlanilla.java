@@ -19,7 +19,9 @@ public class VTtempoDatosPlanilla {
 	private String nom_colabora2; 
 	private int cod_colabora3; 
 	private String nom_colabora3;
-	private int compartida; 
+	private int compartida;
+	private int estado_planilla; 
+	private int detalle_estado; 
 	
 	
 	public VTtempoDatosPlanilla() {
@@ -31,7 +33,7 @@ public class VTtempoDatosPlanilla {
 	public VTtempoDatosPlanilla(int cod_temp_planilla, int cod_persona, String nom_contador, Date fecha_genera,
 			Date fecha_planilla, int cod_servicio, int cont_colabora, String nom_servicio, String hora_servicio,
 			int cod_colabora1, String nom_colabora1, int cod_colabora2, String nom_colabora2, int cod_colabora3,
-			String nom_colabora3, int compartida) {
+			String nom_colabora3, int compartida, int estado_planilla, int detalle_estado) {
 		super();
 		this.cod_temp_planilla = cod_temp_planilla;
 		this.cod_persona = cod_persona;
@@ -49,34 +51,39 @@ public class VTtempoDatosPlanilla {
 		this.cod_colabora3 = cod_colabora3;
 		this.nom_colabora3 = nom_colabora3;
 		this.compartida = compartida;
+		this.estado_planilla = estado_planilla;
+		this.detalle_estado = detalle_estado;
+	}
+
+
+	public VTtempoDatosPlanilla(int cod_persona, String nom_contador, Date fecha_genera, Date fecha_planilla,
+			int cod_servicio, int cont_colabora, String nom_servicio, String hora_servicio, int cod_colabora1,
+			String nom_colabora1, int cod_colabora2, String nom_colabora2, int cod_colabora3, String nom_colabora3,
+			int compartida, int estado_planilla, int detalle_estado) {
+		super();
+		this.cod_persona = cod_persona;
+		this.nom_contador = nom_contador;
+		this.fecha_genera = fecha_genera;
+		this.fecha_planilla = fecha_planilla;
+		this.cod_servicio = cod_servicio;
+		this.cont_colabora = cont_colabora;
+		this.nom_servicio = nom_servicio;
+		this.hora_servicio = hora_servicio;
+		this.cod_colabora1 = cod_colabora1;
+		this.nom_colabora1 = nom_colabora1;
+		this.cod_colabora2 = cod_colabora2;
+		this.nom_colabora2 = nom_colabora2;
+		this.cod_colabora3 = cod_colabora3;
+		this.nom_colabora3 = nom_colabora3;
+		this.compartida = compartida;
+		this.estado_planilla = estado_planilla;
+		this.detalle_estado = detalle_estado;
 	}
 
 
 	public VTtempoDatosPlanilla(int cod_temp_planilla) {
 		super();
 		this.cod_temp_planilla = cod_temp_planilla;
-	}
-
-
-	public VTtempoDatosPlanilla(int cod_persona, String nom_contador, Date fecha_genera, Date fecha_planilla,
-			int cod_servicio, int cont_colabora, String nom_servicio, String hora_servicio, int cod_colabora1,
-			String nom_colabora1, int cod_colabora2, String nom_colabora2, int cod_colabora3, String nom_colabora3, int compartida) {
-		super();
-		this.cod_persona = cod_persona;
-		this.nom_contador = nom_contador;
-		this.fecha_genera = fecha_genera;
-		this.fecha_planilla = fecha_planilla;
-		this.cod_servicio = cod_servicio;
-		this.cont_colabora = cont_colabora;
-		this.nom_servicio = nom_servicio;
-		this.hora_servicio = hora_servicio;
-		this.cod_colabora1 = cod_colabora1;
-		this.nom_colabora1 = nom_colabora1;
-		this.cod_colabora2 = cod_colabora2;
-		this.nom_colabora2 = nom_colabora2;
-		this.cod_colabora3 = cod_colabora3;
-		this.nom_colabora3 = nom_colabora3;
-		this.compartida = compartida;
 	}
 
 
@@ -228,8 +235,8 @@ public class VTtempoDatosPlanilla {
 	public void setNom_colabora3(String nom_colabora3) {
 		this.nom_colabora3 = nom_colabora3;
 	}
-	
-	
+
+
 	public int getCompartida() {
 		return compartida;
 	}
@@ -240,6 +247,27 @@ public class VTtempoDatosPlanilla {
 	}
 
 
+	public int getEstado_planilla() {
+		return estado_planilla;
+	}
+
+
+	public void setEstado_planilla(int estado_planilla) {
+		this.estado_planilla = estado_planilla;
+	}
+
+
+	public int getDetalle_estado() {
+		return detalle_estado;
+	}
+
+
+	public void setDetalle_estado(int detalle_estado) {
+		this.detalle_estado = detalle_estado;
+	}
+
+
+	
 
 	
 	

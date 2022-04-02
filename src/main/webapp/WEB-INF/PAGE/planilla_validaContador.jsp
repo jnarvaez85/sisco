@@ -3,6 +3,7 @@
 <%@ include file="../CONTENT/header.jsp" %>
 <%@ include file="../CONTENT/funciones.jsp" %>
 <%@ include file="../CONTENT/consultas.jsp" %>
+<%@ include file="../CONTENT/botones.jsp" %>
 
 
 
@@ -87,8 +88,10 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 			<div style="float: left;margin-right: 1%;">
 			<form action="${pageContext.request.contextPath}/planillas" method="post">
 			
-			<button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#eliminarPlanilla">No, deseo eliminarla</button>
 			
+			<% if(btn_permiso == 1){ %>
+			<a href="#" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#<%=btn_link%>">No, deseo eliminarla</a>
+			<% } %>
 
 			
 			</div>

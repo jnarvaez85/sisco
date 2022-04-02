@@ -54,7 +54,7 @@ Lo sentimos, no hay planillas compartidas por ingresar
 
 
 
-<button type="button" class="btn btn-success">INGRESAR</button>
+<a href="${pageContext.request.contextPath}/planillas?url=addSobres"  class="btn btn-success">INGRESAR</a>
 <div>
 <small>¿Desea ayudar con el ingreso de los sobres de la planilla compartida?</small>
 </div>		

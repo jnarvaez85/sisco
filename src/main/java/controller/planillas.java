@@ -183,6 +183,14 @@ public class planillas extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
+			case "finalizarIngreso":
+				try {
+					finalizarIngreso(request, response);
+				} catch (SQLException | IOException | ServletException e) {
+					System.out.print("Error al finalizar sobres de planilla : " + e);
+					e.printStackTrace();
+				}
+				break;
 		}
 	
 	}
@@ -519,9 +527,26 @@ public class planillas extends HttpServlet {
 		
 			SobresPlanillasDAO.compartirPlanilla(comp);	
 		
-			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);	
-			
+			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);			
 		
+		}
+		
+		
+		// Finalizar Ingreso
+		
+		private void finalizarIngreso(HttpServletRequest request, HttpServletResponse response)
+				throws SQLException, IOException, ServletException {
+		
+			
+			VTtempoDatosPlanilla finalizaIngreso = new VTtempoDatosPlanilla();		
+			
+			finalizaIngreso.setCod_temp_planilla(Integer.parseInt(request.getParameter("txtCodPlanilla")));
+			finalizaIngreso.setEstado_planilla(Integer.parseInt(request.getParameter("txtEstadoPlanilla")));
+		
+			SobresPlanillasDAO.finalizarIngresos(finalizaIngreso);	
+		
+			
+			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp").forward(request, response);
 		
 		}
 		

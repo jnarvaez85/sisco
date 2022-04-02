@@ -537,5 +537,44 @@ public class SobresPlanillasDAO {
 					return rows;
 				}
 				
+				
+				// FINALIZAR SOBRES
+				public static int finalizarIngresos(VTtempoDatosPlanilla estado_planilla) throws SQLException {
+
+					int rows = 0;
+					
+				 	MysqlConexion conx = new MysqlConexion();
+			    	Connection con = null;
+			    	CallableStatement stmt = null;
+			    	
+					try {								
+						
+						con = conx.conectar();					
+						String sql = "{call SP_FINALIZAR_INGRESO (?,?)}";
+				        stmt = con.prepareCall(sql);	
+									
+				        stmt.setInt(1, estado_planilla.getCod_temp_planilla());						        
+				        stmt.setInt(2, estado_planilla.getEstado_planilla());
+				   
+						
+
+				        rows = stmt.executeUpdate();
+						
+					   } catch (SQLException e) {
+							System.out.println("Error al finalizar ingreso de sobres de planilla " + e);
+						}
+			        
+					finally {
+						try {
+							
+							MysqlConexion.close(stmt);
+							MysqlConexion.close(con);
+						} catch (SQLException e) {
+							System.out.println("Error al cerrar" + e);
+						}
+					}
+					return rows;
+				}
+				
 
 }
