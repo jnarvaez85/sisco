@@ -54,6 +54,9 @@ public class planillas extends HttpServlet {
 			case "planillaCompartida":
 				this.sharePlanilla(request, response);
 				break;
+			case "validarIngreso":
+				this.validarIngreso(request, response);
+				break;
 				
 			}
 			
@@ -88,7 +91,12 @@ public class planillas extends HttpServlet {
 	private void sharePlanilla(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		request.getRequestDispatcher("WEB-INF/PAGE/planilla_compartida.jsp").forward(request, response);	
-	}	
+	}
+	
+	private void validarIngreso(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp").forward(request, response);	
+	}
 
 	// FIN GET
 
@@ -191,6 +199,14 @@ public class planillas extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
+			case "validarCuadre":
+				try {
+					validarCuadre(request, response);
+				} catch (SQLException | IOException | ServletException e) {
+					System.out.print("Error al validar cuadre : " + e);
+					e.printStackTrace();
+				}
+				break;
 		}
 	
 	}
@@ -212,6 +228,8 @@ public class planillas extends HttpServlet {
 			cont = contador.validarContador(cod_persona, cod_contador);
 			
 			if (cont.getCod_persona() == 1) {
+				
+				contador.insertarContador(cod_persona);
 				
 				request.setAttribute("cod_persona", cont.getCod_persona());	   
 				request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
@@ -548,6 +566,64 @@ public class planillas extends HttpServlet {
 			
 			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp").forward(request, response);
 		
+		}
+		
+		
+		
+		// Validar Cuadre
+		private void validarCuadre(HttpServletRequest request, HttpServletResponse response)
+				throws SQLException, IOException, ServletException {
+			
+			
+			TempoDineroPlanilla valida = new TempoDineroPlanilla();
+			
+			
+			
+			String txtb_cien= request.getParameter("txtb_cien");
+			String txtb_cincuenta= request.getParameter("txtb_cincuenta");
+			String txtb_veinte= request.getParameter("txtb_veinte");
+			String txtb_diez= request.getParameter("txtb_diez");
+			String txtb_cinco= request.getParameter("txtb_cinco");
+			String txtb_dos= request.getParameter("txtb_dos");
+			String txtb_mil= request.getParameter("txtb_mil");
+			String txtm_mil= request.getParameter("txtm_mil");
+			String txtm_quiniento= request.getParameter("txtm_quiniento");
+			String txtm_dos= request.getParameter("txtm_dos");
+			String txtm_cien= request.getParameter("txtm_cien");
+			String txtm_cincuenta= request.getParameter("txtm_cincuenta");
+			
+			
+			if(txtb_cien=="" && txtb_cincuenta=="" && txtb_veinte=="" && txtb_diez=="" && txtb_cinco=="" && txtb_dos=="" &&
+					txtb_mil=="" && txtm_mil=="" && txtm_quiniento=="" && txtm_dos=="" && txtm_cien=="" && txtm_cincuenta=="") {
+				
+				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp");
+				request.setAttribute("alert", "104");	
+				dispatcher.forward(request, response);	
+				
+			}else {
+			
+			
+			valida.setCod_planilla(Integer.parseInt(request.getParameter("txtCodPlanilla")));
+			valida.setB_cien(Integer.parseInt(request.getParameter("txtb_cien")));
+			valida.setB_cincuenta(Integer.parseInt(request.getParameter("txtb_cincuenta")));
+			valida.setB_veinte(Integer.parseInt(request.getParameter("txtb_veinte")));
+			valida.setB_diez(Integer.parseInt(request.getParameter("txtb_diez")));
+			valida.setB_cinco(Integer.parseInt(request.getParameter("txtb_cinco")));
+			valida.setB_dos(Integer.parseInt(request.getParameter("txtb_dos")));
+			valida.setB_mil(Integer.parseInt(request.getParameter("txtb_mil")));
+			valida.setM_mil(Integer.parseInt(request.getParameter("txtm_mil")));
+			valida.setM_quiniento(Integer.parseInt(request.getParameter("txtm_quiniento")));
+			valida.setM_dos(Integer.parseInt(request.getParameter("txtm_dos")));
+			valida.setM_cien(Integer.parseInt(request.getParameter("txtm_cien")));
+			valida.setM_cincuenta(Integer.parseInt(request.getParameter("txtm_cincuenta")));
+			valida.setEstado(Integer.parseInt(request.getParameter("txtEstadoValidacion")));
+		
+			PlanillasDAO.validarCuadre(valida);	
+		
+			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp").forward(request, response);	
+			
+			}
 		}
 		
 

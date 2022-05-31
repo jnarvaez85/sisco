@@ -238,5 +238,39 @@ public class ContadoresDAO {
 			}
 			return cont;
 		}
+		
+		
+		// INSERTAR CONTADOR	
+		public void insertarContador(int cod_persona) throws SQLException {
+			
+	    	MysqlConexion conx = new MysqlConexion();
+	    	Connection con = null;
+			CallableStatement stmt = null;
+			
+			try {
+				con = conx.conectar();
+				
+				 String sql = "{call SP_INSERT_CONTADOR (?)}";
+		         stmt = con.prepareCall(sql);
+			
+		         stmt.setInt(1, cod_persona);		         
+		     
+		         stmt.executeUpdate();
+				
+	        } catch (SQLException e) {
+					System.out.println("Error al insertar contador " + e);
+				}
+				
+				finally {
+					try {
+						
+						MysqlConexion.close(stmt);
+						MysqlConexion.close(con);
+					} catch (SQLException e) {
+						System.out.println("Error al cerrar" + e);
+					}
+				}
+		}
+		
 
 }

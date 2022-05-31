@@ -2,7 +2,6 @@
     pageEncoding="ISO-8859-1"%>
 
 <!--  Paquetes JAVA -->
-<%@page import="admin.*"%>
 
 <%@ page language="java"%>
 <%@ page import="java.util.*"%>
@@ -15,18 +14,7 @@
 
 <% 
 
-int getRol = (int)session.getAttribute("mi_rol");
 
-
-// REDIRIGE LA SESSION EXPIRADA
-if (session.getAttribute("usuario") == null) {
-	session.invalidate();  
-	request.setAttribute("errMessage", "La sessión finalizo exitosamente!");
-	RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/PAGE/denegado.jsp");
-	requestDispatcher.forward(request, response);
-	System.out.println("Sessión cerrada!");
-
-}
 
 //FECHA ACTUAL  
 

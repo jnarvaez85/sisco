@@ -576,5 +576,45 @@ public class SobresPlanillasDAO {
 					return rows;
 				}
 				
+				
+				// VALIDAR TABLA VACIA
+				
+				/*
+				public static VTtempoSobresPlanilla validarSizeTable(){
+				 
+				 	MysqlConexion conx = new MysqlConexion();
+					Connection con = null;
+					PreparedStatement ps = null;
+					ResultSet rs = null;						 
+				 
+					VTtempoSobresPlanilla sumOtros = new VTtempoSobresPlanilla();
+				  
+				  try{
+					  
+					  con = conx.conectar();					
+					  ps = con.prepareStatement("select count(*) as total from tempo_planilla_sobres");							  
+					  rs=	ps.executeQuery();
+				   
+				 	while(rs.next()){
+				 		sumOtros.setOtros(rs.getInt("otros"));	
+				 	 	
+				   }
+				  } catch (SQLException e) {
+						System.out.println("Error al sumar otros " + e);
+					}
+			    
+				finally {
+					try {
+						
+						MysqlConexion.close(rs);
+						MysqlConexion.close(ps);
+						MysqlConexion.close(con);
+					} catch (SQLException e) {
+						System.out.println("Error al cerrar" + e);
+					}
+				}
+				return sumOtros;
+				}
+				*/
 
 }

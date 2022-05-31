@@ -30,6 +30,7 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 
 int cod_tmp_planilla = tmp_dato_planilla.getCod_temp_planilla();
 int compartida = tmp_dato_planilla.getCompartida();
+int estado_planilla = tmp_dato_planilla.getEstado_planilla();
 
 
 String nom_contador = tmp_dato_planilla.getNom_contador();
@@ -358,7 +359,7 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 			<button type="subbmit" class="btn btn-primary btn-lg">Agregar sobre</button>
 			
 			
-			<% if (btn_finalizar_permiso ==1) {%>
+			<% if (btn_finalizar_permiso ==1 ) {%>
 			<a href="#" style="text-decoration: none;" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#<%=btn_finalizar_link %>"><%=btn_finalizar_opcion  %></a>
 			
 			<% } %>
