@@ -1,13 +1,34 @@
-<%@ include file="../CONTENT/lib.jsp" %>
-<%@ include file="../CONTENT/title.jsp" %>
-<%@ include file="../CONTENT/header.jsp" %>
-<%@ include file="../CONTENT/funciones.jsp" %>
-<%@ include file="../CONTENT/consultas.jsp" %>
-<%@ include file="../CONTENT/botones.jsp" %>
+<%@ include file="../../CONTENT/lib.jsp" %>
+<%@ include file="../../CONTENT/title.jsp" %>
+<%@ include file="../../CONTENT/header.jsp" %>
+<%@ include file="../../CONTENT/funciones.jsp" %>
+<%@ include file="../../CONTENT/consultas.jsp" %>
+<%--@ include file="../../CONTENT/botones.jsp" --%>
+
+
+
+<% if (request.getAttribute("alert") == "102") { %>
+<jsp:include page="/WEB-INF/ALERT/codContadorInvalido.jsp" />
+<% } %>
+
 
 
 
 <%
+
+
+// Boton cancelar planilla
+VTmenu btn_cancelar = MenuDAO.menuGeneral(cod_rol, 44);
+
+int btn_permiso = btn_cancelar.getPermiso();
+String btn_opcion = btn_cancelar.getOpcion();
+String btn_link = btn_cancelar.getLink_menu();
+
+
+
+
+
+
 final int tmp_cod_plan=1;
 String fecha_planilla=null;
 VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPlanillaTemp(tmp_cod_plan);
@@ -126,4 +147,4 @@ VTtempoDatosPlanilla tmp_dato_planilla = TempoDatosPlanillaDAO.consultarDatosPla
 </html>
 
 
-<%@ include file="../modal/cancelarPlanilla.jsp"%>
+<%@ include file="../../modal/cancelarPlanilla.jsp"%>

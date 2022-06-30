@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     
+
     
  <!--  Paquetes JAVA -->
 <%@page import="admin.*"%>
@@ -12,7 +13,23 @@
 
 
 //DEFINIENDO LAS OPCIONES DE LOS ROLES
-int getRolColabor = (int) session.getAttribute("mi_rol");
+//int getRolColabor = (int) session.getAttribute("mi_rol");
+
+
+//int getRolColabor = cod_rol;
+
+
+int getRolColabor =0;
+
+if (session.getAttribute("usuario") != null) {
+	getRolColabor = (int)session.getAttribute("rol");  // Variable de session
+}else{
+	
+	response.sendRedirect("expired");
+	
+	
+}
+
 
 
 

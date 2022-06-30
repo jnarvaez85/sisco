@@ -1,6 +1,6 @@
-<%@ include file="../../WEB-INF/CONTENT/lib.jsp" %>
-<%@ include file="../../WEB-INF/CONTENT/title.jsp" %>
-<%@ include file="../../WEB-INF/CONTENT/consultas.jsp" %>
+<%@ include file="../../../WEB-INF/CONTENT/lib.jsp" %>
+<%@ include file="../../../WEB-INF/CONTENT/title.jsp" %>
+<%@ include file="../../../WEB-INF/CONTENT/consultas.jsp" %>
 
 
 <div class="alert_error_login">

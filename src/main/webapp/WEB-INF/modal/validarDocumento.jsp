@@ -16,7 +16,7 @@
 
  <div>
     <label for="validationCustom05" class="form-label">Validar existencia de persona</label>
-    <input type="text" class="form-control" name="txtIdentificacion" autocomplete="off" required placeholder="Número identificación">
+    <input type="text" maxlength="15" class="form-control" name="txtIdentificacion" autocomplete="off" required placeholder="Número identificación">
 
   </div>
 

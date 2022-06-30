@@ -1,8 +1,8 @@
-<%@ include file="../CONTENT/lib.jsp"%>
-<%@ include file="../CONTENT/title.jsp"%>
-<%@ include file="../CONTENT/header.jsp"%>
-<%@ include file="../CONTENT/funciones.jsp"%>
-<%@ include file="../CONTENT/consultas.jsp"%>
+<%@ include file="../../CONTENT/lib.jsp"%>
+<%@ include file="../../CONTENT/title.jsp"%>
+<%@ include file="../../CONTENT/header.jsp"%>
+<%@ include file="../../CONTENT/funciones.jsp"%>
+<%@ include file="../../CONTENT/consultas.jsp"%>
 
 
 

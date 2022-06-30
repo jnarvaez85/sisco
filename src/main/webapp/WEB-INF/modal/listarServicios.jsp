@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
 	pageEncoding="ISO-8859-1"%>
-
-
+<%@ include file="../CONTENT/session_modal.jsp"%>
 
 <!--  Paquetes JAVA -->
 <%@page import="planillas.*"%>
@@ -18,8 +17,7 @@
 LinkedList<Servicios> datos_serv = ServiciosDAO.listarServicios();
 
 //DEFINIENDO LAS OPCIONES DE LOS ROLES
-int getRolServ = (int) session.getAttribute("mi_rol");
-LinkedList<VTmenu> submenu = MenuDAO.datosMenu(getRolServ);
+LinkedList<VTmenu> submenu = MenuDAO.datosMenu(getRolModal);
 %>
 
 

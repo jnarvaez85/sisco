@@ -12,6 +12,7 @@ import db.MysqlConexion;
 public class SobresPlanillasDAO {
 	
 	private static final String VER_SOBRES = "SELECT * FROM view_temp_sobres_planilla";
+	private static final String SELECT_CONCEPTOS = "SELECT * FROM planilla_sobre_especial";
 	
 	
 	// AGREGAR SOBRE	
@@ -40,6 +41,41 @@ public class SobresPlanillasDAO {
 			
         } catch (SQLException e) {
 				System.out.println("Error al agregar nuevo sobre " + e);
+			}
+			
+			finally {
+				try {
+					
+					MysqlConexion.close(stmt);
+					MysqlConexion.close(con);
+				} catch (SQLException e) {
+					System.out.println("Error al cerrar" + e);
+				}
+			}
+	}
+	
+	
+	
+	// AGREGAR SOBRE ESPECIAL	
+	public void agregarSobreEspecial(String nom_persona, TempoSobresPlanilla sobres) throws SQLException {
+		
+    	MysqlConexion conx = new MysqlConexion();
+    	Connection con = null;
+		CallableStatement stmt = null;
+		
+		try {
+			con = conx.conectar();
+			
+			 String sql = "{call SP_INSERT_SOBRE_ESPECIAL(?,?)}";
+	         stmt = con.prepareCall(sql);
+		
+	         stmt.setString(1, nom_persona);
+	         stmt.setInt(2, sobres.getEspecial());	        
+	         
+	         stmt.executeUpdate();
+			
+        } catch (SQLException e) {
+				System.out.println("Error al agregar nuevo sobre especial" + e);
 			}
 			
 			finally {
@@ -577,44 +613,123 @@ public class SobresPlanillasDAO {
 				}
 				
 				
-				// VALIDAR TABLA VACIA
 				
-				/*
-				public static VTtempoSobresPlanilla validarSizeTable(){
-				 
+				// VALIDAR EXISTENCIA DE CONCEPTOS INGRESOS				
+				public int validarConceptoIngreso(String nom_concepto) {
+					
 				 	MysqlConexion conx = new MysqlConexion();
-					Connection con = null;
-					PreparedStatement ps = null;
-					ResultSet rs = null;						 
-				 
-					VTtempoSobresPlanilla sumOtros = new VTtempoSobresPlanilla();
-				  
-				  try{
-					  
-					  con = conx.conectar();					
-					  ps = con.prepareStatement("select count(*) as total from tempo_planilla_sobres");							  
-					  rs=	ps.executeQuery();
-				   
-				 	while(rs.next()){
-				 		sumOtros.setOtros(rs.getInt("otros"));	
-				 	 	
-				   }
-				  } catch (SQLException e) {
-						System.out.println("Error al sumar otros " + e);
-					}
-			    
-				finally {
+			    	Connection con = null;
+			    	CallableStatement stmt = null;
+					ResultSet rs = null;
+					
+					
 					try {
 						
+						con = conx.conectar();			
+						
+						 String sql = "{call SP_VALIDA_CONCEPTO_INGRESO (?)}";
+				         stmt = con.prepareCall(sql);			
+
+				         stmt.setString(1, nom_concepto);					
+						 rs=	stmt.executeQuery();
+						
+						if(rs.next()) {
+							return rs.getInt(1);
+						}
 						MysqlConexion.close(rs);
-						MysqlConexion.close(ps);
+						MysqlConexion.close(stmt);
 						MysqlConexion.close(con);
-					} catch (SQLException e) {
-						System.out.println("Error al cerrar" + e);
+						return 1;
+						
+					   } catch (SQLException e) {
+							System.out.println("Error al validar  concepto de ingreso " + e);
+						}
+			        
+					finally {
+						try {
+							
+							MysqlConexion.close(rs);
+							MysqlConexion.close(stmt);
+							MysqlConexion.close(con);
+						} catch (SQLException e) {
+							System.out.println("Error al cerrar" + e);
+						}
 					}
+					return 1;
 				}
-				return sumOtros;
+				
+				
+				// AGREGAR NUEVO CONCEPTOS INGRESOS	
+				public void agregarConceptoIngreso(SobresEspeciales concepto) throws SQLException {
+					
+			    	MysqlConexion conx = new MysqlConexion();
+			    	Connection con = null;
+					CallableStatement stmt = null;
+					
+					try {
+						con = conx.conectar();
+						
+						 String sql = "{call SP_INSERT_CONCEPTO_INGRESO (?)}";
+				         stmt = con.prepareCall(sql);
+					
+				         stmt.setString(1, concepto.getNom_sobre_especial());
+				         stmt.executeUpdate();
+						
+			        } catch (SQLException e) {
+							System.out.println("Error al agregar nuevo concepto de sobre especial " + e);
+						}
+						
+						finally {
+							try {
+								
+								MysqlConexion.close(stmt);
+								MysqlConexion.close(con);
+							} catch (SQLException e) {
+								System.out.println("Error al cerrar" + e);
+							}
+						}
 				}
-				*/
+				
+				
+				
+				// LISTAR CONCEPTOS INGRESOS
+				public static  LinkedList<SobresEspeciales> listarConceptosIngresos() {
+			    	LinkedList<SobresEspeciales> list_conceptos= new LinkedList<SobresEspeciales> ();
+			    	
+			    	MysqlConexion conx = new MysqlConexion();
+			    	Connection con = null;
+					PreparedStatement ps = null;
+					ResultSet rs = null;	
+			     
+					try {
+						con = conx.conectar();
+						ps = con.prepareStatement(SELECT_CONCEPTOS);	
+						rs = ps.executeQuery();
+						
+			            while (rs.next()) {
+			            	
+			            	SobresEspeciales list_concep = new SobresEspeciales();
+			            	
+			            	list_concep.setCod_especial(rs.getInt("cod_especial"));
+			            	list_concep.setNom_sobre_especial(rs.getString("nom_sobre_especial"));
+			            	list_conceptos.add(list_concep);
+			            }
+			        } catch (SQLException e) {
+						System.out.println("Error al listar nombre de conceptos de ingresos" + e);
+					}
+					
+					finally {
+						try {
+							
+							MysqlConexion.close(rs);
+							MysqlConexion.close(ps);
+							MysqlConexion.close(con);
+						} catch (SQLException e) {
+							System.out.println("Error al cerrar" + e);
+						}
+					}
+					
+					return list_conceptos;
+				}
 
 }

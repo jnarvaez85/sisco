@@ -1,5 +1,5 @@
 <%@ include file="../../libraries/bootstrap.jsp" %>
-
+<%@ include file="../CONTENT/session.jsp"%>
 
 <%@page import="admin.*"%>
 <%@page import="seguridad.*"%>
@@ -9,9 +9,29 @@
 <%@ page import="java.util.LinkedList"%>
 
 <%
+
+
+
+
+
 // recibe el rol
-int cod_rol = (int)session.getAttribute("mi_rol");
+
+/*
+if (session.getAttribute("usuario") == null) {
+	session.invalidate();  
+	request.setAttribute("errMessage", "La sessión finalizo exitosamente!");
+	RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/PAGE/EXCEPTION/error_login.jsp");
+	requestDispatcher.forward(request, response);
+	System.out.println("Sessión cerrada!");
+
+}
+*/
+	
+
+
+
 LinkedList<VTmenu> menu = MenuDAO.datosMenu(cod_rol);
+
 
 LinkedList<Entidad> entidad = EntidadDAO.datosEntidad();
 String nombre_ent = entidad.get(0).getNom_entidad();
@@ -19,6 +39,10 @@ String nombre_ent = entidad.get(0).getNom_entidad();
 LinkedList<Systemas> software = SystemsDAO.datosSystema();
 String nombre_sys = software.get(0).getNom_sys();
 String version_sys = software.get(0).getVer_sys();
+
+
+
+
 %>
 
 

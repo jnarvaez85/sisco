@@ -117,5 +117,43 @@ public class PlanillasDAO {
 					
 					return list_dinero;
 				}
+				
+				
+				// APROBAR PLANILLA
+				public static int aprobarPlanilla(String nom_aprueba, int cod_estado_pla) throws SQLException {
+
+					int rows = 0;
+					
+				 	MysqlConexion conx = new MysqlConexion();
+			    	Connection con = null;
+			    	CallableStatement stmt = null;
+			    	
+					try {								
+						
+						con = conx.conectar();					
+						String sql = "{call SP_APRUEBA_PLANILLA (?,?)}";
+				        stmt = con.prepareCall(sql);	
+									
+				        stmt.setString(1, nom_aprueba);						        
+				        stmt.setInt(2, cod_estado_pla);
+						
+
+				        rows = stmt.executeUpdate();
+						
+					   } catch (SQLException e) {
+							System.out.println("Error al Aprobar Planilla " + e);
+						}
+			        
+					finally {
+						try {
+							
+							MysqlConexion.close(stmt);
+							MysqlConexion.close(con);
+						} catch (SQLException e) {
+							System.out.println("Error al cerrar" + e);
+						}
+					}
+					return rows;
+				}
 
 }

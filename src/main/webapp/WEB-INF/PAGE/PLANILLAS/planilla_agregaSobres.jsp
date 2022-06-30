@@ -1,13 +1,31 @@
-<%@ include file="../CONTENT/lib.jsp"%>
-<%@ include file="../CONTENT/title.jsp"%>
-<%@ include file="../CONTENT/header.jsp"%>
-<%@ include file="../CONTENT/funciones.jsp"%>
-<%@ include file="../CONTENT/consultas.jsp"%>
-<%@ include file="../CONTENT/botones.jsp"%>
+<%@ include file="../../CONTENT/lib.jsp"%>
+<%@ include file="../../CONTENT/title.jsp"%>
+<%@ include file="../../CONTENT/header.jsp"%>
+<%@ include file="../../CONTENT/funciones.jsp"%>
+<%@ include file="../../CONTENT/consultas.jsp"%>
 
+
+<% if (request.getAttribute("alert") == "101") { %>
+<jsp:include page="/WEB-INF/ALERT/personaExiste.jsp" />
+<% } %>
+
+<% if (request.getAttribute("alert") == "102") { %>
+<jsp:include page="/WEB-INF/ALERT/conceptoExiste.jsp" />
+<% } %>
 
 <% if (request.getAttribute("alert") == "103") { %>
 <jsp:include page="/WEB-INF/ALERT/agregarValorSobre.jsp" />
+<% } %>
+
+
+<% if (request.getAttribute("alert") == "104") { %>
+<jsp:include page="/WEB-INF/ALERT/noExistePersona.jsp" />
+<% } %>
+
+
+<% if (request.getAttribute("alert") == "105") { %>
+<jsp:include page="/WEB-INF/ALERT/aportadorNoExiste.jsp" />
+
 <% } %>
 
 <%
@@ -231,9 +249,9 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 
 			<form action="${pageContext.request.contextPath}/planillas"
 				method="post">
+				
 
-
-				<div class="input-group">
+<div class="input-group">
 <input required class="form-control" name="txtNombrePersona" list="datalistOptions" id="exampleDataList" placeholder="Ingresa el nombre del aportante" autocomplete="off">
 <datalist id="datalistOptions">
 
@@ -245,34 +263,32 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 <% }%>
  
 </datalist>
-
-
-
-
-
+<span class="input-group-text">
  <%	if (btn_add_colabora_permiso == 1) { %> 
  
- 	<a href="#" data-bs-toggle="modal" data-bs-target="#<%=btn_add_colabora_link%>" 
-	 data-bs-url="redirectColaboradores"
-	 data-bs-canc="planillas?url=add"
+ 	<a href="#" data-bs-toggle="modal" data-bs-target="#validarDocumento" 
+	 data-bs-url="redirectSobres"
+	 data-bs-canc="planillas?url=addSobres"
 	 data-bs-modl="getIdentificacion"
 	 data-bs-doc="data-bs-getDoc" >
 	 <img width="25px" src="img/menu/<%=btn_add_colabora_icon%>.png" /></a> 
   
  <% } %>
 
+</span>
 
 
 
 
- <a href="#" data-bs-toggle="modal" data-bs-target="#<%=btn_add_especial_link %>" 
- data-bs-url="redirectColaboradores"
- data-bs-canc="planillas?url=add"
- data-bs-modl="getIdentificacion"
- data-bs-doc="data-bs-getDoc"
- ><img width="25px" src="img/menu/<%=btn_add_especial_icon %>.png" /></a> 
 
-</span> 
+
+
+
+
+
+
+
+
 			
 				</div>
 
@@ -285,32 +301,32 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtDiezmos" class="form-control-sm" placeholder="Diezmos" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtDiezmos" class="form-control-sm" placeholder="Diezmos" onkeypress='return isNumberKey(event)' autocomplete="off">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtOfrendas" class="form-control-sm" placeholder="Ofrendas" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtOfrendas" class="form-control-sm" placeholder="Ofrendas" onkeypress='return isNumberKey(event)' autocomplete="off">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtNecesitados" class="form-control-sm" placeholder="Necesitados" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtNecesitados" class="form-control-sm" placeholder="Necesitados" onkeypress='return isNumberKey(event)' autocomplete="off">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtMercados" class="form-control-sm" placeholder="Mercados" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtMercados" class="form-control-sm" placeholder="Mercados" onkeypress='return isNumberKey(event)' autocomplete="off">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtConstruccion" class="form-control-sm" placeholder="Construcción" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtConstruccion" class="form-control-sm" placeholder="Construcción" onkeypress='return isNumberKey(event)' autocomplete="off">
 </div>
 
 <div class="input-group mb-3">
   <span class="input-group-text" id="basic-addon1">$</span>
-  <input type="text" name="txtMisiones" class="form-control-sm" placeholder="Misiones" aria-label="Username" aria-describedby="basic-addon1">
+  <input type="text" name="txtMisiones" class="form-control-sm" placeholder="Misiones" onkeypress='return isNumberKey(event)' autocomplete="off">
 </div>
 
 
@@ -349,6 +365,10 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 <% if(btn_permiso==1){ %>
 <a href="#" style="text-decoration: none;" class="badge bg-danger" data-bs-toggle="modal" data-bs-target="#<%=btn_link %>">Cancelar planilla</a>
 <% } %>
+
+
+<a href="#" style="text-decoration: none;" class="badge bg-primary" data-bs-toggle="modal" data-bs-target="#otrosIngresos">$ Otros Ingresos</a>
+
 </div>
 <br>
 <br>		
@@ -359,12 +379,14 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 			<button type="subbmit" class="btn btn-primary btn-lg">Agregar sobre</button>
 			
 			
-			<% if (btn_finalizar_permiso ==1 ) {%>
+			<% if (btn_finalizar_permiso ==1 && sobres > 0) {%>
 			<a href="#" style="text-decoration: none;" class="btn btn-success btn-lg" data-bs-toggle="modal" data-bs-target="#<%=btn_finalizar_link %>"><%=btn_finalizar_opcion  %></a>
 			
 			<% } %>
-			</div>
 			
+						
+			
+			</div>
 <hr>
 
 
@@ -440,17 +462,21 @@ int total = diezmos+ ofrendas+ necesitados+ mercados+ construccion+ misiones+ ot
 
 
 
-<%@ include file="../modal/validarDocumento.jsp"%>
-<%@ include file="../modal/listarAportantes.jsp"%>
-<%@ include file="../modal/listarSobres.jsp"%>
-<%@ include file="../modal/agregarSobreEspecial.jsp"%>
-<%@ include file="../modal/cancelarPlanilla.jsp"%>
-<%@ include file="../modal/compartirPlanilla.jsp"%>
-<%@ include file="../modal/compartirPlanillaNO.jsp"%>
-<%@ include file="../modal/finalizarIngreso.jsp"%>
+<%@ include file="../../modal/validarDocumento.jsp"%>
+<%@ include file="../../modal/listarAportantes.jsp"%>
+<%@ include file="../../modal/listarSobres.jsp"%>
+<%@ include file="../../modal/agregarSobreEspecial.jsp"%>
+<%@ include file="../../modal/cancelarPlanilla.jsp"%>
+<%@ include file="../../modal/compartirPlanilla.jsp"%>
+<%@ include file="../../modal/compartirPlanillaNO.jsp"%>
+<%@ include file="../../modal/finalizarIngreso.jsp"%>
+<%@ include file="../../modal/agregarPersona.jsp"%>
+<%@ include file="../../modal/otrosIngresos.jsp"%>
 
 
-<%@ include file="../js/scriptUsuarios.jsp"%>
-<%@ include file="../js/scriptPersonas.jsp"%>
+
+<%@ include file="../../js/scriptUsuarios.jsp"%>
+<%@ include file="../../js/scriptPersonas.jsp"%>
+<%@ include file="../../jquery/functionsJavascript.jsp"%>
 
 

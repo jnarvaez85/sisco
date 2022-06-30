@@ -55,13 +55,13 @@ public class seguridad extends HttpServlet {
 	
 	private void listarUsuarios(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/SEGURIDAD/segur_usuarios.jsp").forward(request, response);	
 	}
 	
 
 	private void validarExisteUsuario(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/segur_validarUsuario.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/SEGURIDAD/segur_validarUsuario.jsp").forward(request, response);	
 	}
 
 	
@@ -110,6 +110,7 @@ public class seguridad extends HttpServlet {
 			case "habilitarContador":
 				habilitarContador(request, response);
 				break;
+			
 			}
 		} catch (SQLException ex) {
 			throw new ServletException(ex);
@@ -127,7 +128,12 @@ public class seguridad extends HttpServlet {
 		String redireccionarUrl = request.getParameter("validarUrl");
 		
 		Personas per = new Personas();
-		PersonasDAO addPersona = new PersonasDAO();
+		PersonasDAO persona = new PersonasDAO();
+		
+		String nom_persona=request.getParameter("txtNombres");
+		
+		if(persona.validarNombrePersona(nom_persona)==0) {
+		
 		
 		per.setNom_persona(request.getParameter("txtNombres"));		
 		per.setTipo_doc_persona(Integer.parseInt(request.getParameter("selectTipoId")));
@@ -135,19 +141,28 @@ public class seguridad extends HttpServlet {
 		per.setDir_persona(request.getParameter("txtDireccion"));
 		per.setTel_persona(request.getParameter("txtTelefono"));
 		
-		addPersona.agregarPersona(per);  
+		persona.agregarPersona(per);  
 		
 		
 		switch (redireccionarUrl) {
 
 		case "agregarPersona":
-			redireccionarUrl="WEB-INF/PAGE/planilla_agregaDatos.jsp";
-			break;		
+			redireccionarUrl="WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp";
+			break;
+		case "agregarPersonaDesdeSobres":
+			redireccionarUrl="WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp";
+			break;	
 		}			
 		
 	
 		RequestDispatcher dispatcher = request.getRequestDispatcher(redireccionarUrl);		
 		dispatcher.forward(request, response);	
+		
+		}else {
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp");
+			request.setAttribute("alert", "101");	
+			dispatcher.forward(request, response);	
+		}
 	}
 	
 	
@@ -171,10 +186,13 @@ public class seguridad extends HttpServlet {
 			switch (redireccionarUrl) {
 
 			case "redirectUsuarios":
-				redireccionarUrl="WEB-INF/PAGE/segur_usuarios.jsp";
+				redireccionarUrl="WEB-INF/PAGE/SEGURIDAD/segur_usuarios.jsp";
 				break;
 			case "redirectColaboradores":
-				redireccionarUrl="WEB-INF/PAGE/planilla_agregaDatos.jsp";
+				redireccionarUrl="WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp";
+				break;
+			case "redirectSobres":
+				redireccionarUrl="WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp";
 				break;	
 			}	
 			
@@ -228,7 +246,7 @@ public class seguridad extends HttpServlet {
 		
 		addUser.insertarUsuario(per, cursor);    	
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/PAGE/SEGURIDAD/segur_usuarios.jsp").forward(request, response);
 	
 	}
 	
@@ -239,7 +257,7 @@ public class seguridad extends HttpServlet {
 		int cod_persona = Integer.parseInt(request.getParameter("cod_persona"));
 		UsuariosDAO.eliminarUsuario(cod_persona);	
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/PAGE/SEGURIDAD/segur_usuarios.jsp").forward(request, response);
 	
 	}
 	
@@ -305,7 +323,7 @@ public class seguridad extends HttpServlet {
 	
 		UsuariosDAO.modificarUsuario(editPersona);	
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/SEGURIDAD/segur_usuarios.jsp").forward(request, response);	
 	
 	}
 	
@@ -319,7 +337,7 @@ public class seguridad extends HttpServlet {
 		 
 		VTusuarios usuario=UsuariosDAO.consultarUsuario(cod_persona);
 		  
-		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/segur_asignarContador.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/SEGURIDAD/segur_asignarContador.jsp");
 		request.setAttribute("usuario", usuario);	
 		dispatcher.forward(request, response);
 	
@@ -346,17 +364,16 @@ public class seguridad extends HttpServlet {
 			
 		Contadores habContador = new Contadores();	
 		
-		
-		
 		habContador.setCod_persona(Integer.parseInt(request.getParameter("txtCodPersona")));
 		String cod_cont = request.getParameter("txtCodContador");
-	
-	
-		ContadoresDAO.habilitarContador(habContador, cod_cont);	
-	
-		request.getRequestDispatcher("WEB-INF/PAGE/segur_usuarios.jsp").forward(request, response);	
+		
+		ContadoresDAO.habilitarContador(habContador, cod_cont);
+		request.getRequestDispatcher("WEB-INF/PAGE/SEGURIDAD/segur_usuarios.jsp").forward(request, response);	
 	
 	}
+	
+	
+
 
 
 }

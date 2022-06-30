@@ -5,10 +5,10 @@
 
 
  <div><strong>LO SENTIMOS!</strong></div>
-  <div>El usuario que intenta agregar ya existe en el sistema</div>
+  <div>La persona que intenta agregar ya existe en el sistema</div>
     <hr>
   <div style="text-align:center">
-  <a href="${pageContext.request.contextPath}/seguridad?url=usuarios" class="btn btn-success">ACEPTAR</a>
+  <a href="${pageContext.request.contextPath}/planillas?url=addSobres" class="btn btn-success">ACEPTAR</a>
   </div>
 </div>
 </div>

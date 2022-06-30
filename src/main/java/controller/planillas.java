@@ -13,6 +13,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import planillas.*;
+import admin.*;
 import seguridad.*;
 
 
@@ -23,6 +24,10 @@ import seguridad.*;
 @WebServlet("/planillas")
 public class planillas extends HttpServlet {
 	private static final long serialVersionUID = 1L;
+	
+	
+	
+	
        
  
     public planillas() {
@@ -35,12 +40,27 @@ public class planillas extends HttpServlet {
  // INICIO GET
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		
-		String accion = request.getParameter("url");
+		
+		// CONTROLA QUE NO EJECUTE NINGUNA ACCION CUANDO EL TIEMPO DE INACTIVIDAD SE CUMPLA
+		String accion = null;
+		HttpSession session= request.getSession(true);
+
+		if (session.getAttribute("usuario") != null) {
+			accion = request.getParameter("url");
+		}else{
+			
+			response.sendRedirect("expired");
+			
+			
+		}
+		
+		
 
 		if (accion != null) {
 			switch (accion) {
 			case "nuevaPlanilla":
 				this.agregarPlanilla(request, response);
+				
 				break;
 			case "add":
 				this.agregarPlanillaGet(request, response);
@@ -57,30 +77,31 @@ public class planillas extends HttpServlet {
 			case "validarIngreso":
 				this.validarIngreso(request, response);
 				break;
+			case "validaContador":
+				this.validaContador(request, response);
+				break;
 				
 			}
 			
-		} else {
-			response.sendRedirect("error.jsp");
-		}
+		} 
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 	}
 	
 	
 
 	private void agregarPlanilla(HttpServletRequest request, HttpServletResponse response)
-			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_validaContador.jsp").forward(request, response);	
+			throws ServletException, IOException {		
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_validaContador.jsp").forward(request, response);	
 	}
 	
 	private void agregarPlanillaGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);	
 	}
 	
 	private void agregarSobres(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp").forward(request, response);	
 	}
 	
 	private void colaboladores(HttpServletRequest request, HttpServletResponse response)
@@ -90,12 +111,17 @@ public class planillas extends HttpServlet {
 	
 	private void sharePlanilla(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_compartida.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_compartida.jsp").forward(request, response);	
 	}
 	
 	private void validarIngreso(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDinero.jsp").forward(request, response);	
+	}
+	
+	private void validaContador(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_validaContador.jsp").forward(request, response);	
 	}
 
 	// FIN GET
@@ -104,10 +130,26 @@ public class planillas extends HttpServlet {
 	
 	
 	// INICIO POST
-	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {		
 		
-		String accion = request.getParameter("validar");
 		
+		// CONTROLA QUE NO EJECUTE NINGUNA ACCION CUANDO EL TIEMPO DE INACTIVIDAD SE CUMPLA
+		String accion = null;
+		HttpSession session= request.getSession(true);
+
+		if (session.getAttribute("usuario") != null) {
+			accion = request.getParameter("validar");
+		}else{
+			
+			response.sendRedirect("expired");
+			
+			
+		}
+		
+		
+		
+		
+	if (accion != null) {
 		switch (accion) {
 
 		case "validarContador":
@@ -207,9 +249,34 @@ public class planillas extends HttpServlet {
 					e.printStackTrace();
 				}
 				break;
+			case "aprobarPlanilla":
+				try {
+					aprobarPlanilla(request, response);
+				} catch (SQLException | IOException | ServletException e) {
+					System.out.print("Error al aprobar planilla : " + e);
+					e.printStackTrace();
+				}
+			case "agregarNuevoConceptoIngreso":
+				try {
+					agregarNuevoConceptoIngreso(request, response);
+				} catch (SQLException | IOException | ServletException e) {
+					System.out.print("Error al insertar nuevo concepto de ingreso: " + e);
+					e.printStackTrace();
+				}
+				break;
+			case "agregarSobreEspecial":
+				try {
+					agregarSobreEspecial(request, response);
+				} catch (SQLException | IOException | ServletException e) {
+					System.out.print("Error al insertar nuevo sobre especial: " + e);
+					e.printStackTrace();
+				}
+				break;
 		}
-	
 	}
+		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+}
 	
 	
 	
@@ -232,10 +299,13 @@ public class planillas extends HttpServlet {
 				contador.insertarContador(cod_persona);
 				
 				request.setAttribute("cod_persona", cont.getCod_persona());	   
-				request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);
 
-			} else {
-				request.getRequestDispatcher("WEB-INF/PAGE/no.jsp").forward(request, response);
+			} else {				
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_validaContador.jsp");
+				request.setAttribute("alert", "102");	
+				dispatcher.forward(request, response);	
+				
 			}
 		} catch (SQLException e) {
 			System.out.print("Error al validar contador: " + e);
@@ -264,7 +334,7 @@ public class planillas extends HttpServlet {
 			e.printStackTrace();
 		}	
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);			
 	
 	}
 	
@@ -289,7 +359,7 @@ public class planillas extends HttpServlet {
 			e.printStackTrace();
 		}	
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);			
 	
 	}
 	
@@ -306,7 +376,7 @@ public class planillas extends HttpServlet {
 			e.printStackTrace();
 		}
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_validaContador.jsp").forward(request, response);			
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_validaContador.jsp").forward(request, response);			
 	
 	}
 	
@@ -326,10 +396,10 @@ public class planillas extends HttpServlet {
 		
 		servicio.agregarServicio(serv);  	
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);
 		
 		}else {
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp");
 			request.setAttribute("alert", "102");	
 			dispatcher.forward(request, response);	
 
@@ -349,7 +419,7 @@ public class planillas extends HttpServlet {
 			e.printStackTrace();
 		}
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);			
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);			
 	
 	}
 	
@@ -370,11 +440,11 @@ public class planillas extends HttpServlet {
 	
 		TempoDatosPlanillaDAO.modificarServicio(serv);	
 	
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);	
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);	
 		
 		}else {
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp");
 			request.setAttribute("alert", "102");	
 			dispatcher.forward(request, response);	
 		}
@@ -385,11 +455,13 @@ public class planillas extends HttpServlet {
 	private void agregarColaborador(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		
-		//Colaboradores colabora = new Colaboradores();
 		ColaboradoresDAO colaborador = new ColaboradoresDAO();
+		PersonasDAO persona = new PersonasDAO();
 		
+		String nom_colaborador = request.getParameter("txtNomColabora");
 		
-		if(colaborador.validarColaborador(request.getParameter("txtIdentificacion")) == 0) {
+		if((colaborador.validarColaborador(request.getParameter("txtIdentificacion")) == 0)
+		&& persona.validarNombrePersona(nom_colaborador)==0) {
 	
 		int cursor = Integer.parseInt(request.getParameter("cursor"));	
 		int tipo_doc = Integer.parseInt(request.getParameter("selectTipoId"));		
@@ -399,14 +471,13 @@ public class planillas extends HttpServlet {
 		String tel_persona = request.getParameter("txtTelColabora");
 		String dir_persona = request.getParameter("txtDirColabora");
 		
-		colaborador.insertarColaborador(nom_persona, tipo_doc, doc_persona, dir_persona, tel_persona, cursor);    	
-	
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+		colaborador.insertarColaborador(nom_persona, tipo_doc, doc_persona, dir_persona, tel_persona, cursor); 
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);
 		
 		
 		}else {
 			
-			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp");
+			RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp");
 			request.setAttribute("alert", "103");	
 			dispatcher.forward(request, response);	
 			
@@ -420,18 +491,15 @@ public class planillas extends HttpServlet {
 	// Bloquear colaborador
 	
 	private void bloquearColaborador(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-	
+			throws SQLException, IOException, ServletException {	
 		
 		Colaboradores editColabora = new Colaboradores();		
 		
 		editColabora.setCod_colabora(Integer.parseInt(request.getParameter("txtCodColabora")));
 		editColabora.setEstado_colabora(Integer.parseInt(request.getParameter("txtEstadoColabora")));
 	
-		ColaboradoresDAO.bloquearColaborador(editColabora);
-	
-		
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+		ColaboradoresDAO.bloquearColaborador(editColabora);		
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);
 	
 	}
 	
@@ -439,18 +507,15 @@ public class planillas extends HttpServlet {
 	// Desbloquear colaborador
 	
 	private void desbloquearColaborador(HttpServletRequest request, HttpServletResponse response)
-			throws SQLException, IOException, ServletException {
-	
+			throws SQLException, IOException, ServletException {	
 		
 		Colaboradores editColabora = new Colaboradores();		
 		
 		editColabora.setCod_colabora(Integer.parseInt(request.getParameter("txtCodColabora")));
 		editColabora.setEstado_colabora(Integer.parseInt(request.getParameter("txtEstadoColabora")));
 	
-		ColaboradoresDAO.desbloquearColaborador(editColabora);
-	
-		
-		request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDatos.jsp").forward(request, response);
+		ColaboradoresDAO.desbloquearColaborador(editColabora);			
+		request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDatos.jsp").forward(request, response);
 	
 	}
 	
@@ -460,54 +525,49 @@ public class planillas extends HttpServlet {
 		private void agregarSobre(HttpServletRequest request, HttpServletResponse response)
 				throws SQLException, IOException, ServletException {
 			
+			Administracion admin = new Administracion();
+			PersonasDAO persona = new PersonasDAO();
 			TempoSobresPlanilla sobres = new TempoSobresPlanilla();
 			SobresPlanillasDAO sobre = new SobresPlanillasDAO();
 			
-			String txtDiezmos= request.getParameter("txtDiezmos");
-			String txtOfrendas= request.getParameter("txtOfrendas");
-			String txtNecesitados= request.getParameter("txtNecesitados");
-			String txtMercados= request.getParameter("txtMercados");
-			String txtConstruccion= request.getParameter("txtConstruccion");
-			String txtMisiones= request.getParameter("txtMisiones");
+			
+			String nom_persona = request.getParameter("txtNombrePersona");	
+			
+
+			int txtDiezmos = admin.validarCampoNumero(request.getParameter("txtDiezmos"));
+			int txtOfrendas = admin.validarCampoNumero(request.getParameter("txtOfrendas"));
+			int txtNecesitados = admin.validarCampoNumero(request.getParameter("txtNecesitados"));
+			int txtMercados = admin.validarCampoNumero(request.getParameter("txtMercados"));
+			int txtConstruccion = admin.validarCampoNumero(request.getParameter("txtConstruccion"));
+			int txtMisiones = admin.validarCampoNumero(request.getParameter("txtMisiones"));
 			
 			
-			if(txtDiezmos=="" && txtOfrendas=="" && txtNecesitados==""	&& txtMercados==""	
-					&& txtConstruccion==""	&& txtMisiones==""
-					
-			) 	{
+			if((admin.validaIngresoSobres(txtDiezmos, txtOfrendas, txtNecesitados, txtMercados, txtConstruccion, txtMisiones)== false)) 	{
 				
-				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp");
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp");
 				request.setAttribute("alert", "103");	
 				dispatcher.forward(request, response);
 				
+			}else {	
+				if(persona.validarNombrePersona(nom_persona)==0) 	{
+						
+						RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp");
+						request.setAttribute("alert", "105");	
+						dispatcher.forward(request, response);
+				
 			}else {
-				
-
-			String nom_persona = request.getParameter("txtNombrePersona");
+					
+			sobres.setDiezmos(txtDiezmos);			
+			sobres.setOfrendas(txtOfrendas);			
+			sobres.setNecesitados(txtNecesitados);			
+			sobres.setMercados(txtMercados);			
+			sobres.setConstruccion(txtConstruccion);			
+			sobres.setMisiones(txtMisiones);
 			
-			if(txtDiezmos=="") { txtDiezmos="0";}else {			
-			sobres.setDiezmos(Integer.parseInt(txtDiezmos));}
+			sobre.agregarSobre(nom_persona, sobres); 
+			request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp").forward(request, response);
 			
-			if(txtOfrendas=="") { txtOfrendas="0";}else {			
-			sobres.setOfrendas(Integer.parseInt(txtOfrendas));}
-			
-			if(txtNecesitados=="") { txtNecesitados="0";}else {			
-			sobres.setNecesitados(Integer.parseInt(txtNecesitados));}
-			
-			if(txtMercados=="") { txtMercados="0";}else {			
-			sobres.setMercados(Integer.parseInt(txtMercados));}
-			
-			if(txtConstruccion=="") { txtConstruccion="0";}else {			
-			sobres.setConstruccion(Integer.parseInt(txtConstruccion));}
-			
-			if(txtMisiones=="") { txtMisiones="0";}else {			
-			sobres.setMisiones(Integer.parseInt(txtMisiones));}
-			
-			sobre.agregarSobre(nom_persona, sobres);    	
-		
-			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);
-			
-				
+					}
 				}
 				
 			}
@@ -544,8 +604,7 @@ public class planillas extends HttpServlet {
 			comp.setCompartida(Integer.parseInt(request.getParameter("txtCompartir")));
 		
 			SobresPlanillasDAO.compartirPlanilla(comp);	
-		
-			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaSobres.jsp").forward(request, response);			
+			request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp").forward(request, response);			
 		
 		}
 		
@@ -561,10 +620,8 @@ public class planillas extends HttpServlet {
 			finalizaIngreso.setCod_temp_planilla(Integer.parseInt(request.getParameter("txtCodPlanilla")));
 			finalizaIngreso.setEstado_planilla(Integer.parseInt(request.getParameter("txtEstadoPlanilla")));
 		
-			SobresPlanillasDAO.finalizarIngresos(finalizaIngreso);	
-		
-			
-			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp").forward(request, response);
+			SobresPlanillasDAO.finalizarIngresos(finalizaIngreso);
+			request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDinero.jsp").forward(request, response);
 		
 		}
 		
@@ -574,58 +631,119 @@ public class planillas extends HttpServlet {
 		private void validarCuadre(HttpServletRequest request, HttpServletResponse response)
 				throws SQLException, IOException, ServletException {
 			
+			Administracion admin = new Administracion();			
+			TempoDineroPlanilla valida = new TempoDineroPlanilla();	
 			
-			TempoDineroPlanilla valida = new TempoDineroPlanilla();
+			int txtb_cien= admin.validarCampoNumero(request.getParameter("txtb_cien"));
+			int txtb_cincuenta= admin.validarCampoNumero(request.getParameter("txtb_cincuenta"));
+			int txtb_veinte= admin.validarCampoNumero(request.getParameter("txtb_veinte"));
+			int txtb_diez= admin.validarCampoNumero(request.getParameter("txtb_diez"));
+			int txtb_cinco= admin.validarCampoNumero(request.getParameter("txtb_cinco"));
+			int txtb_dos= admin.validarCampoNumero(request.getParameter("txtb_dos"));
+			int txtb_mil= admin.validarCampoNumero(request.getParameter("txtb_mil")); 
+			int txtm_mil= admin.validarCampoNumero(request.getParameter("txtm_mil"));
+			int txtm_quiniento= admin.validarCampoNumero(request.getParameter("txtm_quiniento"));
+			int txtm_dos= admin.validarCampoNumero(request.getParameter("txtm_dos"));
+			int txtm_cien= admin.validarCampoNumero(request.getParameter("txtm_cien"));
+			int txtm_cincuenta= admin.validarCampoNumero(request.getParameter("txtm_cincuenta"));
 			
-			
-			
-			String txtb_cien= request.getParameter("txtb_cien");
-			String txtb_cincuenta= request.getParameter("txtb_cincuenta");
-			String txtb_veinte= request.getParameter("txtb_veinte");
-			String txtb_diez= request.getParameter("txtb_diez");
-			String txtb_cinco= request.getParameter("txtb_cinco");
-			String txtb_dos= request.getParameter("txtb_dos");
-			String txtb_mil= request.getParameter("txtb_mil");
-			String txtm_mil= request.getParameter("txtm_mil");
-			String txtm_quiniento= request.getParameter("txtm_quiniento");
-			String txtm_dos= request.getParameter("txtm_dos");
-			String txtm_cien= request.getParameter("txtm_cien");
-			String txtm_cincuenta= request.getParameter("txtm_cincuenta");
-			
-			
-			if(txtb_cien=="" && txtb_cincuenta=="" && txtb_veinte=="" && txtb_diez=="" && txtb_cinco=="" && txtb_dos=="" &&
-					txtb_mil=="" && txtm_mil=="" && txtm_quiniento=="" && txtm_dos=="" && txtm_cien=="" && txtm_cincuenta=="") {
-				
-				
-				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp");
+			if(admin.validaIngresoDinero(txtb_cien, txtb_cincuenta, txtb_veinte, txtb_diez, txtb_cinco, txtb_dos, txtb_mil, txtm_mil, txtm_quiniento, txtm_dos, txtm_cien, txtm_cincuenta) == false) {
+								
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDinero.jsp");
 				request.setAttribute("alert", "104");	
 				dispatcher.forward(request, response);	
 				
 			}else {
+				
+				valida.setCod_planilla(Integer.parseInt(request.getParameter("txtCodPlanilla")));
+				valida.setB_cien(txtb_cien);
+				valida.setB_cincuenta(txtb_cincuenta);
+				valida.setB_veinte(txtb_veinte);
+				valida.setB_diez(txtb_diez);
+				valida.setB_cinco(txtb_cinco);
+				valida.setB_dos(txtb_dos);
+				valida.setB_mil(txtb_mil);
+				valida.setM_mil(txtm_mil);
+				valida.setM_quiniento(txtm_quiniento);
+				valida.setM_dos(txtm_dos);
+				valida.setM_cien(txtm_cien);
+				valida.setM_cincuenta(txtm_cincuenta);
+				
+				valida.setEstado(Integer.parseInt(request.getParameter("txtEstadoValidacion")));			
 			
-			
-			valida.setCod_planilla(Integer.parseInt(request.getParameter("txtCodPlanilla")));
-			valida.setB_cien(Integer.parseInt(request.getParameter("txtb_cien")));
-			valida.setB_cincuenta(Integer.parseInt(request.getParameter("txtb_cincuenta")));
-			valida.setB_veinte(Integer.parseInt(request.getParameter("txtb_veinte")));
-			valida.setB_diez(Integer.parseInt(request.getParameter("txtb_diez")));
-			valida.setB_cinco(Integer.parseInt(request.getParameter("txtb_cinco")));
-			valida.setB_dos(Integer.parseInt(request.getParameter("txtb_dos")));
-			valida.setB_mil(Integer.parseInt(request.getParameter("txtb_mil")));
-			valida.setM_mil(Integer.parseInt(request.getParameter("txtm_mil")));
-			valida.setM_quiniento(Integer.parseInt(request.getParameter("txtm_quiniento")));
-			valida.setM_dos(Integer.parseInt(request.getParameter("txtm_dos")));
-			valida.setM_cien(Integer.parseInt(request.getParameter("txtm_cien")));
-			valida.setM_cincuenta(Integer.parseInt(request.getParameter("txtm_cincuenta")));
-			valida.setEstado(Integer.parseInt(request.getParameter("txtEstadoValidacion")));
-		
-			PlanillasDAO.validarCuadre(valida);	
-		
-			request.getRequestDispatcher("WEB-INF/PAGE/planilla_agregaDinero.jsp").forward(request, response);	
+			PlanillasDAO.validarCuadre(valida);			
+			request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaDinero.jsp").forward(request, response);	
 			
 			}
 		}
 		
+		
+		// Aprobar Planilla
+		
+		private void aprobarPlanilla(HttpServletRequest request, HttpServletResponse response)
+				throws SQLException, IOException, ServletException {
+		
+			String 	nom_aprueba= 	request.getParameter("txtPersonaGenera");
+			int	cod_estado_pla=	Integer.parseInt(request.getParameter("txtEstadoPlanilla")); 			
+			
+			PlanillasDAO.aprobarPlanilla(nom_aprueba, cod_estado_pla);
+			request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_finalizada.jsp").forward(request, response);
+		
+		}
+		
+		
+		
+		// Agregar nuevo concepto de Ingreso
+		private void agregarNuevoConceptoIngreso(HttpServletRequest request, HttpServletResponse response)
+				throws SQLException, IOException, ServletException {
+			
+			SobresEspeciales sobre = new SobresEspeciales();
+			SobresPlanillasDAO sobres = new SobresPlanillasDAO();
+			
+			String nom_concepto= request.getParameter("txtNombreConcepto");
+			
+			if(sobres.validarConceptoIngreso(nom_concepto) == 0) {
+			
+			sobre.setNom_sobre_especial(nom_concepto);
+			
+			sobres.agregarConceptoIngreso(sobre);  	
+		
+			request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp").forward(request, response);
+			
+			}else {
+				RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp");
+				request.setAttribute("alert", "102");	
+				dispatcher.forward(request, response);	
+
+			}
+		
+		}
+		
+		
+		
+		// Agregar Sobre especial
+				private void agregarSobreEspecial(HttpServletRequest request, HttpServletResponse response)
+						throws SQLException, IOException, ServletException {
+					
+					Administracion admin = new Administracion();
+					TempoSobresPlanilla sobres = new TempoSobresPlanilla();
+					SobresPlanillasDAO sobre = new SobresPlanillasDAO();
+					
+					
+					String nom_persona = request.getParameter("selectConceptoEspecial");
+					String txtEspeciales = request.getParameter("txtEspeciales");
+
+					//int txtEspeciales = admin.validarCampoNumero(request.getParameter("txtEspeciales"));					
+											
+					sobres.setEspecial(Integer.parseInt(txtEspeciales));	
+					
+					sobre.agregarSobreEspecial(nom_persona, sobres); 
+					request.getRequestDispatcher("WEB-INF/PAGE/PLANILLAS/planilla_agregaSobres.jsp").forward(request, response);
+					
+							
+						
+						
+					}
 
 
 }

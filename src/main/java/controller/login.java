@@ -54,7 +54,7 @@ public class login extends HttpServlet {
 	}
 	
 	
-	private void validarLogin(HttpServletRequest request, HttpServletResponse response)
+	public void validarLogin(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		UsuariosDAO usuario = new UsuariosDAO();
@@ -74,16 +74,19 @@ public class login extends HttpServlet {
 			if (login.getUsuario() != null) {
 				
 	    		HttpSession session= request.getSession(true);
+
+	    		 // DEJAR CONFIGURADO TIEMPO DE SESSION EN web.xml
+	    		session.setMaxInactiveInterval(5);	
+	    		//response.setHeader("Refresh","10;url=logout");
 	    		
-	    		
+	    		//response.setIntHeader("Refresh", 5);
 	    		session.setAttribute("mi_rol", rol.getCod_rol()); // Retorna el rol
-        		request.setAttribute("mi_rol", rol.getCod_rol());
 	    		
 	    		session.setAttribute("usuario", login);
 	    		request.getRequestDispatcher("WEB-INF/PAGE/home.jsp").forward(request, response);
 
 			} else {
-				request.getRequestDispatcher("WEB-INF/PAGE/error_login.jsp").forward(request, response);
+				request.getRequestDispatcher("WEB-INF/PAGE/EXCEPTION/error_login.jsp").forward(request, response);
 			}
 		} catch (SQLException e) {
 			System.out.print("Error al logearse: " + e);

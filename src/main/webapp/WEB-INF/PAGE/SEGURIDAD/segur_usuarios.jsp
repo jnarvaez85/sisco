@@ -1,9 +1,8 @@
-<%@ include file="../CONTENT/lib.jsp"%>
-<%@ include file="../CONTENT/title.jsp"%>
-<%@ include file="../CONTENT/header.jsp"%>
-<%@ include file="../CONTENT/funciones.jsp"%>
-<%@ include file="../CONTENT/consultas.jsp"%>
-
+<%@ include file="../../CONTENT/lib.jsp"%>
+<%@ include file="../../CONTENT/title.jsp"%>
+<%@ include file="../../CONTENT/header.jsp"%>
+<%@ include file="../../CONTENT/funciones.jsp"%>
+<%@ include file="../../CONTENT/consultas.jsp"%>
 
 
 
@@ -35,19 +34,7 @@
 
 
 
-
-
-
-
-
-
-
-
-
 	<div class="div_content">
-	
-	
-
 		
 	<%-- --%>
 	<div class="scroll">
@@ -136,10 +123,10 @@
 
 
 												<li>
-													<%
-       
+		<%
+		
       
-       LinkedList<VTmenu> submenu = MenuDAO.datosMenu(getRol);
+		LinkedList<VTmenu> submenu = MenuDAO.datosMenu(cod_rol);
        
        
        
@@ -241,15 +228,15 @@ data-bs-url="redirectUsuarios"
 </html>
 
 
-<%@ include file="../modal/validarDocumento.jsp"%>
-<%@ include file="../modal/bloquearUsuario.jsp"%>
-<%@ include file="../modal/eliminarUsuario.jsp"%>
-<%@ include file="../modal/modificarUsuario.jsp"%>
-<%@ include file="../modal/resetearPassword.jsp"%>
-<%@ include file="../modal/agregarUsuario.jsp"%>
+<%@ include file="../../modal/validarDocumento.jsp"%>
+<%@ include file="../../modal/bloquearUsuario.jsp"%>
+<%@ include file="../../modal/eliminarUsuario.jsp"%>
+<%@ include file="../../modal/modificarUsuario.jsp"%>
+<%@ include file="../../modal/resetearPassword.jsp"%>
+<%@ include file="../../modal/agregarUsuario.jsp"%>
 
-<%@ include file="../js/scriptUsuarios.jsp"%>
-<%@ include file="../js/scriptPersonas.jsp"%>
+<%@ include file="../../js/scriptUsuarios.jsp"%>
+<%@ include file="../../js/scriptPersonas.jsp"%>
 
 
 

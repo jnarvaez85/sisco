@@ -1,10 +1,27 @@
-<%@ include file="../CONTENT/lib.jsp"%>
-<%@ include file="../CONTENT/title.jsp"%>
-<%@ include file="../CONTENT/header.jsp"%>
-<%@ include file="../CONTENT/funciones.jsp"%>
-<%@ include file="../CONTENT/consultas.jsp"%>
-<%@ include file="../CONTENT/botones.jsp"%>
+<%@ include file="../../CONTENT/lib.jsp"%>
+<%@ include file="../../CONTENT/title.jsp"%>
+<%@ include file="../../CONTENT/header.jsp"%>
+<%@ include file="../../CONTENT/funciones.jsp"%>
+<%@ include file="../../CONTENT/consultas.jsp"%>
 
+<%
+
+//Boton cancelar planilla
+VTmenu btn_cancelar = MenuDAO.menuGeneral(cod_rol, 44);
+
+int btn_permiso = btn_cancelar.getPermiso();
+String btn_opcion = btn_cancelar.getOpcion();
+String btn_link = btn_cancelar.getLink_menu();
+
+
+//Boton para Agregar colaboradores de planilla
+VTmenu btn_add_colabora = MenuDAO.menuGeneral(cod_rol, 40);
+
+int btn_add_colabora_permiso = btn_add_colabora.getPermiso();
+String btn_add_colabora_icon = btn_add_colabora.getIcon_menu();
+String btn_add_colabora_opcion = btn_add_colabora.getOpcion();
+String btn_add_colabora_link = btn_add_colabora.getLink_menu();
+%>
 
 
 <% if(request.getAttribute("alert") == "101"){ %>
@@ -415,13 +432,13 @@ if (cursor == 5) {
 
 
 
-<%@ include file="../modal/validarDocumento.jsp"%>
-<%@ include file="../modal/agregarServicio.jsp"%>
-<%@ include file="../modal/listarServicios.jsp"%>
-<%@ include file="../modal/listarColaboradores.jsp"%>
-<%@ include file="../modal/agregarColaborador.jsp"%>
-<%@ include file="../modal/cancelarPlanilla.jsp"%>
+<%@ include file="../../modal/validarDocumento.jsp"%>
+<%@ include file="../../modal/agregarServicio.jsp"%>
+<%@ include file="../../modal/listarServicios.jsp"%>
+<%@ include file="../../modal/listarColaboradores.jsp"%>
+<%@ include file="../../modal/agregarColaborador.jsp"%>
+<%@ include file="../../modal/cancelarPlanilla.jsp"%>
 
 
-<%@ include file="../js/scriptUsuarios.jsp"%>
-<%@ include file="../js/scriptPersonas.jsp"%>
+<%@ include file="../../js/scriptUsuarios.jsp"%>
+<%@ include file="../../js/scriptPersonas.jsp"%>

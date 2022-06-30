@@ -232,7 +232,7 @@ public class ColaboradoresDAO {
 						}
 						
 						
-						// CONSULTAR COLABORADOR			
+						// CONSULTAR COLABORADOR POR IDENTIFICACION			
 						public int validarColaborador(String doc_persona) {
 							
 						 	MysqlConexion conx = new MysqlConexion();
@@ -278,6 +278,7 @@ public class ColaboradoresDAO {
 						
 						
 						
+							
 						
 
 }

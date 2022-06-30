@@ -16,6 +16,9 @@
 
 
 <%
+
+
+
  // INFORMACION DEL SOFTWARE
  int var_sys=0;
  LinkedList<Systemas> datos_software = SystemsDAO.datosSystema();
@@ -44,6 +47,9 @@
 
  //SERVICIOS
  LinkedList<Servicios> datos_servicios = ServiciosDAO.listarServicios();
+ 
+ 
+
  %>
 
 

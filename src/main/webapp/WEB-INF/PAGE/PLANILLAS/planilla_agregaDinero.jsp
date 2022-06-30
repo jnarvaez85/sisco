@@ -1,9 +1,8 @@
-<%@ include file="../CONTENT/lib.jsp"%>
-<%@ include file="../CONTENT/title.jsp"%>
-<%@ include file="../CONTENT/header.jsp"%>
-<%@ include file="../CONTENT/funciones.jsp"%>
-<%@ include file="../CONTENT/consultas.jsp"%>
-<%@ include file="../CONTENT/botones.jsp"%>
+<%@ include file="../../CONTENT/lib.jsp"%>
+<%@ include file="../../CONTENT/title.jsp"%>
+<%@ include file="../../CONTENT/header.jsp"%>
+<%@ include file="../../CONTENT/funciones.jsp"%>
+<%@ include file="../../CONTENT/consultas.jsp"%>
 
 
 <% if (request.getAttribute("alert") == "103") { %>
@@ -490,23 +489,23 @@ int total_sueltos	= total_ingreso - total;
 
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 
-<%@ include file="../modal/validarDocumento.jsp"%>
-<%@ include file="../modal/listarAportantes.jsp"%>
-<%@ include file="../modal/listarSobres.jsp"%>
-<%@ include file="../modal/agregarSobreEspecial.jsp"%>
-<%@ include file="../modal/cancelarPlanilla.jsp"%>
-<%@ include file="../modal/compartirPlanilla.jsp"%>
-<%@ include file="../modal/compartirPlanillaNO.jsp"%>
-<%@ include file="../modal/finalizarIngreso.jsp"%>
-<%@ include file="../modal/aprobarPlanilla.jsp"%>
+<%@ include file="../../modal/validarDocumento.jsp"%>
+<%@ include file="../../modal/listarAportantes.jsp"%>
+<%@ include file="../../modal/listarSobres.jsp"%>
+<%@ include file="../../modal/agregarSobreEspecial.jsp"%>
+<%@ include file="../../modal/cancelarPlanilla.jsp"%>
+<%@ include file="../../modal/compartirPlanilla.jsp"%>
+<%@ include file="../../modal/compartirPlanillaNO.jsp"%>
+<%@ include file="../../modal/finalizarIngreso.jsp"%>
+<%@ include file="../../modal/aprobarPlanilla.jsp"%>
 
 
-<%@ include file="../js/scriptUsuarios.jsp"%>
-<%@ include file="../js/scriptPersonas.jsp"%>
-<%@ include file="../js/scriptPersonas.jsp"%>
+<%@ include file="../../js/scriptUsuarios.jsp"%>
+<%@ include file="../../js/scriptPersonas.jsp"%>
+<%@ include file="../../js/scriptPersonas.jsp"%>
 
-<%@ include file="../jquery/calcularMonedas.jsp"%>
-<%@ include file="../jquery/functionsJavascript.jsp"%>
+<%@ include file="../../jquery/calcularMonedas.jsp"%>
+<%@ include file="../../jquery/functionsJavascript.jsp"%>
 
 
 

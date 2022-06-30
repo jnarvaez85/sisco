@@ -183,7 +183,49 @@ public class PersonasDAO {
 		return 1;
 	}
 	
-	
+	// CONSULTAR PERSONA POR NOMBRE		
+	public int validarNombrePersona(String nom_persona) {
+		
+	 	MysqlConexion conx = new MysqlConexion();
+    	Connection con = null;
+    	CallableStatement stmt = null;
+		ResultSet rs = null;
+		
+		
+		try {
+			
+			con = conx.conectar();			
+			
+			 String sql = "{call SP_VALIDA_NOMBRE_PERSONA (?)}";
+	         stmt = con.prepareCall(sql);			
+
+	         stmt.setString(1, nom_persona);					
+			 rs=	stmt.executeQuery();
+			
+			if(rs.next()) {
+				return rs.getInt(1);
+			}
+			MysqlConexion.close(rs);
+			MysqlConexion.close(stmt);
+			MysqlConexion.close(con);
+			return 1;
+			
+		   } catch (SQLException e) {
+				System.out.println("Error al consultar nombre colaborador " + e);
+			}
+        
+		finally {
+			try {
+				
+				MysqlConexion.close(rs);
+				MysqlConexion.close(stmt);
+				MysqlConexion.close(con);
+			} catch (SQLException e) {
+				System.out.println("Error al cerrar" + e);
+			}
+		}
+		return 1;
+	}
 	
 	
 }
